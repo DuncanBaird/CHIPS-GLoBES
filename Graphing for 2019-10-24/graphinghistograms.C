@@ -4,13 +4,28 @@ void graphinghistograms(){
 
   TFile* f = TFile::Open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Graphing for 2019-10-24/20190824_000_confFile_20190824_104918_02POMs_NanobeaconB_6200mV_acceptanceTest_nano.root");
   TTree *t1 =  (TTree*)f->Get("CLBOpt_tree");
+  TBranch *b1 = (TBranch*)t1->GetBranch("TimeStamp_ns");
   TCanvas *myCanvas = new TCanvas();
   myCanvas->SetGrid();
-  chi2Hist = new TH1D("distribution name","Name of plot",100,4,20); //last numbers: number of bins, lower bound of bins, upper bound of bins
-  chi2Hist->GetXaxis()->SetTitle("X axis name (bins)");
-  chi2Hist->GetYaxis()->SetTitle("Yaxis Name (frequency of bin)");
+  chi2Hist = new TH1D("Time events module","Histrogram of events over time",100,233800217,20); //last numbers: number of bins, lower bound of bins, upper bound of bins
+  chi2Hist->GetXaxis()->SetTitle("Timestamp ns");
+  chi2Hist->GetYaxis()->SetTitle("Frequencz of event");
 
-  chi2Hist->Draw("test1");
+  UInt_t TimeStamp_ns;
+  t1->SetBranchAddress("TimeStamp_ns",&TimeStamp_ns);
+
+
+  int entries = t1->GetEntries();
+  for (int i=0;i<entries;i++){
+    t1->GetEntry(i);
+    chi2Hist->Fill(TimeStamp_ns);
+  }
+
+  chi2Hist->Draw();
   gPad->Update();
   TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
+
+
+
+  printf("%d",3 % 2);
 }
