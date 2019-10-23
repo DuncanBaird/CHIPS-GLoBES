@@ -7,7 +7,7 @@ void graphinghistograms(){
   TBranch *b1 = (TBranch*)t1->GetBranch("TimeStamp_ns");
   TCanvas *myCanvas = new TCanvas();
   myCanvas->SetGrid();
-  chi2Hist = new TH1D("Time events module","Histrogram of events over time",100,233800217,20); //last numbers: number of bins, lower bound of bins, upper bound of bins
+  chi2Hist = new TH1D("Time events modulo","Histrogram of events over time",100,233800217,20); //last numbers: number of bins, lower bound of bins, upper bound of bins
   chi2Hist->GetXaxis()->SetTitle("Timestamp ns");
   chi2Hist->GetYaxis()->SetTitle("Frequencz of event");
 
@@ -18,14 +18,14 @@ void graphinghistograms(){
   int entries = t1->GetEntries();
   for (int i=0;i<entries;i++){
     t1->GetEntry(i);
-    chi2Hist->Fill(TimeStamp_ns);
+    chi2Hist->Fill(TimeStamp_ns%50000); //take modulo 50000 of each timestamp
   }
 
   chi2Hist->Draw();
   gPad->Update();
   TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
 
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Graphing for 2019-10-24/GraphModulofiftythou.pdf");
 
-
-  printf("%d",3 % 2);
+  //printf("%d",3 % 2);
 }
