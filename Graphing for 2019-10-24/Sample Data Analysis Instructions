@@ -1,0 +1,21 @@
+GLOBES sample data analysis
+
+new TBrowser
+
+TFile* f = TFile::Open("/home/duncan/Documents/Globes Sample Data Analysis/20190824_000_confFile_20190824_104918_02POMs_NanobeaconB_6200mV_acceptanceTest_nano.root")
+
+
+Find someway to read the data, perhaps select tree then leaf then get entry
+
+TREENAME->Print() #shows branches
+TREENAME->Scan("BRANCHNAME") #shows contents of branch
+
+.x /Path/File.C #runs files
+
+
+TCanvas *myCanvas = new TCanvas()
+myCanvas->Divide(2,2)
+myCanvas->cd(1)
+CLBOpt_tree->Draw("ToT:Channel")
+myCanvas->cd(2)
+CLBOpt_tree->Draw("ToT:Channel","PomID == 1")
