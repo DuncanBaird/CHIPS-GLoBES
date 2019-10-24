@@ -11,7 +11,7 @@
 #include <gsl/gsl_roots.h>
 #include <gsl/gsl_errno.h>
 
-#include "../Globes/globes-3.2.17/globes/globes.h"   /* GLoBES library */
+#include <globes/globes.h>   /* GLoBES library */
 #include "myio.h"            /* my input-output routines */
 
 // /home/duncan/Documents/Globes/globes-3.2.17/globes/globes.h
