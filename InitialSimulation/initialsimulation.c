@@ -219,7 +219,7 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
     chi2 += likelihood( true_rates_N[i], fit_rate,
                     true_rates_N[i] * (1.0 + true_rates_N[i]*square(sigma_binbin)) );
   }
-
+https://www.argos.co.uk/help/faq/72487
   /* Systematical part of chi^2 (= priors) */
   for (i=0; i < n_params; i++)
     chi2 += square(x[i] / errors[i]);
