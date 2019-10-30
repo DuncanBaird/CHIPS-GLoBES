@@ -4,14 +4,19 @@ void GraphSensitivity(){
   TTree *t1 =  (TTree*)f->Get("CLBOpt_tree");
   TCanvas *myCanvas = new TCanvas();
   myCanvas->SetGrid();
-  myCanvas->Divide(2,2);
-  myCanvas->cd(1);
-  t1->Draw("ToT:Channel");
-  myCanvas->cd(2);
-  t1->Draw("ToT:Channel", "Channel == 1.0");
-  myCanvas->cd(3);
-  t1->Draw("ToT:TimeStamp_ns", "Channel == 1.0");
-  myCanvas->cd(4);
-  t1->Draw("ToT:TimeStamp_s");
-  myCanvas->SaveAs("/home/duncan/Documents/Globes Sample Data Analysis/Graphs/GraphGamma3.pdf");
+  TGraphErrors* sp = new TGraphErrors("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/insimb.dat","%lg %lg");
+  
+  sp->SetTitle("B: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  sp->SetMarkerStyle(4);
+  sp->SetMarkerColor(4);
+
+  gPad->SetLogx();
+  gPad->Update();
+  TPaveStats *st = (TPaveStats*)sp->FindObject("stats");
+  
+  
+  sp->Draw();
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/Plotting/SensitivityplotB.pdf");
 }
