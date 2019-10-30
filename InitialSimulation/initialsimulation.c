@@ -350,7 +350,7 @@ int main(int argc, char *argv[])
 {
   double *old_sys_errors = NULL;      /* Temp. pointer to systematical error array */
   int sys_dim;                        /* Abbrv. for number of systematical errors */
-  int n_bins=62;                      /* Number of bins */
+  int n_bins=85;                      /* Number of bins */
   int i;
 
   /* Initialization */
