@@ -15,7 +15,7 @@ void MultiGraphSensitivity(){
   spb->SetMarkerStyle(3);
   spb->SetMarkerColor(3);
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  mg->SetTitle("AB: Log Plot of sensitivity curve for Initial Simulation with systematic corrections For CHIPS .glb");
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
@@ -33,8 +33,8 @@ void MultiGraphSensitivity(){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A","lp");
-  legend->AddEntry(spb,"series b","lp");
+  legend->AddEntry(spa,"series A: Flux normalization of source","lp");
+  legend->AddEntry(spb,"series B: Fiducial mass of Far detector","lp");
   legend->Draw();
 
 
