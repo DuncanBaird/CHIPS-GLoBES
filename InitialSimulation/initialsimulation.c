@@ -350,7 +350,7 @@ int main(int argc, char *argv[])
 {
   double *old_sys_errors = NULL;      /* Temp. pointer to systematical error array */
   int sys_dim;                        /* Abbrv. for number of systematical errors */
-  int n_bins=85;                      /* Number of bins */
+  int n_bins=86;                      /* Number of bins */
   int i;
 
   /* Initialization */
@@ -382,6 +382,10 @@ int main(int argc, char *argv[])
   if (glbGetNumberOfBins(EXP_FAR) != n_bins || glbGetNumberOfBins(EXP_NEAR) != n_bins)
   {
     printf("ERROR: Number of bins changed in AEDL file, but not in C code (or vice-versa).\n");
+    printf("nbins %i",n_bins);
+    printf("far bins %i",glbGetNumberOfBins(EXP_FAR));
+    printf("near bins %i",glbGetNumberOfBins(EXP_NEAR));
+
     return -1;
   }
   else
