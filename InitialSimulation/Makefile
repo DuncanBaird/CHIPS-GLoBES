@@ -41,13 +41,15 @@ exec_prefix = ${prefix}
 libdir = ${exec_prefix}/lib
 globesconf= $(exec_prefix)/bin/globes-config
 
+ROOTLIBS = $(shell root-config --libs)
+ROOTGLIBS = $(shell root-config --glibs)
+ROOTCFLAGS = $(shell root-config --cflags)
+
 local_CFLAGS = -g -O4
 
 INCFLAGS:=$(shell $(globesconf) --include)
 local_LDFLAGS:=$(shell $(globesconf) --libs)
 local_LTLDFLAGS:=$(shell $(globesconf) --ltlibs)
-
-
 
 BIN = example-tour example-static initialsimulation example2 example3 example4 example5 example6
 OBJ = example-tour.o example-tour-s.o initialsimulation.o example2.o example3.o example4.o \
