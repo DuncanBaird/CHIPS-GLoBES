@@ -377,8 +377,8 @@ int main(int argc, char *argv[])
 
   /* Load 2 experiments: DC far (#0) and near (#1) detectors */
   glbClearExperimentList();
-  glbInitExperiment("D-Chooz_far.glb", &glb_experiment_list[0], &glb_num_of_exps);
-  glbInitExperiment("D-Chooz_near.glb", &glb_experiment_list[0], &glb_num_of_exps);
+  glbInitExperiment("CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb", &glb_experiment_list[0], &glb_num_of_exps);
+  glbInitExperiment("CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb", &glb_experiment_list[0], &glb_num_of_exps);
   if (glbGetNumberOfBins(EXP_FAR) != n_bins || glbGetNumberOfBins(EXP_NEAR) != n_bins)
   {
     printf("ERROR: Number of bins changed in AEDL file, but not in C code (or vice-versa).\n");
