@@ -17,32 +17,32 @@ energy(#anu_mucc_sk2)<>
 energy(#anu_nqe_sk2)<>
 energy(#anu_qe_sk2)<>
 
-include "smear_nc_sk2.dat"
-include "smear_nu_mucc_sk2.dat"
-include "smear_nu_nqe_sk2.dat"
-include "smear_nu_qe_sk2.dat"
-include "smear_anu_mucc_sk2.dat"
-include "smear_anu_nqe_sk2.dat"
-include "smear_anu_qe_sk2.dat"
+include "CHIPS-GLB/smear_nc_sk2.dat"
+include "CHIPS-GLB/smear_nu_mucc_sk2.dat"
+include "CHIPS-GLB/smear_nu_nqe_sk2.dat"
+include "CHIPS-GLB/smear_nu_qe_sk2.dat"
+include "CHIPS-GLB/smear_anu_mucc_sk2.dat"
+include "CHIPS-GLB/smear_anu_nqe_sk2.dat"
+include "CHIPS-GLB/smear_anu_qe_sk2.dat"
 
 
 
 /* 	 Cross sections 	 */
 
 cross(#NC)<
-	@cross_file = "XSections/wc_XNC.dat"
+	@cross_file = "CHIPS-GLB/wc_XNC.dat"
 >
 
 cross(#QE)<
-	@cross_file = "XSections/wc_XQE.dat"
+	@cross_file = "CHIPS-GLB/wc_XQE.dat"
 >
 
 cross(#CC)<
-	@cross_file = "XSections/wc_XCC.dat"
+	@cross_file = "CHIPS-GLB/wc_XCC.dat"
 >
 
 cross(#CCNonQE)<
-	@cross_file = "XSections/wc_XCCNonQE.dat"
+	@cross_file = "CHIPS-GLB/wc_XCCNonQE.dat"
 >
 
 /*Pre/Post Efficiencies Setup (now using Chelsea's interpolation setup)*/

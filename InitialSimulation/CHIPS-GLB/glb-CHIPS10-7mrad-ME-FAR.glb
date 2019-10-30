@@ -15,7 +15,7 @@ ANGLE=0
 /* ####### Beam flux ####### */
 
 nuflux(#pos_beam)<
-	@flux_file="Fluxes/flux-numi-me-7mrad-plus.dat"
+	@flux_file="CHIPS-GLB/flux-numi-me-7mrad-plus.dat"
 	@time = 5	/* years */
 	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/
       	@norm = 1.12*6.47886918e-19 /* 1.12 is necessary to match the
@@ -24,7 +24,7 @@ nuflux(#pos_beam)<
 
 
 nuflux(#neg_beam)<
-	@flux_file="Fluxes/flux-numi-me-7mrad-minus.dat"
+	@flux_file="CHIPS-GLB/flux-numi-me-7mrad-minus.dat"
 	@time = 5	/* years */
 	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/ 		
 	@norm = 1.12*NUB* 6.47886918e-19 /* 1.12 is necessary to match the
@@ -36,7 +36,7 @@ nuflux(#neg_beam)<
 
 $target_mass = 	        10.0	/* kt */
 
-include "template-WC.glb"
+include "CHIPS-GLB/template-WC.glb"
 
 
 /* ####### Baseline setting ####### */
