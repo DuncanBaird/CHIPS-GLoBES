@@ -33,11 +33,11 @@ void MultiGraphSensitivity(){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: Flux normalization of source","lp");
-  legend->AddEntry(spb,"series B: Fiducial mass of Far detector","lp");
+  legend->AddEntry(spa,"series A: No Systematics","lp");
+  legend->AddEntry(spb,"series B: All systematics (no spectra shift)","lp");
   legend->Draw();
 
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/Plotting/SensitivityplotAB.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/Plotting/SensitivityplotABnew.pdf");
 }
