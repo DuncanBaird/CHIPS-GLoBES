@@ -31,8 +31,9 @@
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
-char MYFILE1[]="insima.dat";
-char MYFILE2[]="insimb.dat";
+char MYFILE1[]="histsima.dat";
+char MYFILE2[]="histsimb.dat";
+char MYFILE3[]="histsim.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
@@ -111,8 +112,7 @@ inline double likelihood(double true_rate, double fit_rate, double sqr_sigma)
  *   x[4]: Energy calibration error - near detector                        *
  ***************************************************************************/
 double chiDCNorm(int exp, int rule, int n_params, double *x, double *errors,
-                 void *user_data)
-{
+                 void *user_data){
   int n_bins = glbGetNumberOfBins(EXP_FAR);
   double *true_rates_N = glbGetRuleRatePtr(EXP_NEAR, 0);
   double *true_rates_F = glbGetRuleRatePtr(EXP_FAR, 0);
@@ -176,8 +176,7 @@ double chiDCNorm(int exp, int rule, int n_params, double *x, double *errors,
  * Eq. (9) of hep-ph/0303232.                                              *
  ***************************************************************************/
 double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
-                     void *user_data)
-{
+                     void *user_data){
   int n_bins = glbGetNumberOfBins(EXP_FAR);
   double *true_rates_N = glbGetRuleRatePtr(EXP_NEAR, 0);
   double *true_rates_F = glbGetRuleRatePtr(EXP_FAR, 0);
@@ -237,8 +236,7 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
  ***************************************************************************/
 
 /* Callback function for GSL root finder */
-double DoChiSquare(double x, void *dummy)
-{
+double DoChiSquare(double x, void *dummy){
   double thetheta13, chi2;
 
   /* Set vector of test values */
@@ -260,8 +258,7 @@ double DoChiSquare(double x, void *dummy)
 
 
 /* Error handler for GSL errors */
-void gslError(const char *reason, const char *file, int line, int gsl_errno)
-{
+void gslError(const char *reason, const char *file, int line, int gsl_errno){
   static int n_errors=0;
 
   printf("GSL Error in file %s:%d : %s\n", file, line, gsl_strerror(gsl_errno));
@@ -274,8 +271,7 @@ void gslError(const char *reason, const char *file, int line, int gsl_errno)
 
 
 /* Compute sensitivity to sin^2(2*th13) for different running times */
-void ComputeSensitivityCurve()
-{
+void ComputeSensitivityCurve(){
   double t_factor = pow(max_runtime/min_runtime, 1.0/tSteps);
   double t;
   double x;               /* Current value of log[sin^2(2*th13)] */
@@ -415,31 +411,17 @@ int main(int argc, char *argv[])
   InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
   ComputeSensitivityCurve();
 
-  // /* Calculate sensitivity curve with the above + spectral error
-  //  * Since chiDCSpectral computes the complete chi^2 for the whole problem, it
-  //  * must be called only for ONE of the two experiments */
-  // InitOutput(MYFILE3,"Format: Running time   Log(10,s22th13) sens. \n");
-  // old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
-  // sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
-  // for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
-  //   sys_errors[i] = old_sys_errors[i];
-  // for (i=sys_dim; i < sys_dim + n_bins; i++)
-  //   sys_errors[i] = 0.02;                                          /* Spectral error */
-  // sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
-  // glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiDCSpectral", sys_errors);
-  // glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
-  // ComputeSensitivityCurve();
-  //
-  // /* Calculate sensitivity curve with the above + bin-to-bin error
-  //  * (uncorrelated between near and far detectors */
-  // InitOutput(MYFILE4,"Format: Running time   Log(10,s22th13) sens. \n");
-  // sigma_binbin = 0.005;
-  // ComputeSensitivityCurve();
-  //
-  // /* Calculate sensitivity curve with a different bin-to-bin error */
-  // InitOutput(MYFILE5,"Format: Running time   Log(10,s22th13) sens. \n");
-  // sigma_binbin = 0.02;
-  // ComputeSensitivityCurve();
+  //// Getting histogram output
+
+  // Setting up output
+  InitOutput(MYFILE3,"Format: energy event rate. \n");
+
+  FILE* f_out = fopen(MYFILE3,"w");
+
+  glbShowChannelRates(f_out,EXP_NEAR,0,GLB_PRE,GLB_WO_EFF,GLB_WO_BG);
+
+  fclose(f_out);
+
 
   /* Clean up */
   glbFreeParams(true_values);
@@ -449,36 +431,3 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-
-/* ROOT plotting test (executing file in ROOT)
-*
-*
-*/
-
-// TH1* chi2Hist = NULL;
-
-// void graphinghistograms(){
-
-//   TFile* f = TFile::Open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Graphing for 2019-10-24/20190824_000_confFile_20190824_104918_02POMs_NanobeaconB_6200mV_acceptanceTest_nano.root");
-//   TTree *t1 =  (TTree*)f->Get("CLBOpt_tree");
-//   TBranch *b1 = (TBranch*)t1->GetBranch("TimeStamp_ns");
-//   TCanvas *myCanvas = new TCanvas();
-//   myCanvas->SetGrid();
-//   chi2Hist = new TH1D("Time events modulo","Histrogram of events over time",100,0,500); //last numbers: number of bins, lower bound of bins, upper bound of bins
-//   chi2Hist->GetXaxis()->SetTitle("Timestamp ns");
-//   chi2Hist->GetYaxis()->SetTitle("Frequency of event timestamp");
-
-//   UInt_t TimeStamp_ns;
-//   t1->SetBranchAddress("TimeStamp_ns",&TimeStamp_ns);
-
-
-//   int entries = t1->GetEntries();
-//   for (int i=0;i<entries;i++){
-//     t1->GetEntry(i);
-//     chi2Hist->Fill(TimeStamp_ns%50000); //take modulo 50000 of each timestamp
-//   }
-
-//   chi2Hist->Draw();
-//   gPad->Update();
-//   TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
-// }
