@@ -1,0 +1,61 @@
+%!GLoBES
+
+$version="3.0.0"
+
+
+
+ /* We need to correct for the fact that our cross sections are
+ for water, i.e. a proton to neutron ratio of 5/4, whereas mineral oil
+ has a proton qratio closer to 4/3. That is we get correction factor
+ for nu ar of */
+
+NUB=1.0
+ANGLE=0 
+
+/* ####### Beam flux ####### */
+
+nuflux(#pos_beam)<
+	@flux_file="CHIPS-GLB/flux-numi-me-7mrad-plus.dat"
+	@time = 5	/* years */
+	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/
+      	@norm = 1.12*6.47886918e-19 /* 1.12 is necessary to match the
+      	numbers in the 2007 TDR */ 
+>
+
+
+nuflux(#neg_beam)<
+	@flux_file="CHIPS-GLB/flux-numi-me-7mrad-minus.dat"
+	@time = 5	/* years */
+	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/ 		
+	@norm = 1.12*NUB* 6.47886918e-19 /* 1.12 is necessary to match the
+      	numbers in the 2007 TDR */
+>
+
+
+/* ####### Detector settings ###### */
+
+$target_mass = 	        10.0	/* kt */
+
+include "CHIPS-GLB/template-WC.glb"
+
+
+/* ####### Baseline setting ####### */
+
+$profiletype = 		3 
+
+/* The relatively larger signal is due to matter effects
+ * whereas tCHIPS-GLoBES/InitialSimulation/he event numbers in the proposal assume two-flavour 
+ * vacuum oscillations
+ */
+
+$densitytab = 		{2.8} 
+$lengthtab = 		{750}	/* km */
+
+
+/* ####### Technical information ####### */
+
+$filter_state = 0 
+$filter_value = 1000000 
+
+
+/**********************END**********************/
