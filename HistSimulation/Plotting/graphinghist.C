@@ -17,6 +17,7 @@ void graphinghist(){
       file >> value >> weight;
       x[i] = value;
       w[i] = weight;
+      printf("bin %f",x[i]);
   }
 file.close();
 
