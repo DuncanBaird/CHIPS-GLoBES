@@ -33,7 +33,7 @@
 /* If filenames given, write to file; for empty filenames, write to screen */
 char MYFILE1[]="histsima.dat";
 char MYFILE2[]="histsimb.dat";
-char MYFILE3[]="histsim.dat";
+char MYFILE3[]="histsim1.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
@@ -414,14 +414,26 @@ int main(int argc, char *argv[])
   //// Getting histogram output
 
   // Setting up output
-  InitOutput(MYFILE3,"Format: energy event rate. \n");
 
-  FILE* f_out = fopen(MYFILE3,"w");
+  int max_channel_id = 17;
 
-  glbShowChannelRates(f_out,EXP_NEAR,0,GLB_PRE,GLB_WO_EFF,GLB_WO_BG);
+  char buf[25];
+  char str[25];
+
+  for(int i=0; i<max_channel_id+1;i++){
+
+    sprintf(buf,"histsim_channel%d.dat",i);
+    strcpy(str,buf);
+
+    FILE* f_out = fopen(str,"w");
+
+    glbShowChannelRates(f_out,EXP_NEAR,i,GLB_PRE,GLB_WO_EFF,GLB_WO_BG);
 
   fclose(f_out);
 
+
+  }
+  
 
   /* Clean up */
   glbFreeParams(true_values);
