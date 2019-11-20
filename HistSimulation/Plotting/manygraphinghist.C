@@ -17,7 +17,7 @@ void manygraphinghist(){
     myCanvas->cd(k+1);
     gPad->Update();
 
-  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/histsim_channel%d.dat",k);
+  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/time1histsim_channel%d.dat",k);
   strcpy(str,buf);
   
   ifstream file;
@@ -57,7 +57,7 @@ file.close();
   }
 
   myCanvas->Update();
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-many.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-manytime.pdf");
 
 
 }

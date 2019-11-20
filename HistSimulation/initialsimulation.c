@@ -417,15 +417,21 @@ int main(int argc, char *argv[])
 
   int max_channel_id = 17;
 
-  char buf[25];
-  char str[25];
+  char buf[30];
+  char str[30];
 
   for(int i=0; i<max_channel_id+1;i++){
 
-    sprintf(buf,"histsim_channel%d.dat",i);
+    sprintf(buf,"time1histsim_channel%d.dat",i);
     strcpy(str,buf);
 
     FILE* f_out = fopen(str,"w");
+
+    
+    double hist_time = 100000;
+    glbSetRunningTime(EXP_NEAR,0,hist_time);
+
+    printf("Running time is; %f",glbGetRunningTime(1,0));
 
     glbShowChannelRates(f_out,EXP_NEAR,i,GLB_PRE,GLB_WO_EFF,GLB_WO_BG);
 
