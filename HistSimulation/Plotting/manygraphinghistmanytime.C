@@ -2,7 +2,8 @@
 
 TH1* chi2Hist = NULL;
 
-void printer3(int w){
+void printer3(int loop){
+
   TCanvas *myCanvas = new TCanvas();
   myCanvas->SetGrid();
   myCanvas->DivideSquare(18);
@@ -16,7 +17,7 @@ void printer3(int w){
     myCanvas->cd(k+1);
     gPad->Update();
 
-  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/%dtime2histsim_channel%d.dat",w,k);
+  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/%dtime2histsim_channel%d.dat",loop,k);
   strcpy(str,buf);
   
   ifstream file;
@@ -37,7 +38,7 @@ file.close();
 
   char buf2[25];
   char str2[25];
-  sprintf(buf2,"Time: %d, Interaction channel %d",w,k);
+  sprintf(buf2,"Time: %d Interaction channel %d",loop,k);
   strcpy(str2,buf2);
 
   chi2Hist = new TH1D(str2,str2,86,0,86); //last numbers: number of bins, lower bound of bins, upper bound of bins
@@ -60,10 +61,12 @@ file.close();
   char buf4[120];
   char str4[120];
 
-  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-time-%d.pdf",w);
+  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-time-%d.pdf",loop);
   strcpy(str4,buf4);
 
-  myCanvas->SaveAs();
+  myCanvas->SaveAs(str4);
+
+  delete gROOT->FindObject("chi2Hist");
 
   }
 
