@@ -441,8 +441,11 @@ int main(int argc, char *argv[])
   InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
   ComputeSensitivityCurve();
 
-  printf("%d",glbGetNumberOfChannels(EXP_NEAR));
-  
+  printf("Number of channels: %d",glbGetNumberOfChannels(EXP_NEAR));
+
+  for(int js = 0; js<=18;js++){
+  printf("Channel: %s",glbValueToName(EXP_NEAR,"channel",js));
+  }  
   
 
   /* Clean up */

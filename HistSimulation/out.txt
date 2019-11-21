@@ -3,4 +3,4 @@ GSL Error in file brent.c:74 : invalid argument supplied by user
 GSL Error in file brent.c:74 : invalid argument supplied by user
 GSL Error in file brent.c:74 : invalid argument supplied by user
 GSL Error in file brent.c:74 : invalid argument supplied by user
-18
+Number of channels: 18Channel: #nc_bgChannel: #nu_mu_bgChannel: #nu_e_beam_qeChannel: #nu_e_beam_nqeChannel: #nu_e_signal_nqeChannel: #nu_e_signal_qeChannel: #anc_bgChannel: #anu_e_beam_qeChannel: #anu_e_beam_nqeChannel: #anu_mu_bgChannel: #anu_e_signal_qeChannel: #anu_e_signal_nqeChannel: #canc_bgChannel: #canu_e_beam_qeChannel: #canu_e_beam_nqeChannel: #canu_mu_bgChannel: #canu_e_signal_qeChannel: #canu_e_signal_nqeChannel: (null)
