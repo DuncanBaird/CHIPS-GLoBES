@@ -355,7 +355,7 @@ void ComputeSensitivityCurve(){
     // double hist_time = 100000;
     // glbSetRunningTime(EXP_NEAR,0,hist_time);
 
-    printf("Running time is; %f",glbGetRunningTime(1,0));
+    //printf("Running time is; %f",glbGetRunningTime(1,0));
 
     glbShowChannelRates(f_out,EXP_NEAR,i,GLB_PRE,GLB_WO_EFF,GLB_WO_BG);
 
@@ -441,6 +441,7 @@ int main(int argc, char *argv[])
   InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
   ComputeSensitivityCurve();
 
+  printf("%d",glbGetNumberOfChannels(EXP_NEAR));
   
   
 

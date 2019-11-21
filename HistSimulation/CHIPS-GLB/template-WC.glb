@@ -208,7 +208,7 @@ rule(#nu_e_appearance)<
 
 rule(#anu_e_appearance)<
   @signal = 1.0@#anu_e_signal_qe : 1.0@#anu_e_signal_nqe : 1.0@#canu_e_signal_qe : 1.0@#canu_e_signal_nqe
-  @background = 1.0@#anu_mu_bg : 1.0@#anc_bg : 1.0@#anu_e_beam_nqe : 1.0@#anu_e_beam_qe : 1.0@#canu_mu_bg : 1.0@#canc_bg : 1.00@#canu_e_beam_nqe : 1.00@#canu_e_beam_qe 
+  @background = 1.0@#anu_mu_bg 
 
   @signalerror = 0.01 : 0.0001
   @backgrounderror = 0.05 : 0.0001
