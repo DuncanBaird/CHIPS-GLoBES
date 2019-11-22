@@ -1,0 +1,413 @@
+\hypertarget{initialsimulation_8c}{}\section{initialsimulation.\+c File Reference}
+\label{initialsimulation_8c}\index{initialsimulation.\+c@{initialsimulation.\+c}}
+{\ttfamily \#include \char`\"{}initialsimulation.\+h\char`\"{}}\newline
+Include dependency graph for initialsimulation.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{initialsimulation_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}~200
+\item 
+\#define \hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{E\+X\+P\+\_\+\+F\+AR}~0
+\item 
+\#define \hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{E\+X\+P\+\_\+\+N\+E\+AR}~1
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{initialsimulation_8c_a2f8edc4561e9744ed4233b205fa7ec32}{min} (double x, double y)
+\item 
+double \hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square} (double x)
+\item 
+double \hyperlink{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}{likelihood} (double true\+\_\+rate, double fit\+\_\+rate, double sqr\+\_\+sigma)
+\item 
+double \hyperlink{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639}{chi\+D\+C\+Norm} (int exp, int rule, int n\+\_\+params, double $\ast$x, double $\ast$errors, void $\ast$user\+\_\+data)
+\item 
+double \hyperlink{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d}{chi\+D\+C\+Spectral} (int exp, int rule, int n\+\_\+params, double $\ast$x, double $\ast$errors, void $\ast$user\+\_\+data)
+\item 
+double \hyperlink{initialsimulation_8c_aa34890f04451218ee65fddd5810924e6}{Do\+Chi\+Square} (double x, void $\ast$dummy)
+\item 
+void \hyperlink{initialsimulation_8c_a98deac6879cfff61ffac7b16a3dcbdc4}{gsl\+Error} (const char $\ast$reason, const char $\ast$file, int line, int gsl\+\_\+errno)
+\item 
+void \hyperlink{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c}{Compute\+Sensitivity\+Curve} ()
+\item 
+int \hyperlink{initialsimulation_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}{M\+Y\+F\+I\+L\+E1} \mbox{[}$\,$\mbox{]} =\char`\"{}histsima.\+dat\char`\"{}
+\item 
+char \hyperlink{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}{M\+Y\+F\+I\+L\+E2} \mbox{[}$\,$\mbox{]} =\char`\"{}histsimb.\+dat\char`\"{}
+\item 
+char \hyperlink{initialsimulation_8c_ac1dafa9fa032f3fd9126bad6b7a9850c}{M\+Y\+F\+I\+L\+E3} \mbox{[}$\,$\mbox{]} =\char`\"{}histsim1.\+dat\char`\"{}
+\item 
+double \hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12}
+\item 
+double \hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13}
+\item 
+double \hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23}
+\item 
+double \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp}
+\item 
+double \hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm}
+\item 
+double \hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm}
+\item 
+glb\+\_\+params \hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\+\_\+values}
+\item 
+glb\+\_\+params \hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\+\_\+values}
+\item 
+glb\+\_\+params \hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\+\_\+errors}
+\item 
+const gsl\+\_\+root\+\_\+fsolver\+\_\+type $\ast$ \hyperlink{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}{T}
+\item 
+gsl\+\_\+root\+\_\+fsolver $\ast$ \hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s}
+\item 
+gsl\+\_\+function \hyperlink{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}{gsl\+\_\+func}
+\item 
+const double \hyperlink{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}{min\+\_\+runtime} = 1e-\/2
+\item 
+const double \hyperlink{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}{max\+\_\+runtime} = 1e4
+\item 
+const double \hyperlink{initialsimulation_8c_aa61745407a26c87961303a3c321dbba0}{chi2\+\_\+goal} = 2.\+7
+\item 
+const int \hyperlink{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}{t\+Steps} = 30
+\item 
+const double \hyperlink{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}{logs22th13\+\_\+precision} = 0.\+005
+\item 
+double \hyperlink{initialsimulation_8c_ac40fbcecee7fb042256f95763d5c1c68}{sys\+\_\+errors} \mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}
+\item 
+double \hyperlink{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}{sys\+\_\+startval} \mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}
+\item 
+double \hyperlink{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}{sigma\+\_\+binbin} = 0.\+0
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}\label{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!E\+X\+P\+\_\+\+F\+AR@{E\+X\+P\+\_\+\+F\+AR}}
+\index{E\+X\+P\+\_\+\+F\+AR@{E\+X\+P\+\_\+\+F\+AR}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{E\+X\+P\+\_\+\+F\+AR}{EXP\_FAR}}
+{\footnotesize\ttfamily \#define E\+X\+P\+\_\+\+F\+AR~0}
+
+\mbox{\Hypertarget{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}\label{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!E\+X\+P\+\_\+\+N\+E\+AR@{E\+X\+P\+\_\+\+N\+E\+AR}}
+\index{E\+X\+P\+\_\+\+N\+E\+AR@{E\+X\+P\+\_\+\+N\+E\+AR}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{E\+X\+P\+\_\+\+N\+E\+AR}{EXP\_NEAR}}
+{\footnotesize\ttfamily \#define E\+X\+P\+\_\+\+N\+E\+AR~1}
+
+\mbox{\Hypertarget{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}\label{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!M\+A\+X\+\_\+\+S\+YS@{M\+A\+X\+\_\+\+S\+YS}}
+\index{M\+A\+X\+\_\+\+S\+YS@{M\+A\+X\+\_\+\+S\+YS}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+S\+YS}{MAX\_SYS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+S\+YS~200}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639}\label{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!chi\+D\+C\+Norm@{chi\+D\+C\+Norm}}
+\index{chi\+D\+C\+Norm@{chi\+D\+C\+Norm}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{chi\+D\+C\+Norm()}{chiDCNorm()}}
+{\footnotesize\ttfamily double chi\+D\+C\+Norm (\begin{DoxyParamCaption}\item[{int}]{exp,  }\item[{int}]{rule,  }\item[{int}]{n\+\_\+params,  }\item[{double $\ast$}]{x,  }\item[{double $\ast$}]{errors,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d}\label{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!chi\+D\+C\+Spectral@{chi\+D\+C\+Spectral}}
+\index{chi\+D\+C\+Spectral@{chi\+D\+C\+Spectral}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{chi\+D\+C\+Spectral()}{chiDCSpectral()}}
+{\footnotesize\ttfamily double chi\+D\+C\+Spectral (\begin{DoxyParamCaption}\item[{int}]{exp,  }\item[{int}]{rule,  }\item[{int}]{n\+\_\+params,  }\item[{double $\ast$}]{x,  }\item[{double $\ast$}]{errors,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c}\label{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!Compute\+Sensitivity\+Curve@{Compute\+Sensitivity\+Curve}}
+\index{Compute\+Sensitivity\+Curve@{Compute\+Sensitivity\+Curve}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{Compute\+Sensitivity\+Curve()}{ComputeSensitivityCurve()}}
+{\footnotesize\ttfamily void Compute\+Sensitivity\+Curve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_aa34890f04451218ee65fddd5810924e6}\label{initialsimulation_8c_aa34890f04451218ee65fddd5810924e6}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!Do\+Chi\+Square@{Do\+Chi\+Square}}
+\index{Do\+Chi\+Square@{Do\+Chi\+Square}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{Do\+Chi\+Square()}{DoChiSquare()}}
+{\footnotesize\ttfamily double Do\+Chi\+Square (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{void $\ast$}]{dummy }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{initialsimulation_8c_aa34890f04451218ee65fddd5810924e6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_a98deac6879cfff61ffac7b16a3dcbdc4}\label{initialsimulation_8c_a98deac6879cfff61ffac7b16a3dcbdc4}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!gsl\+Error@{gsl\+Error}}
+\index{gsl\+Error@{gsl\+Error}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{gsl\+Error()}{gslError()}}
+{\footnotesize\ttfamily void gsl\+Error (\begin{DoxyParamCaption}\item[{const char $\ast$}]{reason,  }\item[{const char $\ast$}]{file,  }\item[{int}]{line,  }\item[{int}]{gsl\+\_\+errno }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{initialsimulation_8c_a98deac6879cfff61ffac7b16a3dcbdc4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}\label{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!likelihood@{likelihood}}
+\index{likelihood@{likelihood}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{likelihood()}{likelihood()}}
+{\footnotesize\ttfamily double likelihood (\begin{DoxyParamCaption}\item[{double}]{true\+\_\+rate,  }\item[{double}]{fit\+\_\+rate,  }\item[{double}]{sqr\+\_\+sigma }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{initialsimulation_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!main@{main}}
+\index{main@{main}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{initialsimulation_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_a2f8edc4561e9744ed4233b205fa7ec32}\label{initialsimulation_8c_a2f8edc4561e9744ed4233b205fa7ec32}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!min@{min}}
+\index{min@{min}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{min()}{min()}}
+{\footnotesize\ttfamily double min (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{initialsimulation_8c_a2f8edc4561e9744ed4233b205fa7ec32_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}\label{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!square@{square}}
+\index{square@{square}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{square()}{square()}}
+{\footnotesize\ttfamily double square (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{initialsimulation_8c_aa61745407a26c87961303a3c321dbba0}\label{initialsimulation_8c_aa61745407a26c87961303a3c321dbba0}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!chi2\+\_\+goal@{chi2\+\_\+goal}}
+\index{chi2\+\_\+goal@{chi2\+\_\+goal}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{chi2\+\_\+goal}{chi2\_goal}}
+{\footnotesize\ttfamily const double chi2\+\_\+goal = 2.\+7}
+
+\mbox{\Hypertarget{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}\label{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!deltacp@{deltacp}}
+\index{deltacp@{deltacp}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{deltacp}{deltacp}}
+{\footnotesize\ttfamily double deltacp}
+
+\mbox{\Hypertarget{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}\label{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!gsl\+\_\+func@{gsl\+\_\+func}}
+\index{gsl\+\_\+func@{gsl\+\_\+func}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{gsl\+\_\+func}{gsl\_func}}
+{\footnotesize\ttfamily gsl\+\_\+function gsl\+\_\+func}
+
+\mbox{\Hypertarget{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}\label{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!input\+\_\+errors@{input\+\_\+errors}}
+\index{input\+\_\+errors@{input\+\_\+errors}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{input\+\_\+errors}{input\_errors}}
+{\footnotesize\ttfamily glb\+\_\+params input\+\_\+errors}
+
+\mbox{\Hypertarget{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}\label{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!ldm@{ldm}}
+\index{ldm@{ldm}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{ldm}{ldm}}
+{\footnotesize\ttfamily double ldm}
+
+\mbox{\Hypertarget{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}\label{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!logs22th13\+\_\+precision@{logs22th13\+\_\+precision}}
+\index{logs22th13\+\_\+precision@{logs22th13\+\_\+precision}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{logs22th13\+\_\+precision}{logs22th13\_precision}}
+{\footnotesize\ttfamily const double logs22th13\+\_\+precision = 0.\+005}
+
+\mbox{\Hypertarget{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}\label{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!max\+\_\+runtime@{max\+\_\+runtime}}
+\index{max\+\_\+runtime@{max\+\_\+runtime}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{max\+\_\+runtime}{max\_runtime}}
+{\footnotesize\ttfamily const double max\+\_\+runtime = 1e4}
+
+\mbox{\Hypertarget{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}\label{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!min\+\_\+runtime@{min\+\_\+runtime}}
+\index{min\+\_\+runtime@{min\+\_\+runtime}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{min\+\_\+runtime}{min\_runtime}}
+{\footnotesize\ttfamily const double min\+\_\+runtime = 1e-\/2}
+
+\mbox{\Hypertarget{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}\label{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E1@{M\+Y\+F\+I\+L\+E1}}
+\index{M\+Y\+F\+I\+L\+E1@{M\+Y\+F\+I\+L\+E1}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E1}{MYFILE1}}
+{\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E1\mbox{[}$\,$\mbox{]} =\char`\"{}histsima.\+dat\char`\"{}}
+
+\mbox{\Hypertarget{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}\label{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E2@{M\+Y\+F\+I\+L\+E2}}
+\index{M\+Y\+F\+I\+L\+E2@{M\+Y\+F\+I\+L\+E2}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E2}{MYFILE2}}
+{\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E2\mbox{[}$\,$\mbox{]} =\char`\"{}histsimb.\+dat\char`\"{}}
+
+\mbox{\Hypertarget{initialsimulation_8c_ac1dafa9fa032f3fd9126bad6b7a9850c}\label{initialsimulation_8c_ac1dafa9fa032f3fd9126bad6b7a9850c}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E3@{M\+Y\+F\+I\+L\+E3}}
+\index{M\+Y\+F\+I\+L\+E3@{M\+Y\+F\+I\+L\+E3}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E3}{MYFILE3}}
+{\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E3\mbox{[}$\,$\mbox{]} =\char`\"{}histsim1.\+dat\char`\"{}}
+
+\mbox{\Hypertarget{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}\label{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!s@{s}}
+\index{s@{s}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{s}{s}}
+{\footnotesize\ttfamily gsl\+\_\+root\+\_\+fsolver$\ast$ s}
+
+\mbox{\Hypertarget{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}\label{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!sdm@{sdm}}
+\index{sdm@{sdm}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{sdm}{sdm}}
+{\footnotesize\ttfamily double sdm}
+
+\mbox{\Hypertarget{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}\label{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!sigma\+\_\+binbin@{sigma\+\_\+binbin}}
+\index{sigma\+\_\+binbin@{sigma\+\_\+binbin}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{sigma\+\_\+binbin}{sigma\_binbin}}
+{\footnotesize\ttfamily double sigma\+\_\+binbin = 0.\+0}
+
+\mbox{\Hypertarget{initialsimulation_8c_ac40fbcecee7fb042256f95763d5c1c68}\label{initialsimulation_8c_ac40fbcecee7fb042256f95763d5c1c68}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!sys\+\_\+errors@{sys\+\_\+errors}}
+\index{sys\+\_\+errors@{sys\+\_\+errors}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{sys\+\_\+errors}{sys\_errors}}
+{\footnotesize\ttfamily double sys\+\_\+errors\mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}}
+
+\mbox{\Hypertarget{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}\label{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!sys\+\_\+startval@{sys\+\_\+startval}}
+\index{sys\+\_\+startval@{sys\+\_\+startval}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{sys\+\_\+startval}{sys\_startval}}
+{\footnotesize\ttfamily double sys\+\_\+startval\mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}}
+
+\mbox{\Hypertarget{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}\label{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!T@{T}}
+\index{T@{T}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{T}{T}}
+{\footnotesize\ttfamily const gsl\+\_\+root\+\_\+fsolver\+\_\+type$\ast$ T}
+
+\mbox{\Hypertarget{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}\label{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!test\+\_\+values@{test\+\_\+values}}
+\index{test\+\_\+values@{test\+\_\+values}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{test\+\_\+values}{test\_values}}
+{\footnotesize\ttfamily glb\+\_\+params test\+\_\+values}
+
+\mbox{\Hypertarget{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}\label{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!theta12@{theta12}}
+\index{theta12@{theta12}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{theta12}{theta12}}
+{\footnotesize\ttfamily double theta12}
+
+\mbox{\Hypertarget{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}\label{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!theta13@{theta13}}
+\index{theta13@{theta13}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{theta13}{theta13}}
+{\footnotesize\ttfamily double theta13}
+
+\mbox{\Hypertarget{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}\label{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!theta23@{theta23}}
+\index{theta23@{theta23}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{theta23}{theta23}}
+{\footnotesize\ttfamily double theta23}
+
+\mbox{\Hypertarget{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}\label{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!true\+\_\+values@{true\+\_\+values}}
+\index{true\+\_\+values@{true\+\_\+values}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{true\+\_\+values}{true\_values}}
+{\footnotesize\ttfamily glb\+\_\+params true\+\_\+values}
+
+\mbox{\Hypertarget{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}\label{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}} 
+\index{initialsimulation.\+c@{initialsimulation.\+c}!t\+Steps@{t\+Steps}}
+\index{t\+Steps@{t\+Steps}!initialsimulation.\+c@{initialsimulation.\+c}}
+\subsubsection{\texorpdfstring{t\+Steps}{tSteps}}
+{\footnotesize\ttfamily const int t\+Steps = 30}
+
