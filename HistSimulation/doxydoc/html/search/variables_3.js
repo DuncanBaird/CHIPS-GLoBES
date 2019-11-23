@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['input_5ferrors',['input_errors',['../initialsimulation_8c.html#a4849c92a9edd1a0b4d2ff01484cebc91',1,'initialsimulation.c']]]
+  ['gsl_5ffunc',['gsl_func',['../initialsimulation_8c.html#a76f2e70c9fc2a87ebcc598a0e021d2e6',1,'initialsimulation.c']]]
 ];

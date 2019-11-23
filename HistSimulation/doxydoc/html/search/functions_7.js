@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['square',['square',['../initialsimulation_8c.html#a435ef393d7d5394df67d5da81c108c7d',1,'initialsimulation.c']]]
+  ['main',['main',['../initialsimulation_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'initialsimulation.c']]],
+  ['min',['min',['../initialsimulation_8c.html#a2f8edc4561e9744ed4233b205fa7ec32',1,'initialsimulation.c']]]
 ];

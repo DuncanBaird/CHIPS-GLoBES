@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initoutput',['InitOutput',['../myio_8c.html#ad28713ee02cd79dc48ad1ee2a7b62177',1,'InitOutput(char *filename, char *headline):&#160;myio.c'],['../myio_8h.html#ad28713ee02cd79dc48ad1ee2a7b62177',1,'InitOutput(char *filename, char *headline):&#160;myio.c']]]
+  ['gslerror',['gslError',['../initialsimulation_8c.html#a98deac6879cfff61ffac7b16a3dcbdc4',1,'initialsimulation.c']]]
 ];

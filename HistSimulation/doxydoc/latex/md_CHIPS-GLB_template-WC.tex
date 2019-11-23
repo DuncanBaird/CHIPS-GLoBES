@@ -1,0 +1,169 @@
+\$emin = 0.\+5 \$emax = 60.\+0 \$binsize= \{0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4\}
+
+\$sampling\+\_\+min = 0.\+5 \$sampling\+\_\+max = 60.\+0 \$sampling\+\_\+stepsize= \{0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125,0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 0.\+125, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4\}
+
+/$\ast$ Energy Resolution $\ast$/ energy(\#nc\+\_\+sk2)$<$$>$ energy(\#nu\+\_\+mucc\+\_\+sk2)$<$$>$ energy(\#nu\+\_\+nqe\+\_\+sk2)$<$$>$ energy(\#nu\+\_\+qe\+\_\+sk2)$<$$>$ energy(\#anu\+\_\+mucc\+\_\+sk2)$<$$>$ energy(\#anu\+\_\+nqe\+\_\+sk2)$<$$>$ energy(\#anu\+\_\+qe\+\_\+sk2)$<$$>$
+
+include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+nc\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+nu\+\_\+mucc\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+nu\+\_\+nqe\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+nu\+\_\+qe\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+anu\+\_\+mucc\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+anu\+\_\+nqe\+\_\+sk2.\+dat\char`\"{} include \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/smear\+\_\+anu\+\_\+qe\+\_\+sk2.\+dat\char`\"{}
+
+/$\ast$ Cross sections $\ast$/
+
+cross(\#\+NC)$<$  = \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/wc\+\_\+\+X\+N\+C.\+dat\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+cross(\#\+QE)$<$  = \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/wc\+\_\+\+X\+Q\+E.\+dat\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+cross(\#\+CC)$<$  = \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/wc\+\_\+\+X\+C\+C.\+dat\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+cross(\#\+C\+C\+Non\+QE)$<$  = \char`\"{}\+C\+H\+I\+P\+S-\/\+G\+L\+B/wc\+\_\+\+X\+C\+C\+Non\+Q\+E.\+dat\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$\+Pre/\+Post Efficiencies Setup (now using Chelsea\textquotesingle{}s interpolation setup)$\ast$/ energy\+\_\+pre = \{0.\+0, 0.\+2, 0.\+4, 0.\+6, 0.\+8, 1.\+0, 1.\+2, 1.\+4, 1.\+6, 1.\+8, 2.\+0, 2.\+5, 3.\+0, 3.\+5, 4.\+0, 4.\+5, 5.\+0, 6.\+0, 7.\+0, 8.\+0, 9.\+0, 10.\+0, 15.\+0, 20.\+0, 40.\+0, 47.\+0, 65.\+0\} energy\+\_\+post = \{0.\+175, 0.\+6, 1.\+175, 1.\+75, 2.\+5, 3.\+5, 4.\+5, 7.\+5, 65.\+0\} sbc = samplingbincenter() bc = bincenter()
+
+precuts\+\_\+\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig = \{0.\+4859, 0.\+9240, 0.\+9417, 0.\+9469, 0.\+9377, 0.\+9141, 0.\+8913, 0.\+8835, 0.\+8625, 0.\+8508, 0.\+8489, 0.\+8530, 0.\+8383, 0.\+8363, 0.\+8072, 0.\+7977, 0.\+7505, 0.\+7505, 0.\+6940, 0.\+7123, 0.\+7219, 0.\+6570, 0.\+5567, 0.\+3786, 0.\+3684, 0.\+3684, 0.\+3684\} precuts\+\_\+\+N\+U\+E\+\_\+\+QE = interpolation(energy\+\_\+pre,precuts\+\_\+\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig,1,sbc)
+
+precuts\+\_\+\+A\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig = \{0.\+4774, 0.\+9244, 0.\+9497, 0.\+9521, 0.\+9490, 0.\+9443, 0.\+9479, 0.\+9395, 0.\+9357, 0.\+9298, 0.\+9120, 0.\+8991, 0.\+8762, 0.\+8888, 0.\+8415, 0.\+8481, 0.\+7766, 0.\+8226, 0.\+6709, 0.\+7933, 0.\+6870, 0.\+6174, 0.\+5109, 0.\+3733, 0.\+2308, 0.\+2308, 0.\+2308\} precuts\+\_\+\+A\+N\+U\+E\+\_\+\+QE = interpolation(energy\+\_\+pre,precuts\+\_\+\+A\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig,1,sbc)
+
+precuts\+\_\+\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig =\{0.\+0000, 0.\+1732, 0.\+3070, 0.\+4197, 0.\+4193, 0.\+3880, 0.\+3662, 0.\+3405, 0.\+3189, 0.\+3220, 0.\+3079, 0.\+2886, 0.\+2717, 0.\+2635, 0.\+2533, 0.\+2558, 0.\+2427, 0.\+2296, 0.\+2197, 0.\+2140, 0.\+1954, 0.\+1817, 0.\+1473, 0.\+1047, 0.\+0398, 0.\+0398, 0.\+0398\} precuts\+\_\+\+N\+U\+E\+\_\+\+N\+QE = interpolation(energy\+\_\+pre,precuts\+\_\+\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig,1,sbc)
+
+precuts\+\_\+\+A\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig=\{0.\+0000, 0.\+7960, 0.\+6303, 0.\+6237, 0.\+5970, 0.\+5832, 0.\+5440, 0.\+5055, 0.\+5089, 0.\+5058, 0.\+4811, 0.\+4745, 0.\+4840, 0.\+4659, 0.\+4622, 0.\+4168, 0.\+4435, 0.\+4215, 0.\+3862, 0.\+4091, 0.\+4019, 0.\+3541, 0.\+2481, 0.\+1800, 0.\+0748, 0.\+0748, 0.\+0748\} precuts\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE = interpolation(energy\+\_\+pre,precuts\+\_\+\+A\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig,1,sbc)
+
+precuts\+\_\+\+N\+C\+\_\+orig = \{0.\+0002, 0.\+0024, 0.\+0145, 0.\+0290, 0.\+0423, 0.\+0530, 0.\+0618, 0.\+0692, 0.\+0782, 0.\+0868, 0.\+0869, 0.\+0885, 0.\+0908, 0.\+0970, 0.\+1002, 0.\+1004, 0.\+0953, 0.\+0899, 0.\+0923, 0.\+0878, 0.\+1019, 0.\+0907, 0.\+0799, 0.\+0678, 0.\+0342, 0.\+0342, 0.\+0342\} precuts\+\_\+\+NC = interpolation(energy\+\_\+pre,precuts\+\_\+\+N\+C\+\_\+orig,1,sbc)
+
+precuts\+\_\+\+A\+N\+C\+\_\+orig = \{0.\+0000, 0.\+0077, 0.\+0257, 0.\+0410, 0.\+0528, 0.\+0587, 0.\+0683, 0.\+0707, 0.\+0782, 0.\+0781, 0.\+0830, 0.\+0865, 0.\+0868, 0.\+0961, 0.\+1081, 0.\+1048, 0.\+0959, 0.\+0962, 0.\+0931, 0.\+0984, 0.\+0950, 0.\+0941, 0.\+0898, 0.\+0834, 0.\+0395, 0.\+0395, 0.\+0395\} precuts\+\_\+\+A\+NC = interpolation(energy\+\_\+pre,precuts\+\_\+\+A\+N\+C\+\_\+orig,1,sbc)
+
+precuts\+\_\+numu\+C\+C\+\_\+orig = \{0.\+0000, 0.\+0004, 0.\+0037, 0.\+0038, 0.\+0037, 0.\+0041, 0.\+0045, 0.\+0048, 0.\+0052, 0.\+0057, 0.\+0063, 0.\+0068, 0.\+0080, 0.\+0080, 0.\+0080, 0.\+0075, 0.\+0077, 0.\+0065, 0.\+0091, 0.\+0061, 0.\+0068, 0.\+0061, 0.\+0047, 0.\+0026, 0.\+0005, 0.\+0005, 0.\+0005\} precuts\+\_\+numu\+CC = interpolation(energy\+\_\+pre,precuts\+\_\+numu\+C\+C\+\_\+orig,1,sbc)
+
+precuts\+\_\+anumu\+C\+C\+\_\+orig = \{0.\+0000, 0.\+0008, 0.\+0029, 0.\+0023, 0.\+0020, 0.\+0023, 0.\+0027, 0.\+0035, 0.\+0042, 0.\+0047, 0.\+0045, 0.\+0047, 0.\+0051, 0.\+0045, 0.\+0034, 0.\+0035, 0.\+0030, 0.\+0024, 0.\+0033, 0.\+0029, 0.\+0043, 0.\+0039, 0.\+0031, 0.\+0016, 0.\+0002, 0.\+0002, 0.\+0002\} precuts\+\_\+anumu\+CC = interpolation(energy\+\_\+pre,precuts\+\_\+anumu\+C\+C\+\_\+orig,1,sbc)
+
+likelihood\+\_\+\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig = \{0.\+42, 0.\+41, 0.\+41, 0.\+39, 0.\+38, 0.\+41, 0.\+40, 0.\+41, 0.\+41\} likelihood\+\_\+\+N\+U\+E\+\_\+\+QE = interpolation(energy\+\_\+post,likelihood\+\_\+\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig,1,bc)
+
+likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig = \{0.\+36, 0.\+35, 0.\+38, 0.\+40, 0.\+41, 0.\+40, 0.\+38, 0.\+42, 0.\+42\} likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+QE = interpolation(energy\+\_\+post,likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+Q\+E\+\_\+orig,1,bc)
+
+likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig = \{0.\+30, 0.\+30, 0.\+30, 0.\+29, 0.\+29, 0.\+25, 0.\+26, 0.\+29, 0.\+29\} likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+QE = interpolation(energy\+\_\+post,likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig,1,bc)
+
+likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig =\{0.\+26, 0.\+26, 0.\+29, 0.\+30, 0.\+30, 0.\+26, 0.\+25, 0.\+31, 0.\+31\} likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE = interpolation(energy\+\_\+post,likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+N\+Q\+E\+\_\+orig,1,bc)
+
+likelihood\+\_\+numu\+C\+C\+\_\+orig = \{0.\+18, 0.\+25, 0.\+13, 0.\+12, 0.\+09, 0.\+05, 0.\+02, 0.\+06, 0.\+06\} likelihood\+\_\+numu\+CC = interpolation(energy\+\_\+post,likelihood\+\_\+numu\+C\+C\+\_\+orig,1,bc)
+
+likelihood\+\_\+\+N\+C\+\_\+orig = \{0.\+03, 0.\+06, 0.\+06, 0.\+08, 0.\+12, 0.\+13, 0.\+16, 0.\+16, 0.\+16\} likelihood\+\_\+\+NC = interpolation(energy\+\_\+post,likelihood\+\_\+\+N\+C\+\_\+orig,1,bc)
+
+/$\ast$\+Channels$\ast$/ channel(\#nc\+\_\+bg)$<$  = \#pos\+\_\+beam\+: +\+: m\+: N\+O\+S\+C\+\_\+m\+: \#\+NC\+: \#nc\+\_\+sk2  = copy(precuts\+\_\+\+NC)  = copy(likelihood\+\_\+\+NC) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#nu\+\_\+mu\+\_\+bg)$<$  = \#pos\+\_\+beam\+: +\+: m\+: m\+: \#\+CC\+: \#nu\+\_\+mucc\+\_\+sk2  = copy(precuts\+\_\+numu\+CC)  = copy(likelihood\+\_\+numu\+CC) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#nu\+\_\+e\+\_\+beam\+\_\+qe)$<$  = \#pos\+\_\+beam\+: +\+: e\+: e\+: \#\+QE\+: \#nu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#nu\+\_\+e\+\_\+beam\+\_\+nqe)$<$  = \#pos\+\_\+beam\+: +\+: e\+: e\+: \#\+C\+C\+Non\+QE\+: \#nu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#nu\+\_\+e\+\_\+signal\+\_\+nqe)$<$  = \#pos\+\_\+beam\+: +\+: m\+: e\+: \#\+C\+C\+Non\+QE\+: \#nu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#nu\+\_\+e\+\_\+signal\+\_\+qe)$<$  = \#pos\+\_\+beam\+: +\+: m\+: e\+: \#\+QE\+: \#nu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#anc\+\_\+bg)$<$  = \#neg\+\_\+beam\+: -\/\+: m\+: N\+O\+S\+C\+\_\+m\+: \#\+NC\+: \#nc\+\_\+sk2  = copy(precuts\+\_\+\+A\+NC)  = copy(likelihood\+\_\+\+NC) \begin{quote}
+
+
+\end{quote}
+channel(\#anu\+\_\+e\+\_\+beam\+\_\+qe)$<$  = \#neg\+\_\+beam\+: -\/\+: e\+: e\+: \#\+QE\+: \#anu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+A\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#anu\+\_\+e\+\_\+beam\+\_\+nqe)$<$  = \#neg\+\_\+beam\+: -\/\+: e\+: e\+: \#\+C\+C\+Non\+QE\+: \#anu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#anu\+\_\+mu\+\_\+bg)$<$  = \#neg\+\_\+beam\+: -\/\+: m\+: m\+: \#\+CC\+: \#anu\+\_\+mucc\+\_\+sk2  = copy(precuts\+\_\+anumu\+CC)  = copy(likelihood\+\_\+numu\+CC) \begin{quote}
+
+
+\end{quote}
+channel(\#anu\+\_\+e\+\_\+signal\+\_\+qe)$<$  = \#neg\+\_\+beam\+: -\/\+: m\+: e\+: \#\+QE\+: \#anu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+A\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#anu\+\_\+e\+\_\+signal\+\_\+nqe)$<$  = \#neg\+\_\+beam\+: -\/\+: m\+: e\+: \#\+C\+C\+Non\+QE\+: \#anu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+A\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+
+
+channel(\#canc\+\_\+bg)$<$  = \#neg\+\_\+beam\+: +\+: m\+: N\+O\+S\+C\+\_\+m\+: \#\+NC\+: \#nc\+\_\+sk2  = copy(precuts\+\_\+\+NC)  = copy(likelihood\+\_\+\+NC) \begin{quote}
+
+
+\end{quote}
+channel(\#canu\+\_\+e\+\_\+beam\+\_\+qe)$<$  = \#neg\+\_\+beam\+: +\+: e\+: e\+: \#\+QE\+: \#nu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#canu\+\_\+e\+\_\+beam\+\_\+nqe)$<$  = \#neg\+\_\+beam\+: +\+: e\+: e\+: \#\+C\+C\+Non\+QE\+: \#nu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#canu\+\_\+mu\+\_\+bg)$<$  = \#neg\+\_\+beam\+: +\+: m\+: m\+: \#\+CC\+: \#nu\+\_\+mucc\+\_\+sk2  = copy(precuts\+\_\+numu\+CC)  = copy(likelihood\+\_\+numu\+CC) \begin{quote}
+
+
+\end{quote}
+channel(\#canu\+\_\+e\+\_\+signal\+\_\+qe)$<$  = \#neg\+\_\+beam\+: +\+: m\+: e\+: \#\+QE\+: \#nu\+\_\+qe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+QE) \begin{quote}
+
+
+\end{quote}
+channel(\#canu\+\_\+e\+\_\+signal\+\_\+nqe)$<$  = \#neg\+\_\+beam\+: +\+: m\+: e\+: \#\+C\+C\+Non\+QE\+: \#nu\+\_\+nqe\+\_\+sk2  = copy(precuts\+\_\+\+N\+U\+E\+\_\+\+N\+QE)  = copy(likelihood\+\_\+\+N\+U\+E\+\_\+\+N\+QE) \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$ Rules $\ast$/
+
+rule(\#nu\+\_\+e\+\_\+appearance)$<$  = 1.\+0\#nu\+\_\+e\+\_\+signal\+\_\+qe \+: 1.\+0\#nu\+\_\+e\+\_\+signal\+\_\+nqe  = 1.\+0\#nu\+\_\+mu\+\_\+bg \+: 1.\+0\#nc\+\_\+bg \+: 1.\+0\#nu\+\_\+e\+\_\+beam\+\_\+qe \+: 1.\+0\#nu\+\_\+e\+\_\+beam\+\_\+nqe  = 0.\+01 \+: 0.\+0001  = 0.\+05 \+: 0.\+0001  = \char`\"{}chi\+Spectrum\+Tilt\char`\"{}  = \char`\"{}chi\+No\+Sys\+Spectrum\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+rule(\#anu\+\_\+e\+\_\+appearance)$<$  = 1.\+0\#anu\+\_\+e\+\_\+signal\+\_\+qe \+: 1.\+0\#anu\+\_\+e\+\_\+signal\+\_\+nqe \+: 1.\+0\#canu\+\_\+e\+\_\+signal\+\_\+qe \+: 1.\+0\#canu\+\_\+e\+\_\+signal\+\_\+nqe  = 1.\+0\#anu\+\_\+mu\+\_\+bg
+
+= 0.\+01 \+: 0.\+0001  = 0.\+05 \+: 0.\+0001  = \char`\"{}chi\+Spectrum\+Tilt\char`\"{}  = \char`\"{}chi\+No\+Sys\+Spectrum\char`\"{}
+
+\begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$\+E\+N\+D$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$/ 

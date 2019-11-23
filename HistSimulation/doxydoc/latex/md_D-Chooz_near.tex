@@ -1,0 +1,121 @@
+\%!\+G\+Lo\+B\+ES
+
+\$version=\char`\"{}3.\+0.\+0\char`\"{}
+
+/$\ast$ A\+E\+DL file for the Double C\+H\+O\+OZ near detector
+\begin{DoxyItemize}
+\item 
+\item Copyright 2004,2005,2006,2007 The G\+Lo\+B\+ES Team
+\item 
+\item If you modify this file you have to rename it.
+\item 
+\item If you are using this file for producing a scientific publication
+\item or a talk please cite the following references and check the supporting
+\item files for a similar comment.
+\item \#$\ast$ \{Huber\+:2006vr, \#$\ast$ author = \char`\"{}\+Huber, P. and Kopp, Joachim and Lindner, M. and Rolinec, M.
+ \#$\ast$                 and Winter, W.\char`\"{}, \#$\ast$ title = \char`\"{}\+From Double Chooz to Triple Chooz\+: Neutrino physics at the
+ \#$\ast$                 Chooz  reactor complex\char`\"{}, \#$\ast$ journal = \char`\"{}\+J\+H\+E\+P\char`\"{}, \#$\ast$ volume = \char`\"{}05\char`\"{}, \#$\ast$ year = \char`\"{}2006\char`\"{}, \#$\ast$ pages = \char`\"{}072\char`\"{}, \#$\ast$ eprint = \char`\"{}hep-\/ph/0601266\char`\"{}, \#$\ast$ S\+L\+A\+Ccitation = \char`\"{}\%\%\+C\+I\+T\+A\+T\+I\+O\+N = H\+E\+P-\/\+P\+H 0601266;\%\%\char`\"{} \#$\ast$ \}
+\item The initial file was prepared by J. Kopp.
+\item 
+\item Last Update\+:12/01/06
+\item $\ast$/
+\end{DoxyItemize}
+
+/$\ast$ \#\#\#\#\#\#\# Preliminary remark \#\#\#\#\#\#\# $\ast$/
+
+/$\ast$ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---
+
+This file cannot be used alone. The file \hyperlink{D-Chooz__far_8glb}{D-\/\+Chooz\+\_\+far.\+glb} and the systematics have to be manually defined. See example5.\+c or the manual (user-\/defined systematics) 
+
+
+
+In example5.\+c \hyperlink{D-Chooz__far_8glb}{D-\/\+Chooz\+\_\+far.\+glb} and \hyperlink{D-Chooz__near_8glb}{D-\/\+Chooz\+\_\+near.\+glb} are used and the chi-\/squared function chi\+D\+C\+Norm is defined in the following way\+:
+
+
+
+
+\begin{DoxyItemize}
+\item Calculate chi$^\wedge$2 for Double Chooz, including the following systematical $\ast$
+\item errors\+: $\ast$
+\item x\mbox{[}0\mbox{]}\+: Flux normalization of reactor $\ast$
+\item x\mbox{[}1\mbox{]}\+: Fiducial mass error -\/ far detector $\ast$
+\item x\mbox{[}2\mbox{]}\+: Fiducial mass error -\/ near detector $\ast$
+\item x\mbox{[}3\mbox{]}\+: Energy calibration error -\/ far detector $\ast$
+\item x\mbox{[}4\mbox{]}\+: Energy calibration error -\/ near detector $\ast$ 
+
+
+\end{DoxyItemize}
+
+double chi\+D\+C\+Norm(int exp, int rule, int n\+\_\+params, double $\ast$x, double $\ast$errors, void $\ast$user\+\_\+data) \{ int n\+\_\+bins = glb\+Get\+Number\+Of\+Bins(\+E\+X\+P\+\_\+\+F\+A\+R); double $\ast$true\+\_\+rates\+\_\+N = glb\+Get\+Rule\+Rate\+Ptr(\+E\+X\+P\+\_\+\+N\+E\+A\+R, 0); double $\ast$true\+\_\+rates\+\_\+F = glb\+Get\+Rule\+Rate\+Ptr(\+E\+X\+P\+\_\+\+F\+A\+R, 0); double signal\+\_\+fit\+\_\+rates\+\_\+N\mbox{[}n\+\_\+bins\mbox{]}; double signal\+\_\+fit\+\_\+rates\+\_\+F\mbox{[}n\+\_\+bins\mbox{]}; double signal\+\_\+norm\+\_\+N, signal\+\_\+norm\+\_\+F; int ew\+\_\+low, ew\+\_\+high; double emin, emax; double fit\+\_\+rate; double chi2 = 0.\+0; int i;
+
+glb\+Get\+Emin\+Emax(exp, \&emin, \&emax); glb\+Get\+Energy\+Window\+Bins(exp, rule, \&ew\+\_\+low, \&ew\+\_\+high);
+
+glb\+Shift\+Energy\+Scale(x\mbox{[}3\mbox{]}, glb\+Get\+Signal\+Fit\+Rate\+Ptr(\+E\+X\+P\+\_\+\+F\+A\+R, 0), signal\+\_\+fit\+\_\+rates\+\_\+F, n\+\_\+bins, emin, emax); glb\+Shift\+Energy\+Scale(x\mbox{[}4\mbox{]}, glb\+Get\+Signal\+Fit\+Rate\+Ptr(\+E\+X\+P\+\_\+\+N\+E\+A\+R, 0), signal\+\_\+fit\+\_\+rates\+\_\+N, n\+\_\+bins, emin, emax);
+
+signal\+\_\+norm\+\_\+F = 1.\+0 + x\mbox{[}0\mbox{]} + x\mbox{[}1\mbox{]}; signal\+\_\+norm\+\_\+N = 1.\+0 + x\mbox{[}0\mbox{]} + x\mbox{[}2\mbox{]}; for (i=ew\+\_\+low; i $<$= ew\+\_\+high; i++) \{ fit\+\_\+rate = signal\+\_\+norm\+\_\+F $\ast$ signal\+\_\+fit\+\_\+rates\+\_\+F\mbox{[}i\mbox{]}; chi2 += likelihood(true\+\_\+rates\+\_\+\+F\mbox{[}i\mbox{]}, fit\+\_\+rate, true\+\_\+rates\+\_\+\+F\mbox{[}i\mbox{]});
+
+fit\+\_\+rate = signal\+\_\+norm\+\_\+N $\ast$ signal\+\_\+fit\+\_\+rates\+\_\+N\mbox{[}i\mbox{]}; chi2 += likelihood(true\+\_\+rates\+\_\+\+N\mbox{[}i\mbox{]}, fit\+\_\+rate, true\+\_\+rates\+\_\+\+N\mbox{[}i\mbox{]}); \}
+
+for (i=0; i $<$ n\+\_\+params; i++) chi2 += square(x\mbox{[}i\mbox{]} / errors\mbox{[}i\mbox{]});
+
+for (i=0; i $<$ n\+\_\+params; i++) sys\+\_\+startval\mbox{[}i\mbox{]} = x\mbox{[}i\mbox{]};
+
+return chi2; \}
+
+\subparagraph*{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# $\ast$/}
+
+/$\ast$ \#\#\#\#\#\#\# Reactor flux \#\#\#\#\#\#\# $\ast$/
+
+nuflux(\#\+Reactor)$<$  = \char`\"{}\+Reactor.\+dat\char`\"{}  = 5 /$\ast$ years $\ast$/  = 8.\+4 /$\ast$ G\+Wth $\ast$/  = 3.\+317709228e-\/12 /$\ast$ Near detector is less efficient than far detector $\ast$/ \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$ \#\#\#\#\#\#\#\# Baseline setting \#\#\#\#\#\#\#\# $\ast$/
+
+\$profiletype = 3 \$densitytab = \{ 1e-\/6 \} \$lengthtab = \{ 0.\+1 \} /$\ast$ km $\ast$/
+
+/$\ast$ \#\#\#\#\#\#\# Detector settings \#\#\#\#\#\#\# $\ast$/
+
+\$target\+\_\+mass = 10.\+16 /$\ast$ tons (fiducial mass) $\ast$/
+
+/$\ast$ \#\#\#\#\#\#\# Energy window \#\#\#\#\#\#\# $\ast$/
+
+\$bins = 62 \$emin = 0.\+0018 /$\ast$ GeV $\ast$/ \$emax = 0.\+008 /$\ast$ GeV $\ast$/
+
+/$\ast$ \#\#\#\#\#\#\#\# Technical information \#\#\#\#\#\#\#\# $\ast$/
+
+\$filter\+\_\+state = 0 \$filter\+\_\+value = 1000000
+
+/$\ast$ \#\#\#\#\#\#\# Energy resolution \#\#\#\#\#\#\# $\ast$/
+
+energy(\#\+E\+R\+ES)$<$  = 1  = \#inverse\+\_\+beta  = \{0.\+05,0,0\} \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$ \#\#\#\#\#\#\# Cross sections \#\#\#\#\#\#\# $\ast$/
+
+cross(\#\+Reactor\+\_\+\+CC)$<$  = \char`\"{}\+X\+C\+Creactor.\+dat\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$ \#\#\#\#\#\#\# Channel definitions \#\#\#\#\#\#\# $\ast$/
+
+channel(\#nu\+\_\+e\+\_\+disappearance\+\_\+\+CC)$<$  = \#\+Reactor\+: -\/ \+: e \+: e \+: \#\+Reactor\+\_\+\+CC \+: \#\+E\+R\+ES \begin{quote}
+
+
+\end{quote}
+
+
+/$\ast$ \#\#\#\#\#\#\# Setting the rules \#\#\#\#\#\#\# $\ast$/
+
+rule(\#\+N\+U\+\_\+\+E\+\_\+\+Disappearance)$<$  = 1.\+0\#nu\+\_\+e\+\_\+disappearance\+\_\+\+CC
+
+= 0.\+0\#nu\+\_\+e\+\_\+disappearance\+\_\+\+CC /$\ast$ No background $\ast$/  = 0.\+0015 \+: 0.\+01
+
+= \char`\"{}chi\+No\+Sys\+Spectrum\char`\"{}  = \{\}  = \char`\"{}chi\+Zero\char`\"{}  = \{\} $>$ 

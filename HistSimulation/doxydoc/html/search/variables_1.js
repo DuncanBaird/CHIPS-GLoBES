@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deltacp',['deltacp',['../initialsimulation_8c.html#a9d56cc3e601b27fad6831203a4626bd2',1,'initialsimulation.c']]]
+  ['chi2_5fgoal',['chi2_goal',['../initialsimulation_8c.html#aa61745407a26c87961303a3c321dbba0',1,'initialsimulation.c']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['y',['../namespacequickplot.html#a010fcab3235443a7866d032bea36b2e8',1,'quickplot']]]
+  ['x',['x',['../namespacequickplot.html#a81eab613e6132e2f34362e0d796374b6',1,'quickplot']]]
 ];

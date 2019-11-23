@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x',['x',['../namespacequickplot.html#a81eab613e6132e2f34362e0d796374b6',1,'quickplot']]]
+  ['weights',['weights',['../namespacequickplot.html#a665c218bc9c59ff692bf90bfbf077344',1,'quickplot']]]
 ];
