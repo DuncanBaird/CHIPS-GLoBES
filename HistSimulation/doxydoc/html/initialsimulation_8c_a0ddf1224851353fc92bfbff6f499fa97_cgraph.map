@@ -1,12 +1,12 @@
 <map id="main" name="main">
-<area shape="rect" id="node2" href="$initialsimulation_8c.html#a526d68b687c952d000bac0c9d8fd4639" title="chiDCNorm" alt="" coords="144,5,235,32"/>
-<area shape="rect" id="node5" href="$initialsimulation_8c.html#aa3d32db5e12332300e78d8fc8de6184d" title="chiDCSpectral" alt="" coords="136,56,243,83"/>
-<area shape="rect" id="node6" href="$initialsimulation_8c.html#a98deac6879cfff61ffac7b16a3dcbdc4" title="gslError" alt="" coords="156,107,223,133"/>
-<area shape="rect" id="node7" href="$initialsimulation_8c.html#aa34890f04451218ee65fddd5810924e6" title="DoChiSquare" alt="" coords="139,157,239,184"/>
-<area shape="rect" id="node8" href="$myio_8c.html#ad28713ee02cd79dc48ad1ee2a7b62177" title="InitOutput" alt="" coords="150,208,229,235"/>
-<area shape="rect" id="node9" href="$initialsimulation_8c.html#a2acac04fd9fbdb6899edcf9aa40e7d0c" title="ComputeSensitivityCurve" alt="" coords="104,259,275,285"/>
-<area shape="rect" id="node3" href="$initialsimulation_8c.html#ad87b3fdc467a8bb3d8b02bee4f76acac" title="likelihood" alt="" coords="338,31,414,57"/>
-<area shape="rect" id="node4" href="$initialsimulation_8c.html#a435ef393d7d5394df67d5da81c108c7d" title="square" alt="" coords="477,31,539,57"/>
-<area shape="rect" id="node10" href="$initialsimulation_8c.html#a2f8edc4561e9744ed4233b205fa7ec32" title="min" alt="" coords="355,233,397,260"/>
-<area shape="rect" id="node11" href="$myio_8c.html#ae9af054c63cf3b736da1ee7151f69d2c" title="AddToOutput2" alt="" coords="323,284,429,311"/>
+<area shape="rect" id="node2" href="$initialsimulation_8c.html#a526d68b687c952d000bac0c9d8fd4639" title="chiDCNorm" alt="" coords="144,21,235,48"/>
+<area shape="rect" id="node5" href="$initialsimulation_8c.html#aa3d32db5e12332300e78d8fc8de6184d" title="chiDCSpectral" alt="" coords="136,72,243,99"/>
+<area shape="rect" id="node6" href="$initialsimulation_8c.html#a2acac04fd9fbdb6899edcf9aa40e7d0c" title="ComputeSensitivityCurve" alt="" coords="104,123,275,149"/>
+<area shape="rect" id="node9" href="$initialsimulation_8c.html#aa34890f04451218ee65fddd5810924e6" title="DoChiSquare" alt="" coords="139,173,239,200"/>
+<area shape="rect" id="node10" href="$initialsimulation_8c.html#a98deac6879cfff61ffac7b16a3dcbdc4" title="gslError" alt="" coords="156,224,223,251"/>
+<area shape="rect" id="node11" href="$myio_8c.html#ad28713ee02cd79dc48ad1ee2a7b62177" title="InitOutput" alt="" coords="150,275,229,301"/>
+<area shape="rect" id="node3" href="$initialsimulation_8c.html#ad87b3fdc467a8bb3d8b02bee4f76acac" title="likelihood" alt="" coords="338,21,414,48"/>
+<area shape="rect" id="node4" href="$initialsimulation_8c.html#a435ef393d7d5394df67d5da81c108c7d" title="square" alt="" coords="477,21,539,48"/>
+<area shape="rect" id="node7" href="$myio_8c.html#ae9af054c63cf3b736da1ee7151f69d2c" title="AddToOutput2" alt="" coords="323,123,429,149"/>
+<area shape="rect" id="node8" href="$initialsimulation_8c.html#a2f8edc4561e9744ed4233b205fa7ec32" title="min" alt="" coords="355,173,397,200"/>
 </map>

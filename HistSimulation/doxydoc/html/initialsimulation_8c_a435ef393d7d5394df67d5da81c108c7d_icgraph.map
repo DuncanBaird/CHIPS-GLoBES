@@ -1,6 +1,6 @@
 <map id="square" name="square">
-<area shape="rect" id="node2" href="$initialsimulation_8c.html#ad87b3fdc467a8bb3d8b02bee4f76acac" title="likelihood" alt="" coords="115,31,191,57"/>
-<area shape="rect" id="node3" href="$initialsimulation_8c.html#a526d68b687c952d000bac0c9d8fd4639" title="chiDCNorm" alt="" coords="247,5,337,32"/>
-<area shape="rect" id="node5" href="$initialsimulation_8c.html#aa3d32db5e12332300e78d8fc8de6184d" title="chiDCSpectral" alt="" coords="239,56,345,83"/>
-<area shape="rect" id="node4" href="$initialsimulation_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="393,31,444,57"/>
+<area shape="rect" id="node2" href="$initialsimulation_8c.html#a526d68b687c952d000bac0c9d8fd4639" title="chiDCNorm" alt="" coords="247,5,337,32"/>
+<area shape="rect" id="node4" href="$initialsimulation_8c.html#aa3d32db5e12332300e78d8fc8de6184d" title="chiDCSpectral" alt="" coords="239,56,345,83"/>
+<area shape="rect" id="node5" href="$initialsimulation_8c.html#ad87b3fdc467a8bb3d8b02bee4f76acac" title="likelihood" alt="" coords="115,31,191,57"/>
+<area shape="rect" id="node3" href="$initialsimulation_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="393,31,444,57"/>
 </map>

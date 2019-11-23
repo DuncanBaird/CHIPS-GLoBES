@@ -33,12 +33,72 @@ static char $\ast$ \hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{T\+H\+E
 \subsubsection{\texorpdfstring{Add\+To\+Output()}{AddToOutput()}}
 {\footnotesize\ttfamily void Add\+To\+Output (\begin{DoxyParamCaption}\item[{double}]{n1,  }\item[{double}]{n2,  }\item[{double}]{n3 }\end{DoxyParamCaption})}
 
+
+
+Definition at line 48 of file myio.\+c.
+
+
+
+References T\+H\+E\+F\+I\+LE.
+
+
+\begin{DoxyCode}
+49 \{
+50  \textcolor{keywordflow}{if}(strlen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE})==0) printf(\textcolor{stringliteral}{"%g %g %f \(\backslash\)n"},n1,n2,n3);
+51  \textcolor{keywordflow}{else} 
+52  \{
+53    FILE* f=fopen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}, \textcolor{stringliteral}{"a"});
+54    \textcolor{keywordflow}{if} (!f)
+55    \{
+56      printf(\textcolor{stringliteral}{"File cannot be opened!\(\backslash\)n"});
+57      \hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}[0]=0;
+58    \}
+59    \textcolor{keywordflow}{else}
+60    \{
+61     fprintf(f,\textcolor{stringliteral}{"%g %g %f \(\backslash\)n"},n1,n2,n3);
+62     fclose(f);
+63    \}
+64  \}
+65 \}
+\end{DoxyCode}
 \mbox{\Hypertarget{myio_8c_ae9af054c63cf3b736da1ee7151f69d2c}\label{myio_8c_ae9af054c63cf3b736da1ee7151f69d2c}} 
 \index{myio.\+c@{myio.\+c}!Add\+To\+Output2@{Add\+To\+Output2}}
 \index{Add\+To\+Output2@{Add\+To\+Output2}!myio.\+c@{myio.\+c}}
 \subsubsection{\texorpdfstring{Add\+To\+Output2()}{AddToOutput2()}}
 {\footnotesize\ttfamily void Add\+To\+Output2 (\begin{DoxyParamCaption}\item[{double}]{n1,  }\item[{double}]{n2 }\end{DoxyParamCaption})}
 
+
+
+Definition at line 67 of file myio.\+c.
+
+
+
+References T\+H\+E\+F\+I\+LE.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
+
+
+\begin{DoxyCode}
+68 \{
+69  \textcolor{keywordflow}{if}(strlen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE})==0) printf(\textcolor{stringliteral}{"%g %g \(\backslash\)n"},n1,n2);
+70  \textcolor{keywordflow}{else} 
+71  \{
+72    FILE* f=fopen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}, \textcolor{stringliteral}{"a"});
+73    \textcolor{keywordflow}{if} (!f)
+74    \{
+75      printf(\textcolor{stringliteral}{"File cannot be opened!\(\backslash\)n"});
+76      \hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}[0]=0;
+77    \}
+78    \textcolor{keywordflow}{else}
+79    \{
+80     fprintf(f,\textcolor{stringliteral}{"%g %g \(\backslash\)n"},n1,n2);
+81     fclose(f);
+82    \}
+83  \}
+84 \}
+\end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -52,6 +112,38 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{Init\+Output()}{InitOutput()}}
 {\footnotesize\ttfamily void Init\+Output (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{char $\ast$}]{headline }\end{DoxyParamCaption})}
 
+
+
+Definition at line 29 of file myio.\+c.
+
+
+
+References T\+H\+E\+F\+I\+LE.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+30 \{
+31  \hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}=filename;
+32  \textcolor{keywordflow}{if}(strlen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE})==0) printf(headline);
+33  \textcolor{keywordflow}{else} 
+34  \{
+35    FILE* f=fopen(\hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}, \textcolor{stringliteral}{"w"});
+36    \textcolor{keywordflow}{if} (!f)
+37    \{
+38      printf(\textcolor{stringliteral}{"File cannot be opened!\(\backslash\)n"});
+39      \hyperlink{myio_8c_a0000f7a2b68b443a53bc17affd3770ce}{THEFILE}[0]=0;
+40    \}
+41    \textcolor{keywordflow}{else} \{
+42     fprintf(f,headline);
+43     fclose(f);
+44    \}
+45  \}
+46 \}
+\end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -67,4 +159,12 @@ Here is the caller graph for this function\+:\nopagebreak
 \index{T\+H\+E\+F\+I\+LE@{T\+H\+E\+F\+I\+LE}!myio.\+c@{myio.\+c}}
 \subsubsection{\texorpdfstring{T\+H\+E\+F\+I\+LE}{THEFILE}}
 {\footnotesize\ttfamily char$\ast$ T\+H\+E\+F\+I\+LE\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 27 of file myio.\+c.
+
+
+
+Referenced by Add\+To\+Output(), Add\+To\+Output2(), and Init\+Output().
 

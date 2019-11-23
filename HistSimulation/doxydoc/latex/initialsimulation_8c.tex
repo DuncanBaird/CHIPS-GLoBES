@@ -96,17 +96,41 @@ double \hyperlink{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}{sigma\
 \subsubsection{\texorpdfstring{E\+X\+P\+\_\+\+F\+AR}{EXP\_FAR}}
 {\footnotesize\ttfamily \#define E\+X\+P\+\_\+\+F\+AR~0}
 
+
+
+Definition at line 66 of file initialsimulation.\+c.
+
+
+
+Referenced by chi\+D\+C\+Norm(), chi\+D\+C\+Spectral(), Compute\+Sensitivity\+Curve(), Do\+Chi\+Square(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}\label{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!E\+X\+P\+\_\+\+N\+E\+AR@{E\+X\+P\+\_\+\+N\+E\+AR}}
 \index{E\+X\+P\+\_\+\+N\+E\+AR@{E\+X\+P\+\_\+\+N\+E\+AR}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{E\+X\+P\+\_\+\+N\+E\+AR}{EXP\_NEAR}}
 {\footnotesize\ttfamily \#define E\+X\+P\+\_\+\+N\+E\+AR~1}
 
+
+
+Definition at line 67 of file initialsimulation.\+c.
+
+
+
+Referenced by chi\+D\+C\+Norm(), chi\+D\+C\+Spectral(), Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}\label{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!M\+A\+X\+\_\+\+S\+YS@{M\+A\+X\+\_\+\+S\+YS}}
 \index{M\+A\+X\+\_\+\+S\+YS@{M\+A\+X\+\_\+\+S\+YS}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+S\+YS}{MAX\_SYS}}
 {\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+S\+YS~200}
+
+
+
+Definition at line 61 of file initialsimulation.\+c.
+
+
+
+Referenced by main().
 
 
 
@@ -117,6 +141,70 @@ double \hyperlink{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}{sigma\
 \subsubsection{\texorpdfstring{chi\+D\+C\+Norm()}{chiDCNorm()}}
 {\footnotesize\ttfamily double chi\+D\+C\+Norm (\begin{DoxyParamCaption}\item[{int}]{exp,  }\item[{int}]{rule,  }\item[{int}]{n\+\_\+params,  }\item[{double $\ast$}]{x,  }\item[{double $\ast$}]{errors,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
 
+
+
+Definition at line 114 of file initialsimulation.\+c.
+
+
+
+References E\+X\+P\+\_\+\+F\+AR, E\+X\+P\+\_\+\+N\+E\+AR, likelihood(), square(), and sys\+\_\+startval.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+115                                  \{
+116   \textcolor{keywordtype}{int} n\_bins = glbGetNumberOfBins(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR});
+117   \textcolor{keywordtype}{double} *true\_rates\_N = glbGetRuleRatePtr(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}, 0);
+118   \textcolor{keywordtype}{double} *true\_rates\_F = glbGetRuleRatePtr(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0);
+119   \textcolor{keywordtype}{double} signal\_fit\_rates\_N[n\_bins];
+120   \textcolor{keywordtype}{double} signal\_fit\_rates\_F[n\_bins];
+121   \textcolor{keywordtype}{double} signal\_norm\_N, signal\_norm\_F;
+122   \textcolor{keywordtype}{int} ew\_low, ew\_high;
+123   \textcolor{keywordtype}{double} emin, emax;
+124   \textcolor{keywordtype}{double} fit\_rate;
+125   \textcolor{keywordtype}{double} chi2 = 0.0;
+126   \textcolor{keywordtype}{int} i;
+127 
+128   \textcolor{comment}{/* Request simulated energy interval and analysis energy window */}
+129   glbGetEminEmax(exp, &emin, &emax);
+130   glbGetEnergyWindowBins(exp, rule, &ew\_low, &ew\_high);
+131 
+132   \textcolor{comment}{/* Apply energy calibration error */}
+133   glbShiftEnergyScale(\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[3], glbGetSignalFitRatePtr(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0),
+134                       signal\_fit\_rates\_F, n\_bins, emin, emax);
+135   glbShiftEnergyScale(\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[4], glbGetSignalFitRatePtr(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}, 0),
+136                       signal\_fit\_rates\_N, n\_bins, emin, emax);
+137 
+138   \textcolor{comment}{/* Loop over all bins in energy window */}
+139   signal\_norm\_F = 1.0 + \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[0] + \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[1];
+140   signal\_norm\_N = 1.0 + x[0] + x[2];
+141   \textcolor{keywordflow}{for} (i=ew\_low; i <= ew\_high; i++)
+142   \{
+143     \textcolor{comment}{/* Statistical part of chi^2 for far detector}
+144 \textcolor{comment}{     * Normalization is affected by flux error x[0] and fiducial mass error x[1] */}
+145     fit\_rate  = signal\_norm\_F * signal\_fit\_rates\_F[i];
+146     chi2 += \hyperlink{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}{likelihood}(true\_rates\_F[i], fit\_rate, true\_rates\_F[i]);
+147 
+148     \textcolor{comment}{/* Statistical part of chi^2 for near detector}
+149 \textcolor{comment}{     * Normalization is affected by flux error x[0] and fiducial mass error x[2] */}
+150     fit\_rate  = signal\_norm\_N * signal\_fit\_rates\_N[i];
+151     chi2 += \hyperlink{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}{likelihood}(true\_rates\_N[i], fit\_rate, true\_rates\_N[i]);
+152   \}
+153 
+154   \textcolor{comment}{/* Systematical part of chi^2 (= priors) */}
+155   \textcolor{keywordflow}{for} (i=0; i < n\_params; i++)
+156     chi2 += \hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square}(x[i] / errors[i]);
+157 
+158   \textcolor{comment}{/* Save the systematics parameters as starting values for the next step */}
+159   \textcolor{keywordflow}{for} (i=0; i < n\_params; i++)
+160     \hyperlink{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}{sys\_startval}[i] = x[i];
+161 
+162   \textcolor{keywordflow}{return} chi2;
+163 \}
+\end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -137,6 +225,76 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{chi\+D\+C\+Spectral()}{chiDCSpectral()}}
 {\footnotesize\ttfamily double chi\+D\+C\+Spectral (\begin{DoxyParamCaption}\item[{int}]{exp,  }\item[{int}]{rule,  }\item[{int}]{n\+\_\+params,  }\item[{double $\ast$}]{x,  }\item[{double $\ast$}]{errors,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})}
 
+
+
+Definition at line 178 of file initialsimulation.\+c.
+
+
+
+References E\+X\+P\+\_\+\+F\+AR, E\+X\+P\+\_\+\+N\+E\+AR, likelihood(), sigma\+\_\+binbin, square(), and sys\+\_\+startval.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+179                                      \{
+180   \textcolor{keywordtype}{int} n\_bins = glbGetNumberOfBins(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR});
+181   \textcolor{keywordtype}{double} *true\_rates\_N = glbGetRuleRatePtr(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}, 0);
+182   \textcolor{keywordtype}{double} *true\_rates\_F = glbGetRuleRatePtr(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0);
+183   \textcolor{keywordtype}{double} signal\_fit\_rates\_N[n\_bins];
+184   \textcolor{keywordtype}{double} signal\_fit\_rates\_F[n\_bins];
+185   \textcolor{keywordtype}{double} signal\_norm\_N, signal\_norm\_F;
+186   \textcolor{keywordtype}{int} ew\_low, ew\_high;
+187   \textcolor{keywordtype}{double} emin, emax;
+188   \textcolor{keywordtype}{double} fit\_rate;
+189   \textcolor{keywordtype}{double} chi2 = 0.0;
+190   \textcolor{keywordtype}{int} i;
+191 
+192   \textcolor{comment}{/* Request simulated energy interval and analysis energy window */}
+193   glbGetEminEmax(exp, &emin, &emax);
+194   glbGetEnergyWindowBins(exp, rule, &ew\_low, &ew\_high);
+195 
+196   \textcolor{comment}{/* Apply energy calibration error */}
+197   glbShiftEnergyScale(\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[3], glbGetSignalFitRatePtr(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0),
+198                       signal\_fit\_rates\_F, n\_bins, emin, emax);
+199   glbShiftEnergyScale(\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[4], glbGetSignalFitRatePtr(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}, 0),
+200                       signal\_fit\_rates\_N, n\_bins, emin, emax);
+201 
+202   \textcolor{comment}{/* Loop over all bins in energy window */}
+203   signal\_norm\_F = 1.0 + \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[0] + \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}[1];
+204   signal\_norm\_N = 1.0 + x[0] + x[2];
+205   \textcolor{keywordflow}{for} (i=ew\_low; i <= ew\_high; i++)
+206   \{
+207     \textcolor{comment}{/* Statistical part of chi^2 for far detector}
+208 \textcolor{comment}{     * Normalization is affected by flux error x[0], fiducial mass error x[1],}
+209 \textcolor{comment}{     * spectral perturbations x[5+i], and bin-to-bin error sigma\_binbin */}
+210     fit\_rate  = (signal\_norm\_F + x[5+i]) * signal\_fit\_rates\_F[i];
+211     chi2 += \hyperlink{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}{likelihood}( true\_rates\_F[i], fit\_rate,
+212                     true\_rates\_F[i] * (1.0 + true\_rates\_F[i]*\hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square}(
+      \hyperlink{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}{sigma\_binbin})) );
+213 
+214     \textcolor{comment}{/* Statistical part of chi^2 for near detector}
+215 \textcolor{comment}{     * Normalization is affected by flux error x[0], fiducial mass error x[2],}
+216 \textcolor{comment}{     * spectral perturbations x[5+i], and bin-to-bin error sigma\_binbin */}
+217     fit\_rate  = (signal\_norm\_N + x[5+i]) * signal\_fit\_rates\_N[i];
+218     chi2 += \hyperlink{initialsimulation_8c_ad87b3fdc467a8bb3d8b02bee4f76acac}{likelihood}( true\_rates\_N[i], fit\_rate,
+219                     true\_rates\_N[i] * (1.0 + true\_rates\_N[i]*\hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square}(
+      \hyperlink{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}{sigma\_binbin})) );
+220   \}
+221 
+222   \textcolor{comment}{/* Systematical part of chi^2 (= priors) */}
+223   \textcolor{keywordflow}{for} (i=0; i < n\_params; i++)
+224     chi2 += \hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square}(x[i] / errors[i]);
+225 
+226   \textcolor{comment}{/* Save the systematics parameters as starting values for the next step */}
+227   \textcolor{keywordflow}{for} (i=0; i < n\_params; i++)
+228     \hyperlink{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}{sys\_startval}[i] = x[i];
+229 
+230   \textcolor{keywordflow}{return} chi2;
+231 \}
+\end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -157,7 +315,121 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{Compute\+Sensitivity\+Curve()}{ComputeSensitivityCurve()}}
 {\footnotesize\ttfamily void Compute\+Sensitivity\+Curve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-Here is the call graph for this function\+:\nopagebreak
+
+
+Definition at line 274 of file initialsimulation.\+c.
+
+
+
+References Add\+To\+Output2(), deltacp, E\+X\+P\+\_\+\+F\+AR, E\+X\+P\+\_\+\+N\+E\+AR, gsl\+\_\+func, input\+\_\+errors, ldm, logs22th13\+\_\+precision, max\+\_\+runtime, min(), min\+\_\+runtime, s, sdm, test\+\_\+values, theta12, theta13, theta23, true\+\_\+values, t\+Steps, and quickplot\+::x.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+274                               \{
+275   \textcolor{keywordtype}{double} t\_factor = pow(\hyperlink{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}{max\_runtime}/\hyperlink{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}{min\_runtime}, 1.0/
+      \hyperlink{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}{tSteps});
+276   \textcolor{keywordtype}{double} t;
+277   \textcolor{keywordtype}{double} \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x};               \textcolor{comment}{/* Current value of log[sin^2(2*th13)] */}
+278   \textcolor{keywordtype}{double} x\_lo, x\_hi;      \textcolor{comment}{/* Bracketing interval for root finder */}
+279   \textcolor{keywordtype}{double} x\_sens[\hyperlink{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}{tSteps}+1];\textcolor{comment}{/* Calculated sensitivities to log[sin^2(2*th13)] */}
+280   \textcolor{keywordtype}{int} gsl\_status;         \textcolor{comment}{/* GSL error code */}
+281   \textcolor{keywordtype}{int} iter;               \textcolor{comment}{/* Iteration counter for root finder */}
+282   \textcolor{keyword}{const} \textcolor{keywordtype}{int} max\_iter=100; \textcolor{comment}{/* Maximum number of iterations allowed in root finder */}
+283   \textcolor{keywordtype}{int} j;
+284 
+285   \textcolor{keywordflow}{for} (j=0; j <= \hyperlink{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}{tSteps}; j++)      \textcolor{comment}{/* Initialize output vector */}
+286     x\_sens[j] = 1;                 \textcolor{comment}{/* As x is always <= 0 this signals "no value" */}
+287 
+288   \textcolor{comment}{/* Loop over all data points in this dataset, using log stepping */}
+289   \textcolor{keywordflow}{for} (j=0; j <= \hyperlink{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}{tSteps}; j++)
+290   \{
+291     \textcolor{comment}{/* Set running time */}
+292     t = \hyperlink{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}{min\_runtime} * pow(t\_factor,j);
+293     glbSetRunningTime(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0, t);
+294     glbSetRunningTime(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}, 0, t);
+295 
+296     \textcolor{comment}{/* Calculate "true" event rates */}
+297     glbDefineParams(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values},\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12},\hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13},\hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23},
+      \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp},\hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm},\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+298     glbSetDensityParams(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values},1.0,GLB\_ALL);
+299     glbDefineParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values},\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12},\hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13},\hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23},
+      \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp},\hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm},\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+300     glbSetDensityParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values},1.0,GLB\_ALL);
+301     glbDefineParams(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors}, 0.1*\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12}, 0, 0.15*
+      \hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23}, 0, 0.05*\hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm}, 0.05*\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+302     glbSetDensityParams(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors}, 0.05, GLB\_ALL);
+303     glbSetOscillationParameters(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values});
+304     glbSetInputErrors(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors});
+305     glbSetRates();
+306 
+307     \textcolor{comment}{/* Determine sensitivity to sin^2(2*th13) by  using the GSL Brent-Dekker}
+308 \textcolor{comment}{     * algorithm to find the th13, for which chi^2 = 2.7 (90%) */}
+309     x\_lo = -3.0;
+310     x\_hi = -0.1;
+311     iter = 0;
+312 
+313     \textcolor{comment}{/* Start root finder. The initial search interval is guessed based on the}
+314 \textcolor{comment}{     * results from a neighboring grid point */}
+315     \textcolor{keywordtype}{double} deviation=0.1;
+316     \textcolor{keywordflow}{do} \{
+317       \textcolor{keywordflow}{if} (j > 0) \{
+318         x\_lo = x\_sens[j-1] - deviation;
+319         x\_hi = \hyperlink{initialsimulation_8c_a2f8edc4561e9744ed4233b205fa7ec32}{min}(x\_sens[j-1] + deviation, -0.001);
+320       \}
+321       gsl\_status = gsl\_root\_fsolver\_set(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s}, &\hyperlink{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}{gsl\_func}, x\_lo, x\_hi);
+322       deviation *= 2;
+323     \} \textcolor{keywordflow}{while} (gsl\_status != GSL\_SUCCESS);
+324 
+325     \textcolor{comment}{/* Iterate root finder */}
+326     \textcolor{keywordflow}{do} \{
+327       gsl\_status = gsl\_root\_fsolver\_iterate(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s});
+328       x          = gsl\_root\_fsolver\_root(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s});
+329       x\_lo       = gsl\_root\_fsolver\_x\_lower(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s});
+330       x\_hi       = gsl\_root\_fsolver\_x\_upper(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s});
+331       gsl\_status = gsl\_root\_test\_interval (x\_lo, x\_hi, \hyperlink{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}{logs22th13\_precision}, 0);
+332     \} \textcolor{keywordflow}{while} (gsl\_status == GSL\_CONTINUE && iter < max\_iter);
+333 
+334     \textcolor{comment}{/* Save results */}
+335     x\_sens[j] = \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x};
+336     \hyperlink{myio_8c_ae9af054c63cf3b736da1ee7151f69d2c}{AddToOutput2}(t, x);
+337 
+339 
+340   \textcolor{comment}{// Setting up output}
+341 
+342   \textcolor{keywordtype}{int} max\_channel\_id = 17;
+343 
+344   \textcolor{keywordtype}{char} buf[60];
+345   \textcolor{keywordtype}{char} str[60];
+346 
+347   \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i<max\_channel\_id+1;i++)\{
+348 
+349     sprintf(buf,\textcolor{stringliteral}{"%dtime2histsim\_channel%d.dat"},j,i);
+350     strcpy(str,buf);
+351 
+352     FILE* f\_out = fopen(str,\textcolor{stringliteral}{"w"});
+353 
+354     
+355     \textcolor{comment}{// double hist\_time = 100000;}
+356     \textcolor{comment}{// glbSetRunningTime(EXP\_NEAR,0,hist\_time);}
+357 
+358     \textcolor{comment}{//printf("Running time is; %f",glbGetRunningTime(1,0));}
+359 
+360     glbShowChannelRates(f\_out,\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR},i,GLB\_PRE,GLB\_WO\_EFF,GLB\_WO\_BG);
+361 
+362   fclose(f\_out);
+363 
+364 
+365   \}
+366 
+367   \}
+368 \}
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -177,6 +449,40 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{Do\+Chi\+Square()}{DoChiSquare()}}
 {\footnotesize\ttfamily double Do\+Chi\+Square (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{void $\ast$}]{dummy }\end{DoxyParamCaption})}
 
+
+
+Definition at line 239 of file initialsimulation.\+c.
+
+
+
+References chi2\+\_\+goal, E\+X\+P\+\_\+\+F\+AR, sys\+\_\+startval, and test\+\_\+values.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+239                                          \{
+240   \textcolor{keywordtype}{double} thetheta13, chi2;
+241 
+242   \textcolor{comment}{/* Set vector of test values */}
+243   thetheta13 = asin(sqrt(pow(10,\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x})))/2;
+244   glbSetOscParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values}, thetheta13, GLB\_THETA\_13);
+245   glbSetOscParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values}, 200.0/2 * (\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}+4)*M\_PI/180, GLB\_DELTA\_CP);
+246 
+247   \textcolor{comment}{/* Set starting values for systematics minimiyer to the coordinates of}
+248 \textcolor{comment}{   * minimum in the last iteration. This accelerates the minimization and}
+249 \textcolor{comment}{   * prevents convergence problems. */}
+250   glbSetSysStartingValuesList(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}, 0, GLB\_ON, \hyperlink{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}{sys\_startval});
+251 
+252   \textcolor{comment}{/* Compute Chi^2 for all loaded experiments and all rules}
+253 \textcolor{comment}{   * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */}
+254   chi2 = glbChiSys(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values}, GLB\_ALL, GLB\_ALL);
+255 
+256   \textcolor{keywordflow}{return} chi2 - \hyperlink{initialsimulation_8c_aa61745407a26c87961303a3c321dbba0}{chi2\_goal};
+257 \}
+\end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -190,6 +496,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{gsl\+Error()}{gslError()}}
 {\footnotesize\ttfamily void gsl\+Error (\begin{DoxyParamCaption}\item[{const char $\ast$}]{reason,  }\item[{const char $\ast$}]{file,  }\item[{int}]{line,  }\item[{int}]{gsl\+\_\+errno }\end{DoxyParamCaption})}
 
+
+
+Definition at line 261 of file initialsimulation.\+c.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+261                                                                             \{
+262   \textcolor{keyword}{static} \textcolor{keywordtype}{int} n\_errors=0;
+263 
+264   printf(\textcolor{stringliteral}{"GSL Error in file %s:%d : %s\(\backslash\)n"}, file, line, gsl\_strerror(gsl\_errno));
+265   \textcolor{keywordflow}{if} (++n\_errors > 1000)
+266   \{
+267     printf(\textcolor{stringliteral}{"Too many GSL errors. Program aborted.\(\backslash\)n"});
+268     abort();
+269   \}
+270 \}
+\end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -203,6 +530,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{likelihood()}{likelihood()}}
 {\footnotesize\ttfamily double likelihood (\begin{DoxyParamCaption}\item[{double}]{true\+\_\+rate,  }\item[{double}]{fit\+\_\+rate,  }\item[{double}]{sqr\+\_\+sigma }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Definition at line 91 of file initialsimulation.\+c.
+
+
+
+References square().
+
+
+
+Referenced by chi\+D\+C\+Norm(), and chi\+D\+C\+Spectral().
+
+
+\begin{DoxyCode}
+92 \{
+93   \textcolor{keywordflow}{if} (sqr\_sigma > 0)
+94     \textcolor{keywordflow}{return} \hyperlink{initialsimulation_8c_a435ef393d7d5394df67d5da81c108c7d}{square}(true\_rate - fit\_rate) / sqr\_sigma;
+95   \textcolor{keywordflow}{else}
+96     \textcolor{keywordflow}{return} 0.0;
+97 \}
+\end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -223,7 +571,106 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{main()}{main()}}
 {\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
 
-Here is the call graph for this function\+:\nopagebreak
+
+
+Definition at line 375 of file initialsimulation.\+c.
+
+
+
+References chi\+D\+C\+Norm(), chi\+D\+C\+Spectral(), Compute\+Sensitivity\+Curve(), deltacp, Do\+Chi\+Square(), E\+X\+P\+\_\+\+F\+AR, E\+X\+P\+\_\+\+N\+E\+AR, gsl\+\_\+func, gsl\+Error(), Init\+Output(), input\+\_\+errors, ldm, M\+A\+X\+\_\+\+S\+YS, M\+Y\+F\+I\+L\+E1, M\+Y\+F\+I\+L\+E2, s, sdm, sys\+\_\+startval, T, test\+\_\+values, theta12, theta13, theta23, and true\+\_\+values.
+
+
+\begin{DoxyCode}
+376 \{
+377   \textcolor{keywordtype}{double} *old\_sys\_errors = NULL;      \textcolor{comment}{/* Temp. pointer to systematical error array */}
+378   \textcolor{keywordtype}{int} sys\_dim;                        \textcolor{comment}{/* Abbrv. for number of systematical errors */}
+379   \textcolor{keywordtype}{int} n\_bins=86;                      \textcolor{comment}{/* Number of bins */}
+380   \textcolor{keywordtype}{int} i;
+381 
+382   \textcolor{comment}{/* Initialization */}
+383   \textcolor{keywordflow}{for} (i=0; i < \hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{MAX\_SYS}; i++)
+384     \hyperlink{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}{sys\_startval}[i] = 0.0;
+385 
+386   \textcolor{comment}{/* Set standard oscillation parameters (cf. hep-ph/0405172v5) */}
+387   \hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12} = asin(sqrt(0.3));
+388   \hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13} = 0.0;
+389   \hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23} = M\_PI/4;
+390   \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp} = M\_PI/2;
+391   \hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm} = 7.9e-5;
+392   \hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm} = 2.6e-3;
+393 
+394   glbInit(argv[0]);                    \textcolor{comment}{/* Initialize GLoBES and define chi^2 functions */}
+395   glbDefineChiFunction(&\hyperlink{initialsimulation_8c_a526d68b687c952d000bac0c9d8fd4639}{chiDCNorm},     5,        \textcolor{stringliteral}{"chiDCNorm"},     NULL);
+396   glbDefineChiFunction(&\hyperlink{initialsimulation_8c_aa3d32db5e12332300e78d8fc8de6184d}{chiDCSpectral}, 5+n\_bins, \textcolor{stringliteral}{"chiDCSpectral"}, NULL);
+397 
+398   gsl\_set\_error\_handler(&\hyperlink{initialsimulation_8c_a98deac6879cfff61ffac7b16a3dcbdc4}{gslError});    \textcolor{comment}{/* Initialize GSL root finder */}
+399   \hyperlink{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}{gsl\_func}.function = &\hyperlink{initialsimulation_8c_aa34890f04451218ee65fddd5810924e6}{DoChiSquare};
+400   \hyperlink{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}{gsl\_func}.params   = NULL;
+401   \hyperlink{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}{T} = gsl\_root\_fsolver\_brent;
+402   \hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s} = gsl\_root\_fsolver\_alloc(\hyperlink{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}{T});
+403 
+404   \textcolor{comment}{/* Load 2 experiments: DC far (#0) and near (#1) detectors */}
+405   glbClearExperimentList();
+406   glbInitExperiment(\textcolor{stringliteral}{"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb"}, &glb\_experiment\_list[0], &glb\_num\_of\_exps);
+407   glbInitExperiment(\textcolor{stringliteral}{"CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb"}, &glb\_experiment\_list[0], &glb\_num\_of\_exps);
+408   \textcolor{keywordflow}{if} (glbGetNumberOfBins(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}) != n\_bins || glbGetNumberOfBins(
+      \hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}) != n\_bins)
+409   \{
+410     printf(\textcolor{stringliteral}{"ERROR: Number of bins changed in AEDL file, but not in C code (or vice-versa).\(\backslash\)n"});
+411     printf(\textcolor{stringliteral}{"nbins %i"},n\_bins);
+412     printf(\textcolor{stringliteral}{"far bins %i"},glbGetNumberOfBins(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR}));
+413     printf(\textcolor{stringliteral}{"near bins %i"},glbGetNumberOfBins(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}));
+414 
+415     \textcolor{keywordflow}{return} -1;
+416   \}
+417   \textcolor{keywordflow}{else}
+418     n\_bins = glbGetNumberOfBins(\hyperlink{initialsimulation_8c_aff6f6215352e5d38380d9ce04a692c87}{EXP\_FAR});
+419 
+420   \textcolor{comment}{/* Initialize parameter vectors */}
+421   \hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values}  = glbAllocParams();
+422   \hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values}  = glbAllocParams();
+423   \hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors} = glbAllocParams();
+424   glbDefineParams(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values},\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12},\hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13},\hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23},
+      \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp},\hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm},\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+425   glbSetDensityParams(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values},1.0,GLB\_ALL);
+426   glbDefineParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values},\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12},\hyperlink{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}{theta13},\hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23},
+      \hyperlink{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}{deltacp},\hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm},\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+427   glbSetDensityParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values},1.0,GLB\_ALL);
+428   glbDefineParams(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors}, 0.1*\hyperlink{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}{theta12}, 0, 0.15*\hyperlink{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}{theta23}, 0, 0.05*
+      \hyperlink{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}{sdm}, 0.05*\hyperlink{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}{ldm});
+429   glbSetDensityParams(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors}, 0.05, GLB\_ALL);
+430   glbSetOscillationParameters(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values});
+431   glbSetInputErrors(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors});
+432 
+433   \textcolor{comment}{/* Calculate sensitivity curve without systematics */}
+434   \hyperlink{myio_8c_ad28713ee02cd79dc48ad1ee2a7b62177}{InitOutput}(\hyperlink{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}{MYFILE1},\textcolor{stringliteral}{"Format: Running time   Log(10,s22th13) sens. \(\backslash\)n"});
+435   glbSwitchSystematics(GLB\_ALL, GLB\_ALL, GLB\_OFF);
+436   \hyperlink{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c}{ComputeSensitivityCurve}();
+437   glbSwitchSystematics(GLB\_ALL, GLB\_ALL, GLB\_ON);
+438 
+439   \textcolor{comment}{/* Calculate sensitivity curve with normalization and energy calibration errors,}
+440 \textcolor{comment}{   * as defined in the AEDL files */}
+441   \hyperlink{myio_8c_ad28713ee02cd79dc48ad1ee2a7b62177}{InitOutput}(\hyperlink{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}{MYFILE2},\textcolor{stringliteral}{"Format: Running time   Log(10,s22th13) sens. \(\backslash\)n"});
+442   \hyperlink{initialsimulation_8c_a2acac04fd9fbdb6899edcf9aa40e7d0c}{ComputeSensitivityCurve}();
+443 
+444   printf(\textcolor{stringliteral}{"Number of channels: %d"},glbGetNumberOfChannels(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR}));
+445 
+446   \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} js = 0; js<=18;js++)\{
+447   printf(\textcolor{stringliteral}{"Channel: %s"},glbValueToName(\hyperlink{initialsimulation_8c_ace970fbe7e3d2edb2ab0923fb12a9fc1}{EXP\_NEAR},\textcolor{stringliteral}{"channel"},js));
+448   \}  
+449   
+450 
+451   \textcolor{comment}{/* Clean up */}
+452   glbFreeParams(\hyperlink{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}{true\_values});
+453   glbFreeParams(\hyperlink{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}{test\_values});
+454   glbFreeParams(\hyperlink{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}{input\_errors});
+455   gsl\_root\_fsolver\_free(\hyperlink{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}{s});
+456 
+457   \textcolor{keywordflow}{return} 0;
+458 \}
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -236,6 +683,27 @@ Here is the call graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{min()}{min()}}
 {\footnotesize\ttfamily double min (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
+
+
+Definition at line 75 of file initialsimulation.\+c.
+
+
+
+References quickplot\+::x, and quickplot\+::y.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
+
+
+\begin{DoxyCode}
+76 \{
+77   \textcolor{keywordflow}{if} (\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x} < \hyperlink{namespacequickplot_a010fcab3235443a7866d032bea36b2e8}{y})
+78     \textcolor{keywordflow}{return} \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x};
+79   \textcolor{keywordflow}{else}
+80     \textcolor{keywordflow}{return} \hyperlink{namespacequickplot_a010fcab3235443a7866d032bea36b2e8}{y};
+81 \}
+\end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -249,7 +717,26 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{square()}{square()}}
 {\footnotesize\ttfamily double square (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+
+Definition at line 84 of file initialsimulation.\+c.
+
+
+
+References quickplot\+::x.
+
+
+
+Referenced by chi\+D\+C\+Norm(), chi\+D\+C\+Spectral(), and likelihood().
+
+
+\begin{DoxyCode}
+85 \{
+86   \textcolor{keywordflow}{return} \hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x}*\hyperlink{namespacequickplot_a81eab613e6132e2f34362e0d796374b6}{x};
+87 \}
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -265,11 +752,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{chi2\+\_\+goal}{chi2\_goal}}
 {\footnotesize\ttfamily const double chi2\+\_\+goal = 2.\+7}
 
+
+
+Definition at line 57 of file initialsimulation.\+c.
+
+
+
+Referenced by Do\+Chi\+Square().
+
 \mbox{\Hypertarget{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}\label{initialsimulation_8c_a9d56cc3e601b27fad6831203a4626bd2}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!deltacp@{deltacp}}
 \index{deltacp@{deltacp}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{deltacp}{deltacp}}
 {\footnotesize\ttfamily double deltacp}
+
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}\label{initialsimulation_8c_a76f2e70c9fc2a87ebcc598a0e021d2e6}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!gsl\+\_\+func@{gsl\+\_\+func}}
@@ -277,11 +780,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{gsl\+\_\+func}{gsl\_func}}
 {\footnotesize\ttfamily gsl\+\_\+function gsl\+\_\+func}
 
+
+
+Definition at line 52 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}\label{initialsimulation_8c_a4849c92a9edd1a0b4d2ff01484cebc91}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!input\+\_\+errors@{input\+\_\+errors}}
 \index{input\+\_\+errors@{input\+\_\+errors}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{input\+\_\+errors}{input\_errors}}
 {\footnotesize\ttfamily glb\+\_\+params input\+\_\+errors}
+
+
+
+Definition at line 47 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}\label{initialsimulation_8c_a3c9a8dabf1ad4dafa47e2d8002a71b44}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!ldm@{ldm}}
@@ -289,11 +808,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{ldm}{ldm}}
 {\footnotesize\ttfamily double ldm}
 
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}\label{initialsimulation_8c_aa1edd4d864d9e90a1f10a7d13a68a885}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!logs22th13\+\_\+precision@{logs22th13\+\_\+precision}}
 \index{logs22th13\+\_\+precision@{logs22th13\+\_\+precision}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{logs22th13\+\_\+precision}{logs22th13\_precision}}
 {\footnotesize\ttfamily const double logs22th13\+\_\+precision = 0.\+005}
+
+
+
+Definition at line 59 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
 
 \mbox{\Hypertarget{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}\label{initialsimulation_8c_aa66d6bca132b398b255c2fd11ae6e7cc}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!max\+\_\+runtime@{max\+\_\+runtime}}
@@ -301,11 +836,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{max\+\_\+runtime}{max\_runtime}}
 {\footnotesize\ttfamily const double max\+\_\+runtime = 1e4}
 
+
+
+Definition at line 56 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
+
 \mbox{\Hypertarget{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}\label{initialsimulation_8c_a0a8e978504303b8dcd44cb9329b4cfc4}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!min\+\_\+runtime@{min\+\_\+runtime}}
 \index{min\+\_\+runtime@{min\+\_\+runtime}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{min\+\_\+runtime}{min\_runtime}}
 {\footnotesize\ttfamily const double min\+\_\+runtime = 1e-\/2}
+
+
+
+Definition at line 55 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
 
 \mbox{\Hypertarget{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}\label{initialsimulation_8c_a612d6b5b01674a0aec144bf224de6879}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E1@{M\+Y\+F\+I\+L\+E1}}
@@ -313,11 +864,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E1}{MYFILE1}}
 {\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E1\mbox{[}$\,$\mbox{]} =\char`\"{}histsima.\+dat\char`\"{}}
 
+
+
+Definition at line 34 of file initialsimulation.\+c.
+
+
+
+Referenced by main().
+
 \mbox{\Hypertarget{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}\label{initialsimulation_8c_adfc2d3d253f6255b799065aa32d95cb2}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E2@{M\+Y\+F\+I\+L\+E2}}
 \index{M\+Y\+F\+I\+L\+E2@{M\+Y\+F\+I\+L\+E2}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E2}{MYFILE2}}
 {\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E2\mbox{[}$\,$\mbox{]} =\char`\"{}histsimb.\+dat\char`\"{}}
+
+
+
+Definition at line 35 of file initialsimulation.\+c.
+
+
+
+Referenced by main().
 
 \mbox{\Hypertarget{initialsimulation_8c_ac1dafa9fa032f3fd9126bad6b7a9850c}\label{initialsimulation_8c_ac1dafa9fa032f3fd9126bad6b7a9850c}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!M\+Y\+F\+I\+L\+E3@{M\+Y\+F\+I\+L\+E3}}
@@ -325,11 +892,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{M\+Y\+F\+I\+L\+E3}{MYFILE3}}
 {\footnotesize\ttfamily char M\+Y\+F\+I\+L\+E3\mbox{[}$\,$\mbox{]} =\char`\"{}histsim1.\+dat\char`\"{}}
 
+
+
+Definition at line 36 of file initialsimulation.\+c.
+
 \mbox{\Hypertarget{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}\label{initialsimulation_8c_a9b42b07c83ecf6e931fc25d97a107cf0}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!s@{s}}
 \index{s@{s}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{s}{s}}
 {\footnotesize\ttfamily gsl\+\_\+root\+\_\+fsolver$\ast$ s}
+
+
+
+Definition at line 51 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}\label{initialsimulation_8c_a188db76c6a2dc2aa72024eb9cfb5eee2}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!sdm@{sdm}}
@@ -337,11 +916,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{sdm}{sdm}}
 {\footnotesize\ttfamily double sdm}
 
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}\label{initialsimulation_8c_af986a51f33f1570fd3fc8186dd81d866}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!sigma\+\_\+binbin@{sigma\+\_\+binbin}}
 \index{sigma\+\_\+binbin@{sigma\+\_\+binbin}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{sigma\+\_\+binbin}{sigma\_binbin}}
 {\footnotesize\ttfamily double sigma\+\_\+binbin = 0.\+0}
+
+
+
+Definition at line 64 of file initialsimulation.\+c.
+
+
+
+Referenced by chi\+D\+C\+Spectral().
 
 \mbox{\Hypertarget{initialsimulation_8c_ac40fbcecee7fb042256f95763d5c1c68}\label{initialsimulation_8c_ac40fbcecee7fb042256f95763d5c1c68}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!sys\+\_\+errors@{sys\+\_\+errors}}
@@ -349,11 +944,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{sys\+\_\+errors}{sys\_errors}}
 {\footnotesize\ttfamily double sys\+\_\+errors\mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}}
 
+
+
+Definition at line 62 of file initialsimulation.\+c.
+
 \mbox{\Hypertarget{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}\label{initialsimulation_8c_a6ce721d0fe57253b204857c23ed0e4db}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!sys\+\_\+startval@{sys\+\_\+startval}}
 \index{sys\+\_\+startval@{sys\+\_\+startval}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{sys\+\_\+startval}{sys\_startval}}
 {\footnotesize\ttfamily double sys\+\_\+startval\mbox{[}\hyperlink{initialsimulation_8c_aa985f5d78fe22e2bf9115004a82d9008}{M\+A\+X\+\_\+\+S\+YS}\mbox{]}}
+
+
+
+Definition at line 63 of file initialsimulation.\+c.
+
+
+
+Referenced by chi\+D\+C\+Norm(), chi\+D\+C\+Spectral(), Do\+Chi\+Square(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}\label{initialsimulation_8c_a00bb11e935f05b5bb392ec7cc02a1478}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!T@{T}}
@@ -361,11 +968,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{T}{T}}
 {\footnotesize\ttfamily const gsl\+\_\+root\+\_\+fsolver\+\_\+type$\ast$ T}
 
+
+
+Definition at line 50 of file initialsimulation.\+c.
+
+
+
+Referenced by main().
+
 \mbox{\Hypertarget{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}\label{initialsimulation_8c_a7b09cafa395dbf045d36fc6dad50319a}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!test\+\_\+values@{test\+\_\+values}}
 \index{test\+\_\+values@{test\+\_\+values}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{test\+\_\+values}{test\_values}}
 {\footnotesize\ttfamily glb\+\_\+params test\+\_\+values}
+
+
+
+Definition at line 46 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), Do\+Chi\+Square(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}\label{initialsimulation_8c_a34595bc67066b681fdf55138851f5537}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!theta12@{theta12}}
@@ -373,11 +996,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{theta12}{theta12}}
 {\footnotesize\ttfamily double theta12}
 
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}\label{initialsimulation_8c_a16d90a56a2e53f1e0ce749a1924f5e91}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!theta13@{theta13}}
 \index{theta13@{theta13}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{theta13}{theta13}}
 {\footnotesize\ttfamily double theta13}
+
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
 
 \mbox{\Hypertarget{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}\label{initialsimulation_8c_ad7eb34b77c1ced121f217184784ca4ca}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!theta23@{theta23}}
@@ -385,15 +1024,39 @@ Here is the caller graph for this function\+:\nopagebreak
 \subsubsection{\texorpdfstring{theta23}{theta23}}
 {\footnotesize\ttfamily double theta23}
 
+
+
+Definition at line 42 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}\label{initialsimulation_8c_a04b2e1a70c7d99ae440fc0b97b42bb2b}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!true\+\_\+values@{true\+\_\+values}}
 \index{true\+\_\+values@{true\+\_\+values}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{true\+\_\+values}{true\_values}}
 {\footnotesize\ttfamily glb\+\_\+params true\+\_\+values}
 
+
+
+Definition at line 45 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve(), and main().
+
 \mbox{\Hypertarget{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}\label{initialsimulation_8c_a8ceb9a82655d4344fa7db3b8d0dc8afb}} 
 \index{initialsimulation.\+c@{initialsimulation.\+c}!t\+Steps@{t\+Steps}}
 \index{t\+Steps@{t\+Steps}!initialsimulation.\+c@{initialsimulation.\+c}}
 \subsubsection{\texorpdfstring{t\+Steps}{tSteps}}
 {\footnotesize\ttfamily const int t\+Steps = 30}
+
+
+
+Definition at line 58 of file initialsimulation.\+c.
+
+
+
+Referenced by Compute\+Sensitivity\+Curve().
 
