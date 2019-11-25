@@ -23,15 +23,24 @@ for (int i{}; i != number_rows; ++i) {
     }
 }
 
-TH2D *hist = new TH2D("nu mucc sk2","2D Histrogram of Smearing Matrix",number_rows,0,number_rows-1,number_columns-2,0,number_columns-3);//"distribution name","Name of plot",86,0,86,86,0,86);
-  //hist->Fill(smear);
-  hist->GetXaxis()->SetTitle("Matrix index(row) Real");
-  hist->GetYaxis()->SetTitle("Matrix index(column) Resonctructed");
+double bins_array[number_rows+1] = {0,0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125,0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125,0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125,0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4};
 
-  for (int i=0;i<number_rows;i++){
-     for(int j=2;j<number_columns;j++){
+for (int edge=0;edge<=number_rows;edge++){
+  bins_array[edge]=bins_array[edge]+bins_array[edge-1];
+  //printf("Bin edges: %f\n",bins_array[edge]);
+}
+
+
+TH2D *hist = new TH2D("nu mucc sk2","2D Histrogram of Smearing Matrix",number_rows,bins_array,number_columns-2,bins_array);//"distribution name","Name of plot",86,0,86,86,0,86);
+  //hist->Fill(smear);
+  hist->GetXaxis()->SetTitle("Real energy GeV (Matrix Row i)");
+  hist->GetYaxis()->SetTitle("Reconstructed energy GeV (Matrix Column j)");
+
+
+  for (int i=1;i<number_rows;i++){
+     for(int j=3;j<number_columns;j++){
          
-         hist->Fill(i-2,j-2,my_array[i][j]);
+         hist->Fill(i,j-2,my_array[i][j]);
      }
   }
   hist->Draw("COLZ");
@@ -48,6 +57,12 @@ TH2D *hist = new TH2D("nu mucc sk2","2D Histrogram of Smearing Matrix",number_ro
   st->SetOptStat(111110110);
 
   myCanvas->Update();
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/GraphSmearMatrixCorrected.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/GraphSmearMatrixCorrectedNewAxis.pdf");
 
+  for (int bintest = 1;bintest<87;bintest++){
+  //printf("bin %d low edge: %f\n",bintest,hist->GetXaxis()->GetBinLowEdge(bintest));
+  //printf("value %f\n",my_array[bintest][5]);
+  //printf("bin %d centre: %f\n",bintest,hist->GetXaxis()->GetBinCenter(bintest));
+  //printf("bin %d up edge: %f\n",bintest,hist->GetXaxis()->GetBinUpEdge(bintest));
+  }
 }
