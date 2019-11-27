@@ -57,7 +57,7 @@ TH2D *hist = new TH2D("nu mucc sk2","2D Histrogram of Smearing Matrix",number_ro
   st->SetOptStat(111110110);
 
   myCanvas->Update();
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/GraphSmearMatrixCorrectedNewAxis.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/GraphSmearMatrixCorrectedNewAxis.svg");
 
   for (int bintest = 1;bintest<87;bintest++){
   //printf("bin %d low edge: %f\n",bintest,hist->GetXaxis()->GetBinLowEdge(bintest));
