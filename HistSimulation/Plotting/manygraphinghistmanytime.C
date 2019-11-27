@@ -38,7 +38,7 @@ void printer3(int loop){
     myCanvas->cd(k+1);
     gPad->Update();
 
-  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/%dtime2histsim_channel%d.dat",loop,k);
+  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/TextFiles/%dtime2histsim_channel%d.dat",loop,k);
   strcpy(str,buf);
   
   ifstream file;
@@ -88,7 +88,7 @@ file.close();
   char buf4[120];
   char str4[120];
 
-  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-time-%d.pdf",loop);
+  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/Output/CHIPShist-time-%d.svg",loop);
   strcpy(str4,buf4);
 
   myCanvas->SaveAs(str4);
