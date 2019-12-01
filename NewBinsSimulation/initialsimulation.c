@@ -346,7 +346,7 @@ void ComputeSensitivityCurve(){
 
   for(int i=0; i<max_channel_id+1;i++){
 
-    sprintf(buf,"%dtime2histsim_channel%d.dat",j,i);
+    sprintf(buf,"TextFiles/%dtime2histBinssim_channel%d.dat",j,i);
     strcpy(str,buf);
 
     FILE* f_out = fopen(str,"w");
