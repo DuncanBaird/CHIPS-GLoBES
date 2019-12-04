@@ -69,7 +69,7 @@ void printer3(int loop){
     strcpy(str7,buf7);
 
 
-    chi2Hist = new TH1D(str7,str2,86,0,86); //last numbers: number of bins, lower bound of bins, upper bound of bins
+    chi2Hist = new TH1D(str7,str2,86,0,30); //last numbers: number of bins, lower bound of bins, upper bound of bins
     chi2Hist->GetXaxis()->SetTitle("Energy GeV");
     chi2Hist->GetYaxis()->SetTitle("Frequency");
     for(int i = 0; i != 86; ++i) {
@@ -120,6 +120,5 @@ for (int j=0; j <= tSteps; j++){
   
 
 }
- 
 
 }
