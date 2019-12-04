@@ -38,7 +38,7 @@ void printer3(int loop){
     myCanvas->cd(k+1);
     gPad->Update();
 
-  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/TextFiles/%dtime2histsim_channel%d.dat",loop,k);
+  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/TextFiles/%dtime2histBinssim_channel%d.dat",loop,k);
   strcpy(str,buf);
   
   ifstream file;
@@ -75,26 +75,32 @@ file.close();
   chi2Hist->Fill(x[i],w[i]);}
 
   chi2Hist->Draw("hist");
+
+  gPad->Update();
   
   TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
 
+  
 
   }
+
   
   }
 
   myCanvas->Update();
+  
 
   char buf4[120];
   char str4[120];
 
-  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/Plotting/Output/CHIPShist-time-%d.svg",loop);
+  sprintf(buf4,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/Plotting/Output/CHIPShistBins-time-%d.svg",loop);
   strcpy(str4,buf4);
 
   myCanvas->SaveAs(str4);
 
-  delete gROOT->FindObject("chi2Hist");
-
+  delete chi2Hist;
+  
+  delete st;
   }
 
 void manygraphinghistmanytime(){
