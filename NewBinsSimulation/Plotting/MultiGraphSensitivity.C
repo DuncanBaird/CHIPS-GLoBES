@@ -4,9 +4,9 @@ void MultiGraphSensitivity(){
   TTree *t1 =  (TTree*)f->Get("CLBOpt_tree");
   TCanvas *myCanvas = new TCanvas();
   myCanvas->SetGrid();
-  TGraphErrors* spa = new TGraphErrors("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/insima.dat","%lg %lg");
+  TGraphErrors* spa = new TGraphErrors("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/insima.dat","%lg %lg");
   
-  TGraphErrors* spb = new TGraphErrors("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/insimb.dat","%lg %lg");
+  TGraphErrors* spb = new TGraphErrors("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/insimb.dat","%lg %lg");
 
   TMultiGraph* mg = new TMultiGraph();
 
@@ -39,5 +39,5 @@ void MultiGraphSensitivity(){
 
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/InitialSimulation/Plotting/SensitivityplotABnew.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/Plotting/Output/SensitivityplotABnewBins.svg");
 }
