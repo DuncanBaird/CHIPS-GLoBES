@@ -1,6 +1,7 @@
 #include <fstream>
 
 TH1* chi2Hist = NULL;
+TPaveStats *st = NULL;
 
 void printer3(int loop){
 
@@ -38,51 +39,55 @@ void printer3(int loop){
     myCanvas->cd(k+1);
     gPad->Update();
 
-  sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/TextFiles/%dtime2histBinssim_channel%d.dat",loop,k);
-  strcpy(str,buf);
+    sprintf(buf,"/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewBinsSimulation/TextFiles/%dtime2histBinssim_channel%d.dat",loop,k);
+    strcpy(str,buf);
   
-  ifstream file;
-  file.open(str);
-  if (!file.is_open()) {printf("Error\n");}else{
+    ifstream file;
+    file.open(str);
+    if (!file.is_open()) {printf("Error\n");}else{
 
-  const int len = 86;
-  double x[85]{};
-  double w[85]{};
-  double value;
-  double weight;
-  for (int i = 0; i != 86; ++i) {
+    const int len = 86;
+    double x[85]{};
+    double w[85]{};
+    double value;
+    double weight;
+    for (int i = 0; i != 86; ++i) {
       file >> value >> weight;
       x[i] = value;
       w[i] = weight;
-  }
-file.close();
+    }
+    file.close();
 
-  char buf2[25];
-  char str2[25];
-  sprintf(buf2,"Time: %d for %s",loop,channel_arr[k]);
-  strcpy(str2,buf2);
+    char buf2[25];
+    char str2[25];
+    sprintf(buf2,"Time: %d for %s",loop,channel_arr[k]);
+    strcpy(str2,buf2);
 
-  char buf7[25];
-  char str7[25];
-  sprintf(buf7,"Statistics; %d",k);
-  strcpy(str7,buf7);
+    char buf7[25];
+    char str7[25];
+    sprintf(buf7,"T: %d; Statistics; %d",loop,k);
+    strcpy(str7,buf7);
 
 
-  chi2Hist = new TH1D(str7,str2,86,0,86); //last numbers: number of bins, lower bound of bins, upper bound of bins
-  chi2Hist->GetXaxis()->SetTitle("Energy GeV");
-  chi2Hist->GetYaxis()->SetTitle("Frequency");
-  for(int i = 0; i != 86; ++i) {
-  chi2Hist->Fill(x[i],w[i]);}
+    chi2Hist = new TH1D(str7,str2,86,0,86); //last numbers: number of bins, lower bound of bins, upper bound of bins
+    chi2Hist->GetXaxis()->SetTitle("Energy GeV");
+    chi2Hist->GetYaxis()->SetTitle("Frequency");
+    for(int i = 0; i != 86; ++i) {
+      chi2Hist->Fill(x[i],w[i]);}
 
-  chi2Hist->Draw("hist");
+    chi2Hist->Draw("hist");
 
-  gPad->Update();
+    gPad->Update();
   
-  TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
+    TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
 
-  
+    myCanvas->Update();
+    gPad->Update();
+    
 
-  }
+
+
+    }
 
   
   }
@@ -97,10 +102,11 @@ file.close();
   strcpy(str4,buf4);
 
   myCanvas->SaveAs(str4);
-
   delete chi2Hist;
+
+
   
-  delete st;
+
   }
 
 void manygraphinghistmanytime(){
@@ -110,6 +116,8 @@ int tSteps = 30;
 for (int j=0; j <= tSteps; j++){
 
   printer3(j);
+  delete st;
+  
 
 }
  
