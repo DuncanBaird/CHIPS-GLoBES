@@ -31,8 +31,8 @@
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
-char MYFILE1[]="Plotting/Input/insima.dat";
-char MYFILE2[]="Plotting/Input/insimb.dat";
+char MYFILE1[]="Plotting/Input/allaCorr.dat";
+char MYFILE2[]="Plotting/Input/allbCorr.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
@@ -253,7 +253,7 @@ double DoChiSquare(double x, void *dummy)
 
   /* Compute Chi^2 for all loaded experiments and all rules
    * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */
-  chi2 = glbChiSys(test_values, GLB_ALL, GLB_ALL);
+  chi2 = glbChiTheta13(test_values,NULL, GLB_ALL);
 
   return chi2 - chi2_goal;
 }
