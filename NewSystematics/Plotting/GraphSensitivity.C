@@ -54,7 +54,7 @@ for(int u=0;u<31;++u){
   
   sp->Draw();
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/SensitivityplotAOldChi.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/SensitivityplotANewChi.svg");
 
 return 0; // everything went right.
 }

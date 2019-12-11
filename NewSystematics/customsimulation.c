@@ -305,7 +305,7 @@ void ComputeSensitivityCurve()
     glbDefineParams(input_errors, 0.1*theta12, 0, 0.15*theta23, 0, 0.05*sdm, 0.05*ldm);
     glbSetDensityParams(input_errors, 0.05, GLB_ALL);
     glbSetOscillationParameters(true_values);
-    //glbSetCentralValues(true_values);
+    glbSetCentralValues(true_values);
     glbSetInputErrors(input_errors);
     glbSetRates();
 
