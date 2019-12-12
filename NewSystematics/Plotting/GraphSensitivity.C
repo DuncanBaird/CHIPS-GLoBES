@@ -7,7 +7,7 @@ int GraphSensitivity(){
 
   ifstream infile;   
 
-  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/insima.dat");// file containing numbers in 3 columns 
+  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/allaCorr2.dat");// file containing numbers in 3 columns 
      if(infile.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -74,11 +74,11 @@ for(int u=0;u<31;++u){
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve for Initial Simulation with systematic corrections For CHIPS .glb");
+  mg->SetTitle("AB: Log Plot of sensitivity curve systematic correlations For CHIPS .glb");
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  mg->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
   // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
@@ -93,8 +93,8 @@ for(int u=0;u<31;++u){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: No Correlaton","lp");
-  legend->AddEntry(spb,"series B: Partial Correlation 1-3 Param","lp");
+  legend->AddEntry(spa,"series A: Both 700 km baseline","lp");
+  legend->AddEntry(spb,"series B: 700 and 750 km baseline","lp");
   legend->Draw();
 
   myCanvas->Update();
@@ -103,7 +103,7 @@ for(int u=0;u<31;++u){
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiCompared.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiCompared2.svg");
 
 return 0; // everything went right.
 }

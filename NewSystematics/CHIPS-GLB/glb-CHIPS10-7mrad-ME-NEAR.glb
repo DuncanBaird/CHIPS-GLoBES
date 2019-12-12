@@ -49,7 +49,7 @@ $profiletype = 		3
  */
 
 $densitytab = 		{2.8} 
-$lengthtab = 		{700}	/* km */
+$lengthtab = 		{750}	/* km */
 
 
 /* ####### Technical information ####### */
