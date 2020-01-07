@@ -36,7 +36,7 @@ double x2[31];// array that can hold 100 numbers for 1st column
 
   ifstream infile2;   
 
-  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/allaCorr.dat");// file containing numbers in 3 columns 
+  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/allaCorrDouble.dat");// file containing numbers in 3 columns 
      if(infile2.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -94,7 +94,7 @@ for(int u=0;u<31;++u){
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
   legend->AddEntry(spa,"series A: Both 700 km baseline","lp");
-  legend->AddEntry(spb,"series B: 700 and 750 km baseline","lp");
+  legend->AddEntry(spb,"series B: Single detector, double fiducial mass","lp");
   legend->Draw();
 
   myCanvas->Update();
@@ -103,7 +103,7 @@ for(int u=0;u<31;++u){
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiCompared2.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiCompared3.svg");
 
 return 0; // everything went right.
 }
