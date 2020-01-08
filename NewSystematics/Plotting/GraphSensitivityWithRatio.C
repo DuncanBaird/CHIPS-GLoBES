@@ -68,7 +68,7 @@ for(int u=0;u<31;++u){
 
   auto *p2 = new TPad("p2","p3",0.,0.,1.,0.3); p2->Draw();
   p2->SetTopMargin(0.001);
-  p2->SetBottomMargin(0.3);
+  p2->SetBottomMargin(0.4);
   p2->SetGrid();
   p2->SetLogx ();
   p2->SetLogy();
@@ -93,7 +93,7 @@ for(int u=0;u<31;++u){
   auto mg = new TMultiGraph();
 
   //gStyle->SetTitleFontSize(0.04);
-  mg->SetTitle("Sensitivity Curve Comparison for Detector Configurations With GLoBES Correlatons.");
+  mg->SetTitle("Sensitivity Curve Comparison for Detector Configurations With GLoBES Correlations.");
   mg->Add(spa);
   mg->Add(spb);
   //mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
@@ -160,6 +160,7 @@ for(int u=0;u<31;++u){
 
 
   myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.pdf");
 
 return 0; // everything went right.
 }
