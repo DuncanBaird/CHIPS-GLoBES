@@ -60,8 +60,26 @@ for(int u=0;u<31;++u){
 
 }
 
+  //TCanvas *c1 = new TCanvas("c1","3 Graphs",700,900);
+
+  
   auto myCanvas = new TCanvas();
-  myCanvas->SetGrid();
+  // myCanvas->SetGrid();
+
+  auto *p2 = new TPad("p2","p3",0.,0.,1.,0.3); p2->Draw();
+  p2->SetTopMargin(0.001);
+  p2->SetBottomMargin(0.3);
+  p2->SetGrid();
+  p2->SetLogx ();
+  p2->SetLogy();
+
+  auto *p1 = new TPad("p1","p1",0.,0.3,1.,0.9);  p1->Draw();
+  p1->SetBottomMargin(0.001);
+  p1->cd();
+  p1->SetGrid();
+  p1->SetLogx ();
+  //p1->SetLogy();
+
   auto spa = new TGraph(31,x,y_new);
   auto spb = new TGraph(31,x2,y2_new);
 
@@ -74,21 +92,22 @@ for(int u=0;u<31;++u){
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve systematic correlations For CHIPS .glb");
+  //gStyle->SetTitleFontSize(0.04);
+  mg->SetTitle("Sensitivity Curve Comparison for Detector Configurations With GLoBES Correlatons.");
   mg->Add(spa);
   mg->Add(spb);
-  mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
-  mg->GetXaxis()->CenterTitle(true);
-  mg->GetYaxis()->CenterTitle(true);
+  //mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  //mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
+  //mg->GetXaxis()->CenterTitle(true);
+  //mg->GetYaxis()->CenterTitle(true);
   // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
   // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
   // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
   // sp->SetMarkerStyle(4);
   // sp->SetMarkerColor(4);
 
-  gPad->SetLogx();
-  gPad->Update();
+  //gPad->SetLogx();
+  //gPad->Update();
   mg->Draw("APL");
 
   TLegend* legend = new TLegend();
@@ -97,13 +116,50 @@ for(int u=0;u<31;++u){
   legend->AddEntry(spb,"series B: Single detector, double fiducial mass","lp");
   legend->Draw();
 
+  //// Ratio Plot
+  double y_ratio[31];
+  for(int z=0; z<31; z++){
+    y_ratio[z] = y_new[z]/y2_new[z];
+  }
+
+  p2->cd();
+  auto r2 = new TGraph(31,x,y_ratio);
+  auto mg2 = new TMultiGraph();
+  mg2->Add(r2);
+  mg2->Draw("APL");
+  printf("test %f",x[30]);
+  //mg2->GetXaxis()->SetLimits(0.,x[30]);
+  //mg->GetXaxis()->SetLimits(0.,x[30]);
+
+  mg2->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  mg2->GetXaxis()->CenterTitle(true);
+  mg2->GetXaxis()->SetTitleSize(0.1);
+  mg->GetYaxis()->SetTitle("Chi Squared Sensitivity");
+  mg->GetYaxis()->CenterTitle(true);
+  mg2->GetYaxis()->SetTitle("Ratio A/B");
+  mg2->GetYaxis()->CenterTitle(true);
+  mg2->GetYaxis()->SetTitleSize(0.06);
+
+
+
+  //  TGraph*r = new TGraph(31); r->SetTitle("");
+  //  //r->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  //  for (int i=0; i<31; i++) r->SetPoint(i, x[i], y_new[i]/y2_new[i]);
+  //     r->GetXaxis()->SetLabelSize(0.075);
+  //     r->GetYaxis()->SetLabelSize(0.075);
+  //  r->Draw("AL");
+
+
+   
+
+
   myCanvas->Update();
   
   myCanvas->Modified();
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiCompared3.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
 
 return 0; // everything went right.
 }
