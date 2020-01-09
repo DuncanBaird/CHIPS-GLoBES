@@ -39,6 +39,7 @@ myCanvas_mu->SetGrid();
 hist_mu->Draw("HIST");
 myCanvas_mu->Update();
 myCanvas_mu->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/mufluxminus.svg");
+myCanvas_mu->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/mufluxminus.pdf");
 
 
 TH1D *hist_e = new TH1D("e","Histogram of Flux Minus",100,0,30);//"distribution name","Name of plot",86,0,86,86,0,86);
@@ -54,6 +55,7 @@ myCanvas_e->SetGrid();
 hist_e->Draw("HIST");
 myCanvas_e->Update();
 myCanvas_e->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/efluxminus.svg");
+myCanvas_e->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/efluxminus.pdf");
 
 TH1D *hist_tau = new TH1D("tau","Histogram of Flux Minus",100,0,30);//"distribution name","Name of plot",86,0,86,86,0,86);
   //hist->Fill(smear);
@@ -68,6 +70,7 @@ myCanvas_tau->SetGrid();
 hist_tau->Draw("HIST");
 myCanvas_tau->Update();
 myCanvas_tau->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/taufluxminus.svg");
+myCanvas_tau->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/taufluxminus.pdf");
 
 
 TH1D *hist_mu_anti = new TH1D("anti mu","Histogram of Flux Minus",100,0,30);//"distribution name","Name of plot",86,0,86,86,0,86);
@@ -83,6 +86,7 @@ myCanvas_mu_anti->SetGrid();
 hist_mu_anti->Draw("HIST");
 myCanvas_mu_anti->Update();
 myCanvas_mu_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antimufluxminus.svg");
+myCanvas_mu_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antimufluxminus.pdf");
 
 
   TH1D *hist_e_anti = new TH1D("anti e","Histogram of Flux Minus",100,0,30);//"distribution name","Name of plot",86,0,86,86,0,86);
@@ -98,6 +102,7 @@ myCanvas_e_anti->SetGrid();
 hist_e_anti->Draw("HIST");
 myCanvas_e_anti->Update();
 myCanvas_e_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antiefluxminus.svg");
+myCanvas_e_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antiefluxminus.pdf");
 
 
   TH1D *hist_tau_anti = new TH1D("anti tau","Histogram of Flux Minus",100,0,30);//"distribution name","Name of plot",86,0,86,86,0,86);
@@ -113,6 +118,7 @@ myCanvas_tau_anti->SetGrid();
 hist_tau_anti->Draw("HIST");
 myCanvas_tau_anti->Update();
 myCanvas_tau_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antitaufluxminus.svg");
+myCanvas_tau_anti->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/antitaufluxminus.pdf");
 
 
   gPad->Update();
