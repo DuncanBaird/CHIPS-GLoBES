@@ -12,7 +12,7 @@ void graphinghistogramsinterpret(){
 
   t1->Draw("This->GetReadEntry():TimeStamp_ns", "Channel == 1.0");
   TH2F *htemp = (TH2F*)gPad->GetPrimitive("htemp");
-  htemp->SetTitle("Plot of evetnts against timestamp ns for Channel = 1");
+  htemp->SetTitle("Plot of events against timestamp ns for Channel = 1");
   htemp->GetXaxis()->SetTitle("Time stamp ns");
   htemp->GetYaxis()->SetTitle("Event number");
   
