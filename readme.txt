@@ -5,3 +5,5 @@ to compile initialsimulation
 
 to run initialsimulation
 "./initialsimulation"
+
+test
