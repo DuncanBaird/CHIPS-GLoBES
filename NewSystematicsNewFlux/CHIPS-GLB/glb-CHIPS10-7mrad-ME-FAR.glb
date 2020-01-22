@@ -44,7 +44,7 @@ include "CHIPS-GLB/template-WC.glb"
 $profiletype = 		3 
 
 /* The relatively larger signal is due to matter effects
- * whereas tCHIPS-GLoBES/InitialSimulation/he event numbers in the proposal assume two-flavour 
+ * whereas the event numbers in the proposal assume two-flavour 
  * vacuum oscillations
  */
 
