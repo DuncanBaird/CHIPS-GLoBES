@@ -10,11 +10,14 @@ TFile f("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/New Flux Files/Flu
 
 
 TH1D *h_nue = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_nue_allpar_NoXSec_CHIPSoffAXIS");
-TH1D *h_anue = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_nue_allpar_NoXSec_CHIPSoffAXIS");
-TH1D *h_numu = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_nue_allpar_NoXSec_CHIPSoffAXIS");
-TH1D *h_anumu = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_nue_allpar_NoXSec_CHIPSoffAXIS");
+TH1D *h_anue = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_anue_allpar_NoXSec_CHIPSoffAXIS");
+TH1D *h_numu = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_numu_allpar_NoXSec_CHIPSoffAXIS");
+TH1D *h_anumu = (TH1D*)f.Get("enufullfine/CHIPSoffAXIS/enufullfine_anumu_allpar_NoXSec_CHIPSoffAXIS");
 
 h_nue->SetDirectory(nullptr);
+h_anue->SetDirectory(nullptr);
+h_numu->SetDirectory(nullptr);
+h_anumu->SetDirectory(nullptr);
 f.Close();
 
 TCanvas *myCanvas = new TCanvas();
@@ -22,6 +25,9 @@ myCanvas->SetGrid();
 
 
 h_nue->Draw();
+h_anue->Draw("SAME");
+h_numu->Draw("SAME");
+h_anumu->Draw("SAME");
 
 
 // enufullfine_nue_allpar_NoXSec_CHIPSoffAXIS
