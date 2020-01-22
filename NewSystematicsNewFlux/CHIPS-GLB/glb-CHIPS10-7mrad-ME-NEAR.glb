@@ -18,7 +18,7 @@ nuflux(#pos_beam)<
 	@flux_file="CHIPS-GLB/newfluxplus.dat"
 	@time = 5	/* years */
 	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/
-      	@norm = 1.12*6.47886918e-19 /* 1.12 is necessary to match the
+      	@norm = 1.0 /* 1.12 is necessary to match the
       	numbers in the 2007 TDR */ 
 >
 
@@ -27,7 +27,7 @@ nuflux(#neg_beam)<
 	@flux_file="CHIPS-GLB/newfluxplus.dat"
 	@time = 5	/* years */
 	@stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/ 		
-	@norm = 1.12*NUB* 6.47886918e-19 /* 1.12 is necessary to match the
+	@norm = 1.0 /* 1.12 is necessary to match the
       	numbers in the 2007 TDR */
 >
 
