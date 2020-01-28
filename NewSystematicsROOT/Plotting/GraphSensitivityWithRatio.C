@@ -7,7 +7,7 @@ int GraphSensitivityWithRatio(){
 
   ifstream infile;   
 
-  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/allaCorr2.dat");// file containing numbers in 3 columns 
+  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Input/allaCorr2.dat");// file containing numbers in 3 columns 
      if(infile.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -36,7 +36,7 @@ double x2[31];// array that can hold 100 numbers for 1st column
 
   ifstream infile2;   
 
-  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Input/allaCorrDouble.dat");// file containing numbers in 3 columns 
+  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Input/allaCorrDouble.dat");// file containing numbers in 3 columns 
      if(infile2.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -159,8 +159,8 @@ for(int u=0;u<31;++u){
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio.pdf");
 
 return 0; // everything went right.
 }
