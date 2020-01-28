@@ -27,12 +27,14 @@
  * Compile with ``make example5''
  */
 
+#include <TApplication.h>
+#include <TFile.h>
 #include "initialsimulation.h"
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
-char MYFILE1[]="Plotting/Input/allaCorrDouble.dat";
-char MYFILE2[]="Plotting/Input/allbCorrDouble.dat";
+char MYFILE1[]="Plotting/Input/allaCorrDoubleROOT.dat";
+char MYFILE2[]="Plotting/Input/allbCorrDoubleROOT.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
@@ -349,6 +351,13 @@ void ComputeSensitivityCurve()
 
 int main(int argc, char *argv[])
 {
+  TApplication app{"customsimulation", &argc, argv};
+
+  TFile *file = new TFile("test.root", "RECREATE");
+  file->Write();
+  file->Close();
+  delete file;
+
   double *old_sys_errors = NULL;      /* Temp. pointer to systematical error array */
   int sys_dim;                        /* Abbrv. for number of systematical errors */
   int n_bins=86;                      /* Number of bins */

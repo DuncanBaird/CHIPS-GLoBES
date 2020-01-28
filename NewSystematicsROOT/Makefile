@@ -41,14 +41,17 @@ exec_prefix = ${prefix}
 libdir = ${exec_prefix}/lib
 globesconf= $(exec_prefix)/bin/globes-config
 
+CC=gcc
+CXX=g++
+
 ROOTLIBS = $(shell root-config --libs)
 ROOTGLIBS = $(shell root-config --glibs)
 ROOTCFLAGS = $(shell root-config --cflags)
 
-local_CFLAGS = -g -O4
+local_CFLAGS = -g -O4 $(ROOTCFLAGS)
 
 INCFLAGS:=$(shell $(globesconf) --include)
-local_LDFLAGS:=$(shell $(globesconf) --libs)
+local_LDFLAGS:=$(shell $(globesconf) --libs) $(ROOTGLIBS)
 local_LTLDFLAGS:=$(shell $(globesconf) --ltlibs)
 
 BIN = example-tour example-static customsimulation example2 example3 example4 example5 example6
@@ -58,31 +61,33 @@ OBJ = example-tour.o example-tour-s.o customsimulation.o example2.o example3.o e
 all: $(BIN)
 
 example-tour: example-tour.o
-	gcc example-tour.o -o example-tour $(LDFLAGS) $(local_LDFLAGS)
+	$(CC) example-tour.o -o example-tour $(LDFLAGS) $(local_LDFLAGS)
 
 example-static: example-tour.o
-	gcc example-tour.o -o example-static -static $(LDFLAGS) $(local_LDFLAGS) 
+	$(CC) example-tour.o -o example-static -static $(LDFLAGS) $(local_LDFLAGS) 
 
 customsimulation: customsimulation.o myio.o
-	gcc customsimulation.o myio.o -o customsimulation  $(LDFLAGS) $(local_LDFLAGS)
+	$(CXX) customsimulation.o myio.o -o customsimulation  $(LDFLAGS) $(local_LDFLAGS)
 
 example2: example2.o myio.o
-	gcc  example2.o myio.o -o example2  $(LDFLAGS) $(local_LDFLAGS)
+	$(CC)  example2.o myio.o -o example2  $(LDFLAGS) $(local_LDFLAGS)
 
 example3: example3.o myio.o
-	gcc example3.o myio.o -o example3  $(LDFLAGS) $(local_LDFLAGS)
+	$(CC) example3.o myio.o -o example3  $(LDFLAGS) $(local_LDFLAGS)
 
 example4: example4.o myio.o
-	gcc example4.o myio.o -o example4  $(LDFLAGS) $(local_LDFLAGS)
+	$(CC) example4.o myio.o -o example4  $(LDFLAGS) $(local_LDFLAGS)
 
 example5: example5.o myio.o
-	gcc example5.o myio.o -o example5  $(LDFLAGS) $(local_LDFLAGS)
+	$(CC) example5.o myio.o -o example5  $(LDFLAGS) $(local_LDFLAGS)
 
 example6: example6.o myio.o
-	gcc example6.o myio.o -o example6  $(LDFLAGS) $(local_LDFLAGS)
+	$(CC) example6.o myio.o -o example6  $(LDFLAGS) $(local_LDFLAGS)
 
 %.o : %.c
-	gcc $(CFLAGS) $(local_CFLAGS) -c $< $(INCFLAGS)
+	$(CC) $(CFLAGS) $(local_CFLAGS) -c $< $(INCFLAGS)
+%.o : %.cc
+	$(CXX) $(CFLAGS) $(local_CFLAGS) -c $< $(INCFLAGS)
 .PHONY: clean
 clean:
 	rm -f $(BIN) $(OBJ)
