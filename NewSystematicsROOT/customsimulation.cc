@@ -29,6 +29,9 @@
 
 #include <TApplication.h>
 #include <TFile.h>
+#include <TCanvas.h>
+#include <TH2D.h>
+#include <TPaveStats.h>
 #include "initialsimulation.h"
 
 
@@ -344,6 +347,95 @@ void ComputeSensitivityCurve()
   }
 }
 
+const int max_index = tSteps*8;
+
+void ComputeSensitivityCurve2(double plot_data[][max_index])
+{
+  double t_factor = pow(max_runtime/min_runtime, 1.0/tSteps);
+  double t;
+  double x;               /* Current value of log[sin^2(2*th13)] */
+  double x_lo, x_hi;      /* Bracketing interval for root finder */
+  double x_sens[tSteps+1];/* Calculated sensitivities to log[sin^2(2*th13)] */
+  int gsl_status;         /* GSL error code */
+  int iter;               /* Iteration counter for root finder */
+  const int max_iter=100; /* Maximum number of iterations allowed in root finder */
+  int j;
+
+ 
+  for(int w = 0; w < 8; w = w++){
+
+    double baseline = (w*100.0) + 100.0;
+
+    glbSetBaselineInExperiment(EXP_NEAR,w);
+    glbSetBaselineInExperiment(EXP_FAR,w);
+  
+
+
+  for (j=0; j <= tSteps; j++)      /* Initialize output vector */
+    x_sens[j] = 1;                 /* As x is always <= 0 this signals "no value" */
+
+  /* Loop over all data points in this dataset, using log stepping */
+  for (j=0; j <= tSteps; j++)
+  {
+    /* Set running time */
+    t = min_runtime * pow(t_factor,j);
+    glbSetRunningTime(EXP_FAR, 0, t);
+    glbSetRunningTime(EXP_NEAR, 0, t);
+
+    /* Calculate "true" event rates */
+    glbDefineParams(true_values,theta12,theta13,theta23,deltacp,sdm,ldm);
+    glbSetDensityParams(true_values,1.0,GLB_ALL);
+    glbDefineParams(test_values,theta12,theta13,theta23,deltacp,sdm,ldm);
+    glbSetDensityParams(test_values,1.0,GLB_ALL);
+    glbDefineParams(input_errors, 0.1*theta12, 0, 0.15*theta23, 0, 0.05*sdm, 0.05*ldm);
+    glbSetDensityParams(input_errors, 0.05, GLB_ALL);
+    glbSetOscillationParameters(true_values);
+    glbSetCentralValues(true_values);
+    glbSetInputErrors(input_errors);
+    glbSetRates();
+
+    /* Determine sensitivity to sin^2(2*th13) by  using the GSL Brent-Dekker
+     * algorithm to find the th13, for which chi^2 = 2.7 (90%) */
+    x_lo = -3.0;
+    x_hi = -0.1;
+    iter = 0;
+
+    /* Start root finder. The initial search interval is guessed based on the
+     * results from a neighboring grid point */
+    double deviation=0.1;
+    do {
+      if (j > 0) {
+        x_lo = x_sens[j-1] - deviation;
+        x_hi = min(x_sens[j-1] + deviation, -0.001);
+      }
+      gsl_status = gsl_root_fsolver_set(s, &gsl_func, x_lo, x_hi);
+      deviation *= 2;
+    } while (gsl_status != GSL_SUCCESS);
+
+    /* Iterate root finder */
+    do {
+      gsl_status = gsl_root_fsolver_iterate(s);
+      x          = gsl_root_fsolver_root(s);
+      x_lo       = gsl_root_fsolver_x_lower(s);
+      x_hi       = gsl_root_fsolver_x_upper(s);
+      gsl_status = gsl_root_test_interval (x_lo, x_hi, logs22th13_precision, 0);
+    } while (gsl_status == GSL_CONTINUE && iter < max_iter);
+
+    /* Save results */
+    x_sens[j] = x;
+
+    //Baseline data
+    plot_data[0][(w*tSteps)+j] = baseline;
+    //Exposure data
+    plot_data[1][(w*tSteps)+j] = t;
+    //Chi data
+    plot_data[2][(w*tSteps)+j] = x;
+  }
+
+  }
+  // return 0;
+}
+
 
 /***************************************************************************
  *                            M A I N   P R O G R A M                      *
@@ -414,42 +506,47 @@ int main(int argc, char *argv[])
   glbSetOscillationParameters(true_values);
   glbSetInputErrors(input_errors);
 
-  /* Calculate sensitivity curve without systematics */
-  InitOutput(MYFILE1,"Format: Running time   Log(10,s22th13) sens. \n");
-  glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_OFF);
-  ComputeSensitivityCurve();
-  glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_ON);
+  // /* Calculate sensitivity curve without systematics */
+  // InitOutput(MYFILE1,"Format: Running time   Log(10,s22th13) sens. \n");
+  // glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_OFF);
+  // ComputeSensitivityCurve();
+  // glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_ON);
 
-  /* Calculate sensitivity curve with normalization and energy calibration errors,
-   * as defined in the AEDL files */
-  InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
-  ComputeSensitivityCurve();
+  // /* Calculate sensitivity curve with normalization and energy calibration errors,
+  //  * as defined in the AEDL files */
+  // InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
+  // ComputeSensitivityCurve();
 
-  // /* Calculate sensitivity curve with the above + spectral error
-  //  * Since chiDCSpectral computes the complete chi^2 for the whole problem, it
-  //  * must be called only for ONE of the two experiments */
-  // InitOutput(MYFILE3,"Format: Running time   Log(10,s22th13) sens. \n");
-  // old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
-  // sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
-  // for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
-  //   sys_errors[i] = old_sys_errors[i];
-  // for (i=sys_dim; i < sys_dim + n_bins; i++)
-  //   sys_errors[i] = 0.02;                                          /* Spectral error */
-  // sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
-  // glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiDCSpectral", sys_errors);
-  // glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
-  // ComputeSensitivityCurve();
-  //
-  // /* Calculate sensitivity curve with the above + bin-to-bin error
-  //  * (uncorrelated between near and far detectors */
-  // InitOutput(MYFILE4,"Format: Running time   Log(10,s22th13) sens. \n");
-  // sigma_binbin = 0.005;
-  // ComputeSensitivityCurve();
-  //
-  // /* Calculate sensitivity curve with a different bin-to-bin error */
-  // InitOutput(MYFILE5,"Format: Running time   Log(10,s22th13) sens. \n");
-  // sigma_binbin = 0.02;
-  // ComputeSensitivityCurve();
+
+  
+  double plot_data[3][max_index];
+  ComputeSensitivityCurve2(plot_data);
+
+
+  /* PLOTTING */
+  auto myCanvas = new TCanvas();
+
+  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 100, 800, 30, plot_data[1][0], plot_data[1][29]);
+
+  myCanvas->SetGrid();
+  h2->GetXaxis()->SetTitle("Baseline km");
+  h2->GetYaxis()->SetTitle("Integrated detector luminosity GW t years");
+  h2->GetZaxis()->SetTitle("Chi Squared Sensitivity of 23 mixing angle");
+  
+  
+  for(int q = 0; i != tSteps*8; ++i) {
+  h2->Fill(plot_data[0][q],plot_data[1][q],plot_data[2][q]);
+  }
+
+  h2->Draw("SURF");
+  gPad->Update();
+  TPaveStats *st = (TPaveStats*)h2->FindObject("stats");
+  myCanvas->Update();
+  //myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-First.pdf");
+
+
+
+
 
   /* Clean up */
   glbFreeParams(true_values);
@@ -459,36 +556,3 @@ int main(int argc, char *argv[])
 
   return 0;
 }
-
-/* ROOT plotting test (executing file in ROOT)
-*
-*
-*/
-
-// TH1* chi2Hist = NULL;
-
-// void graphinghistograms(){
-
-//   TFile* f = TFile::Open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Graphing for 2019-10-24/20190824_000_confFile_20190824_104918_02POMs_NanobeaconB_6200mV_acceptanceTest_nano.root");
-//   TTree *t1 =  (TTree*)f->Get("CLBOpt_tree");
-//   TBranch *b1 = (TBranch*)t1->GetBranch("TimeStamp_ns");
-//   TCanvas *myCanvas = new TCanvas();
-//   myCanvas->SetGrid();
-//   chi2Hist = new TH1D("Time events modulo","Histrogram of events over time",100,0,500); //last numbers: number of bins, lower bound of bins, upper bound of bins
-//   chi2Hist->GetXaxis()->SetTitle("Timestamp ns");
-//   chi2Hist->GetYaxis()->SetTitle("Frequency of event timestamp");
-
-//   UInt_t TimeStamp_ns;
-//   t1->SetBranchAddress("TimeStamp_ns",&TimeStamp_ns);
-
-
-//   int entries = t1->GetEntries();
-//   for (int i=0;i<entries;i++){
-//     t1->GetEntry(i);
-//     chi2Hist->Fill(TimeStamp_ns%50000); //take modulo 50000 of each timestamp
-//   }
-
-//   chi2Hist->Draw();
-//   gPad->Update();
-//   TPaveStats *st = (TPaveStats*)chi2Hist->FindObject("stats");
-// }
