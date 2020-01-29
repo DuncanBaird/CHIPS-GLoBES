@@ -34,7 +34,7 @@ nuflux(#neg_beam)<
 
 /* ####### Detector settings ###### */
 
-$target_mass = 	        0.0	/* kt */
+$target_mass = 	        10.0	/* kt */
 
 include "CHIPS-GLB/template-WC.glb"
 
@@ -49,7 +49,7 @@ $profiletype = 		3
  */
 
 $densitytab = 		{2.8} 
-$lengthtab = 		{750}	/* km */
+$lengthtab = 		{100}	/* km */
 
 
 /* ####### Technical information ####### */

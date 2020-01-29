@@ -36,7 +36,7 @@ double x2[31];// array that can hold 100 numbers for 1st column
 
   ifstream infile2;   
 
-  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Input/allaCorrDouble.dat");// file containing numbers in 3 columns 
+  infile2.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Input/allaCorr100.dat");// file containing numbers in 3 columns 
      if(infile2.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -67,14 +67,14 @@ for(int u=0;u<31;++u){
   // myCanvas->SetGrid();
 
   auto *p2 = new TPad("p2","p3",0.,0.,1.,0.3); p2->Draw();
-  p2->SetTopMargin(0.001);
+  p2->SetTopMargin(0.01);
   p2->SetBottomMargin(0.4);
   p2->SetGrid();
   p2->SetLogx ();
   p2->SetLogy();
 
   auto *p1 = new TPad("p1","p1",0.,0.3,1.,0.9);  p1->Draw();
-  p1->SetBottomMargin(0.001);
+  p1->SetBottomMargin(0.01);
   p1->cd();
   p1->SetGrid();
   p1->SetLogx ();
@@ -112,8 +112,8 @@ for(int u=0;u<31;++u){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: Both 700 km baseline","lp");
-  legend->AddEntry(spb,"series B: Single detector, double fiducial mass","lp");
+  legend->AddEntry(spa,"series A: 750 km Baseline","lp");
+  legend->AddEntry(spb,"series B: 100 km Baseline","lp");
   legend->Draw();
 
   //// Ratio Plot
@@ -128,8 +128,7 @@ for(int u=0;u<31;++u){
   mg2->Add(r2);
   mg2->Draw("APL");
   printf("test %f",x[30]);
-  //mg2->GetXaxis()->SetLimits(0.,x[30]);
-  //mg->GetXaxis()->SetLimits(0.,x[30]);
+  
 
   mg2->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
   mg2->GetXaxis()->CenterTitle(true);
@@ -137,10 +136,12 @@ for(int u=0;u<31;++u){
   mg->GetYaxis()->SetTitle("Chi Squared Sensitivity");
   mg->GetYaxis()->CenterTitle(true);
   mg2->GetYaxis()->SetTitle("Ratio A/B");
-  mg2->GetYaxis()->CenterTitle(true);
-  mg2->GetYaxis()->SetTitleSize(0.06);
+  // mg2->GetYaxis()->CenterTitle(true);
+  // mg2->GetYaxis()->SetTitleSize(0.06);
 
-
+  //mg2->GetXaxis()->SetLimits(0.,x[30]);
+  //mg->GetXaxis()->SetLimits(0.,x[30]);
+  mg2->GetYaxis()->SetLimits(-1.0,1.0);
 
   //  TGraph*r = new TGraph(31); r->SetTitle("");
   //  //r->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
@@ -159,8 +160,8 @@ for(int u=0;u<31;++u){
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio100v700.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOT/Plotting/Output/SensitivityplotAChiComparedRatio100v700.pdf");
 
 return 0; // everything went right.
 }

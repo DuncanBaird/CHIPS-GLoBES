@@ -33,8 +33,8 @@
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
-char MYFILE1[]="Plotting/Input/allaCorrDoubleROOT.dat";
-char MYFILE2[]="Plotting/Input/allbCorrDoubleROOT.dat";
+char MYFILE1[]="Plotting/Input/allaCorr100.dat";
+char MYFILE2[]="Plotting/Input/allbCorr100.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
