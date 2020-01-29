@@ -362,9 +362,9 @@ void ComputeSensitivityCurve2(double plot_data[][max_index])
   int j;
 
  
-  for(int w = 0; w < 2; w++){
+  for(int w = 0; w < 8; w++){
     printf("w value: %d \n",w);
-    double baseline = (w*100.0) + 700.0;
+    double baseline = (w*100.0) + 200.0;
     printf("Starting baseline: %f \n",baseline);
 
     glbSetBaselineInExperiment(EXP_NEAR,baseline);
@@ -531,7 +531,7 @@ int main(int argc, char *argv[])
   /* PLOTTING */
   auto myCanvas = new TCanvas();
 
-  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 2, 700, 800, tSteps, plot_data[1][0], plot_data[1][29]);
+  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 200, 900, tSteps, plot_data[1][0], plot_data[1][29]);
 
   myCanvas->SetGrid();
   h2->GetXaxis()->SetTitle("Baseline km");
@@ -539,11 +539,15 @@ int main(int argc, char *argv[])
   h2->GetZaxis()->SetTitle("Chi Squared Sensitivity of 23 mixing angle");
   
   
-  for(int q = 0; i != tSteps*8; ++i) {
-  h2->Fill(plot_data[0][q],plot_data[1][q],plot_data[2][q]);
+  for(int q = 1; q < tSteps*8; ++q) {
+    //printf("Data inspection: index: %d, pow chi: %f, baseline: %f, exposure: %f \n",q,pow(10.0,plot_data[2][q]),plot_data[0][q],plot_data[1][q]);
+  
+  
+  h2->Fill(plot_data[0][q],plot_data[1][q],pow(10.0,plot_data[2][q]));
   }
 
   h2->Draw("SURF");
+  gPad->SetLogz();
   gPad->Update();
   TPaveStats *st = (TPaveStats*)h2->FindObject("stats");
   myCanvas->Update();
