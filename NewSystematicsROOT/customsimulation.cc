@@ -362,12 +362,15 @@ void ComputeSensitivityCurve2(double plot_data[][max_index])
   int j;
 
  
-  for(int w = 0; w < 8; w = w++){
+  for(int w = 0; w < 2; w++){
+    printf("w value: %d \n",w);
+    double baseline = (w*100.0) + 700.0;
+    printf("Starting baseline: %f \n",baseline);
 
-    double baseline = (w*100.0) + 100.0;
+    glbSetBaselineInExperiment(EXP_NEAR,baseline);
+    glbSetBaselineInExperiment(EXP_FAR,baseline);
 
-    glbSetBaselineInExperiment(EXP_NEAR,w);
-    glbSetBaselineInExperiment(EXP_FAR,w);
+    printf("Baselines set \n");
   
 
 
@@ -443,7 +446,8 @@ void ComputeSensitivityCurve2(double plot_data[][max_index])
 
 int main(int argc, char *argv[])
 {
-  TApplication app{"customsimulation", &argc, argv};
+  //TApplication app{"customsimulation", &argc, argv};
+  TApplication *app = new TApplication("app", &argc, argv);
 
   TFile *file = new TFile("test.root", "RECREATE");
   file->Write();
@@ -508,7 +512,7 @@ int main(int argc, char *argv[])
 
   // /* Calculate sensitivity curve without systematics */
   // InitOutput(MYFILE1,"Format: Running time   Log(10,s22th13) sens. \n");
-  // glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_OFF);
+  glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_OFF);
   // ComputeSensitivityCurve();
   // glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_ON);
 
@@ -518,15 +522,16 @@ int main(int argc, char *argv[])
   // ComputeSensitivityCurve();
 
 
-  
+  printf("Before curve \n");
   double plot_data[3][max_index];
   ComputeSensitivityCurve2(plot_data);
+  printf("After curve");
 
 
   /* PLOTTING */
   auto myCanvas = new TCanvas();
 
-  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 100, 800, 30, plot_data[1][0], plot_data[1][29]);
+  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 2, 700, 800, tSteps, plot_data[1][0], plot_data[1][29]);
 
   myCanvas->SetGrid();
   h2->GetXaxis()->SetTitle("Baseline km");
@@ -544,6 +549,7 @@ int main(int argc, char *argv[])
   myCanvas->Update();
   //myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-First.pdf");
 
+  app->Run();
 
 
 
