@@ -598,6 +598,10 @@ int main(int argc, char *argv[])
  *                                P L O T T I N G                          *
  ***************************************************************************/
 
+// Notes
+// Plot to compare Systematics on and off
+
+
 double plot_data_statvsys_a[2][tSteps];
 double plot_data_statvsys_b[2][tSteps];
 
