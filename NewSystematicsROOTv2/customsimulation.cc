@@ -1,30 +1,8 @@
-/* GLoBES -- General LOng Baseline Experiment Simulator
- * (C) 2002 - 2007,  The GLoBES Team
- *
- * GLoBES is mainly intended for academic purposes. Proper
- * credit must be given if you use GLoBES or parts of it. Please
- * read the section 'Credit' in the README file.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 /*
- * Duncan Baird; Initial Simultion; based on example5
+ * Duncan Baird; Simulation for doing several plots.
  * Example: Create sensitivity plot for reactor experiments with near
  * and far detectors.
- * Compile with ``make example5''
+ * Compile with ``make customsimulation''
  */
 
 #include <TApplication.h>
@@ -33,11 +11,14 @@
 #include <TH2D.h>
 #include <TPaveStats.h>
 #include "initialsimulation.h"
+#include <TLatex.h>
+#include <iostream>
+using namespace std;
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
-char MYFILE1[]="Plotting/Input/allaCorr100.dat";
-char MYFILE2[]="Plotting/Input/allbCorr100.dat";
+char MYFILE1[]="Plotting/Input/v2testa.dat";
+char MYFILE2[]="Plotting/Input/v2testb.dat";
 // char MYFILE3[]="test5c.dat";
 // char MYFILE4[]="test5d.dat";
 // char MYFILE5[]="test5e.dat";
@@ -439,6 +420,94 @@ void ComputeSensitivityCurve2(double plot_data[][max_index])
   // return 0;
 }
 
+void ComputeSensitivityCurve3(double plot_data[][tSteps])
+{
+  double t_factor = pow(max_runtime/min_runtime, 1.0/tSteps);
+  double t;
+  double x;               /* Current value of log[sin^2(2*th13)] */
+  double x_lo, x_hi;      /* Bracketing interval for root finder */
+  double x_sens[tSteps+1];/* Calculated sensitivities to log[sin^2(2*th13)] */
+  int gsl_status;         /* GSL error code */
+  int iter;               /* Iteration counter for root finder */
+  const int max_iter=100; /* Maximum number of iterations allowed in root finder */
+  int j;
+
+ 
+  for(int w = 5; w < 6; w++){
+    printf("w value: %d \n",w);
+    double baseline = (w*100.0) + 200.0;
+    printf("Starting baseline: %f \n",baseline);
+
+    glbSetBaselineInExperiment(EXP_NEAR,baseline);
+    glbSetBaselineInExperiment(EXP_FAR,baseline);
+
+    printf("Baselines set \n");
+  
+
+
+  for (j=0; j <= tSteps; j++)      /* Initialize output vector */
+    x_sens[j] = 1;                 /* As x is always <= 0 this signals "no value" */
+
+  /* Loop over all data points in this dataset, using log stepping */
+  for (j=0; j <= tSteps; j++)
+  {
+    /* Set running time */
+    t = min_runtime * pow(t_factor,j);
+    glbSetRunningTime(EXP_FAR, 0, t);
+    glbSetRunningTime(EXP_NEAR, 0, t);
+
+    /* Calculate "true" event rates */
+    glbDefineParams(true_values,theta12,theta13,theta23,deltacp,sdm,ldm);
+    glbSetDensityParams(true_values,1.0,GLB_ALL);
+    glbDefineParams(test_values,theta12,theta13,theta23,deltacp,sdm,ldm);
+    glbSetDensityParams(test_values,1.0,GLB_ALL);
+    glbDefineParams(input_errors, 0.1*theta12, 0, 0.15*theta23, 0, 0.05*sdm, 0.05*ldm);
+    glbSetDensityParams(input_errors, 0.05, GLB_ALL);
+    glbSetOscillationParameters(true_values);
+    glbSetCentralValues(true_values);
+    glbSetInputErrors(input_errors);
+    glbSetRates();
+
+    /* Determine sensitivity to sin^2(2*th13) by  using the GSL Brent-Dekker
+     * algorithm to find the th13, for which chi^2 = 2.7 (90%) */
+    x_lo = -3.0;
+    x_hi = -0.1;
+    iter = 0;
+
+    /* Start root finder. The initial search interval is guessed based on the
+     * results from a neighboring grid point */
+    double deviation=0.1;
+    do {
+      if (j > 0) {
+        x_lo = x_sens[j-1] - deviation;
+        x_hi = min(x_sens[j-1] + deviation, -0.001);
+      }
+      gsl_status = gsl_root_fsolver_set(s, &gsl_func, x_lo, x_hi);
+      deviation *= 2;
+    } while (gsl_status != GSL_SUCCESS);
+
+    /* Iterate root finder */
+    do {
+      gsl_status = gsl_root_fsolver_iterate(s);
+      x          = gsl_root_fsolver_root(s);
+      x_lo       = gsl_root_fsolver_x_lower(s);
+      x_hi       = gsl_root_fsolver_x_upper(s);
+      gsl_status = gsl_root_test_interval (x_lo, x_hi, logs22th13_precision, 0);
+    } while (gsl_status == GSL_CONTINUE && iter < max_iter);
+
+    /* Save results */
+    x_sens[j] = x;
+
+    //Expsoure data
+    plot_data[0][j] = t;
+    //Chi data
+    plot_data[1][j] = x;
+  }
+
+  }
+  // return 0;
+}
+
 
 /***************************************************************************
  *                            M A I N   P R O G R A M                      *
@@ -482,9 +551,13 @@ int main(int argc, char *argv[])
   s = gsl_root_fsolver_alloc(T);
 
   /* Load 2 experiments: DC far (#0) and near (#1) detectors */
+  char *Far_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb";
+  char *Near_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb";
+
+
   glbClearExperimentList();
-  glbInitExperiment("CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb", &glb_experiment_list[0], &glb_num_of_exps);
-  glbInitExperiment("CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb", &glb_experiment_list[0], &glb_num_of_exps);
+  glbInitExperiment(Far_file, &glb_experiment_list[0], &glb_num_of_exps);
+  glbInitExperiment(Near_file, &glb_experiment_list[0], &glb_num_of_exps);
   if (glbGetNumberOfBins(EXP_FAR) != n_bins || glbGetNumberOfBins(EXP_NEAR) != n_bins)
   {
     printf("ERROR: Number of bins changed in AEDL file, but not in C code (or vice-versa).\n");
@@ -521,37 +594,68 @@ int main(int argc, char *argv[])
   // InitOutput(MYFILE2,"Format: Running time   Log(10,s22th13) sens. \n");
   // ComputeSensitivityCurve();
 
+/***************************************************************************
+ *                                P L O T T I N G                          *
+ ***************************************************************************/
 
-  printf("Before curve \n");
-  double plot_data[3][max_index];
-  ComputeSensitivityCurve2(plot_data);
-  printf("After curve");
+double plot_data_statvsys_a[2][tSteps];
+double plot_data_statvsys_b[2][tSteps];
+
+//ComputeSensitivityCurve();
+
+  // printf("1Before curve \n");
+  // double plot_data[3][max_index];
+  // ComputeSensitivityCurve2(plot_data);
+  // printf("1After curve");
 
 
-  /* PLOTTING */
-  auto myCanvas = new TCanvas();
+printf("Starting curve calculations \n");
+ComputeSensitivityCurve3(plot_data_statvsys_a);
+ComputeSensitivityCurve3(plot_data_statvsys_b);
 
-  TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 200, 900, tSteps, plot_data[1][0], plot_data[1][29]);
+printf("Curve calculations complete \n");
+printf("Commencing potting \n");
 
-  myCanvas->SetGrid();
-  h2->GetXaxis()->SetTitle("Baseline km");
-  h2->GetYaxis()->SetTitle("Integrated detector luminosity GW t years");
-  h2->GetZaxis()->SetTitle("Chi Squared Sensitivity of 23 mixing angle");
+  int kz;
+  cout << "Please enter an integer value: ";
+  cin >> kz;
+  cout << "The value you entered is " << kz;
+  cout << " and its double is " << kz*2 << ".\n";
+  return 0;
+
+
+/***************OLD**/
+
+  // printf("Before curve \n");
+  // double plot_data[3][max_index];
+  // ComputeSensitivityCurve2(plot_data);
+  // printf("After curve");
+
+
+
+  // auto myCanvas = new TCanvas();
+
+  // TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 200, 900, tSteps, plot_data[1][0], plot_data[1][29]);
+
+  // myCanvas->SetGrid();
+  // h2->GetXaxis()->SetTitle("Baseline km");
+  // h2->GetYaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // h2->GetZaxis()->SetTitle("Chi Squared Sensitivity of 23 mixing angle");
   
   
-  for(int q = 1; q < tSteps*8; ++q) {
-    //printf("Data inspection: index: %d, pow chi: %f, baseline: %f, exposure: %f \n",q,pow(10.0,plot_data[2][q]),plot_data[0][q],plot_data[1][q]);
+  // for(int q = 1; q < tSteps*8; ++q) {
+  //   //printf("Data inspection: index: %d, pow chi: %f, baseline: %f, exposure: %f \n",q,pow(10.0,plot_data[2][q]),plot_data[0][q],plot_data[1][q]);
   
   
-  h2->Fill(plot_data[0][q],plot_data[1][q],pow(10.0,plot_data[2][q]));
-  }
+  // h2->Fill(plot_data[0][q],plot_data[1][q],pow(10.0,plot_data[2][q]));
+  // }
 
-  h2->Draw("SURF");
-  gPad->SetLogz();
-  gPad->Update();
-  TPaveStats *st = (TPaveStats*)h2->FindObject("stats");
-  myCanvas->Update();
-  //myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-First.pdf");
+  // h2->Draw("SURF");
+  // gPad->SetLogz();
+  // gPad->Update();
+  // TPaveStats *st = (TPaveStats*)h2->FindObject("stats");
+  // myCanvas->Update();
+  // //myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-First.pdf");
 
   app->Run();
 
