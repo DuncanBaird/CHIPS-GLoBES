@@ -16,6 +16,7 @@
 #include <TMultiGraph.h>
 #include <TLegend.h>
 #include <iostream>
+#include <stdio.h>
 using namespace std;
 
 
@@ -423,7 +424,7 @@ void ComputeSensitivityCurve2(double plot_data[][max_index])
   // return 0;
 }
 
-void ComputeSensitivityCurve3(double plot_data[][tSteps])
+void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
 {
   double t_factor = pow(max_runtime/min_runtime, 1.0/tSteps);
   double t;
@@ -434,6 +435,14 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps])
   int iter;               /* Iteration counter for root finder */
   const int max_iter=100; /* Maximum number of iterations allowed in root finder */
   int j;
+
+  if(option == 1){
+    glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_ON);
+  } else if (option == 0) {
+    glbSwitchSystematics(GLB_ALL, GLB_ALL, GLB_OFF);
+  } else {
+    printf("No option available \n");
+  }
 
  
   for(int w = 5; w < 6; w++){
@@ -617,8 +626,8 @@ double plot_data_statvsys_b[2][tSteps];
 
 
 printf("Starting curve calculations \n");
-ComputeSensitivityCurve3(plot_data_statvsys_a);
-ComputeSensitivityCurve3(plot_data_statvsys_b);
+ComputeSensitivityCurve3(plot_data_statvsys_a,1);
+ComputeSensitivityCurve3(plot_data_statvsys_b,0);
 
 printf("Curve calculations complete \n");
 printf("Commencing potting \n");
@@ -652,7 +661,7 @@ printf("Commencing potting \n");
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve systematic correlations For CHIPS .glb");
+  mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
@@ -671,8 +680,8 @@ printf("Commencing potting \n");
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: Both 700 km baseline","lp");
-  legend->AddEntry(spb,"series B: Single detector, double fiducial mass","lp");
+  legend->AddEntry(spa,"series A: With Systematics","lp");
+  legend->AddEntry(spb,"series B: Statistics only","lp");
   legend->Draw();
 
   myCanvas->Update();
