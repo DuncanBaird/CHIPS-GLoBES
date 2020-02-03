@@ -12,6 +12,9 @@
 #include <TPaveStats.h>
 #include "initialsimulation.h"
 #include <TLatex.h>
+#include <TGraph.h>
+#include <TMultiGraph.h>
+#include <TLegend.h>
 #include <iostream>
 using namespace std;
 
@@ -501,7 +504,7 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps])
     //Expsoure data
     plot_data[0][j] = t;
     //Chi data
-    plot_data[1][j] = x;
+    plot_data[1][j] = pow(10.0,x);
   }
 
   }
@@ -625,7 +628,60 @@ printf("Commencing potting \n");
   cin >> kz;
   cout << "The value you entered is " << kz;
   cout << " and its double is " << kz*2 << ".\n";
-  return 0;
+  //return 0;
+
+
+  for (int g = 0;g<tSteps; g++){
+    printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
+    printf("Data b is: index: %f and value: %f \n",plot_data_statvsys_b[0][g],plot_data_statvsys_b[1][g]);
+  }
+  plot_data_statvsys_a[1][0] = plot_data_statvsys_a[1][1];
+  plot_data_statvsys_b[1][0] = plot_data_statvsys_b[1][1];
+
+  auto myCanvas = new TCanvas("test");
+  myCanvas->SetGrid();
+  auto spa = new TGraph(tSteps,plot_data_statvsys_a[0],plot_data_statvsys_a[1]);
+  auto spb = new TGraph(tSteps,plot_data_statvsys_b[0],plot_data_statvsys_b[1]);
+
+  //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
+
+  spa->SetMarkerStyle(4);
+  spa->SetMarkerColor(4);
+  spb->SetMarkerStyle(3);
+  spb->SetMarkerColor(3);
+  
+  auto mg = new TMultiGraph();
+
+  mg->SetTitle("AB: Log Plot of sensitivity curve systematic correlations For CHIPS .glb");
+  mg->Add(spa);
+  mg->Add(spb);
+  mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
+  mg->GetXaxis()->CenterTitle(true);
+  mg->GetYaxis()->CenterTitle(true);
+  // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  // sp->SetMarkerStyle(4);
+  // sp->SetMarkerColor(4);
+
+  gPad->SetLogx();
+  gPad->Update();
+  mg->Draw("APL");
+
+  TLegend* legend = new TLegend();
+  legend->SetHeader("Legend Title");
+  legend->AddEntry(spa,"series A: Both 700 km baseline","lp");
+  legend->AddEntry(spb,"series B: Single detector, double fiducial mass","lp");
+  legend->Draw();
+
+  myCanvas->Update();
+  
+  myCanvas->Modified();
+  myCanvas->Update();
+
+
+
 
 
 /***************OLD**/
