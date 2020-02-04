@@ -575,9 +575,35 @@ for (int g = 0;g<tSteps; g++){
   myCanvas->Modified();
   myCanvas->Update();
 
+  if (option == 1){
 
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOTv2/Plotting/Output/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
 
+  // char filename1[256];
+  // strncat(filename1,filepath,sizeof(filename1));
+  // printf(filename1);
+  // strncat(filename1,canvas_name,sizeof(filename1));
+  // strncat(filename1,file_svg,sizeof(filename1));
+  // printf(filename1);
+  
+  // char filename2[256];
+  // strncat(filename2,filepath,sizeof(filename2));
+  // strncat(filename2,canvas_name,sizeof(filename2));
+  // strncat(filename2,file_pdf,sizeof(filename2));
 
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
 
 }
 
@@ -728,10 +754,10 @@ printf("Commencing potting \n");
 
   
   userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"test1");
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefault");
 
   userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,0,"test2");
+  doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZero");
 
   // for (int g = 0;g<tSteps; g++){
   //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
