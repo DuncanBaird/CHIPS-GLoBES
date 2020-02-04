@@ -520,6 +520,77 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
   // return 0;
 }
 
+/***************************************************************************
+ *                   P L O T T I N G   F U N C T I O N                     *
+ ***************************************************************************/
+
+void doPlotROOT(double plot_data_a[][tSteps],double plot_data_b[][tSteps],int option,const char* canvas_name){
+
+for (int g = 0;g<tSteps; g++){
+    printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+    printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+  }
+  plot_data_a[1][0] = plot_data_a[1][1];
+  plot_data_b[1][0] = plot_data_b[1][1];
+
+  auto myCanvas = new TCanvas(canvas_name,canvas_name);
+  myCanvas->SetGrid();
+  auto spa = new TGraph(tSteps,plot_data_a[0],plot_data_a[1]);
+  auto spb = new TGraph(tSteps,plot_data_b[0],plot_data_b[1]);
+
+  //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
+
+  spa->SetMarkerStyle(4);
+  spa->SetMarkerColor(4);
+  spb->SetMarkerStyle(3);
+  spb->SetMarkerColor(3);
+  
+  auto mg = new TMultiGraph();
+
+  mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
+  mg->Add(spa);
+  mg->Add(spb);
+  mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
+  mg->GetXaxis()->CenterTitle(true);
+  mg->GetYaxis()->CenterTitle(true);
+  // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  // sp->SetMarkerStyle(4);
+  // sp->SetMarkerColor(4);
+
+  gPad->SetLogx();
+  gPad->Update();
+  mg->Draw("APL");
+
+  TLegend* legend = new TLegend();
+  legend->SetHeader("Legend Title");
+  legend->AddEntry(spa,"series A: With Systematics","lp");
+  legend->AddEntry(spb,"series B: Statistics only","lp");
+  legend->Draw();
+
+  myCanvas->Update();
+  
+  myCanvas->Modified();
+  myCanvas->Update();
+
+
+
+
+
+}
+
+void userConfirm(){
+  int kz;
+  cout << "Please enter an integer to proceed: ";
+  cin >> kz;
+  cout << "The value you entered is " << kz;
+  cout << " and its double is " << kz*2 << ".\n";
+  //return 0;
+}
+
+
 
 /***************************************************************************
  *                            M A I N   P R O G R A M                      *
@@ -617,6 +688,10 @@ int main(int argc, char *argv[])
 double plot_data_statvsys_a[2][tSteps];
 double plot_data_statvsys_b[2][tSteps];
 
+double plot_data_statvsysSPECTRAL_a[2][tSteps];
+double plot_data_statvsysSPECTRAL_b[2][tSteps];
+
+
 //ComputeSensitivityCurve();
 
   // printf("1Before curve \n");
@@ -629,65 +704,83 @@ printf("Starting curve calculations \n");
 ComputeSensitivityCurve3(plot_data_statvsys_a,1);
 ComputeSensitivityCurve3(plot_data_statvsys_b,0);
 
+
+old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
+  sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
+  for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
+    sys_errors[i] = old_sys_errors[i];
+  for (i=sys_dim; i < sys_dim + n_bins; i++)
+    sys_errors[i] = 0.02;                                          /* Spectral error */
+  sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
+  glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiZero", sys_errors);
+  glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
+  ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_a,1);
+  ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_b,0);
+
+
+
+
+
+
+
 printf("Curve calculations complete \n");
 printf("Commencing potting \n");
 
-  int kz;
-  cout << "Please enter an integer value: ";
-  cin >> kz;
-  cout << "The value you entered is " << kz;
-  cout << " and its double is " << kz*2 << ".\n";
-  //return 0;
-
-
-  for (int g = 0;g<tSteps; g++){
-    printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
-    printf("Data b is: index: %f and value: %f \n",plot_data_statvsys_b[0][g],plot_data_statvsys_b[1][g]);
-  }
-  plot_data_statvsys_a[1][0] = plot_data_statvsys_a[1][1];
-  plot_data_statvsys_b[1][0] = plot_data_statvsys_b[1][1];
-
-  auto myCanvas = new TCanvas("test");
-  myCanvas->SetGrid();
-  auto spa = new TGraph(tSteps,plot_data_statvsys_a[0],plot_data_statvsys_a[1]);
-  auto spb = new TGraph(tSteps,plot_data_statvsys_b[0],plot_data_statvsys_b[1]);
-
-  //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
-
-  spa->SetMarkerStyle(4);
-  spa->SetMarkerColor(4);
-  spb->SetMarkerStyle(3);
-  spb->SetMarkerColor(3);
   
-  auto mg = new TMultiGraph();
+  userConfirm();
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"test1");
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
-  mg->Add(spa);
-  mg->Add(spb);
-  mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
-  mg->GetXaxis()->CenterTitle(true);
-  mg->GetYaxis()->CenterTitle(true);
-  // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
-  // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
-  // sp->SetMarkerStyle(4);
-  // sp->SetMarkerColor(4);
+  userConfirm();
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,0,"test2");
 
-  gPad->SetLogx();
-  gPad->Update();
-  mg->Draw("APL");
+  // for (int g = 0;g<tSteps; g++){
+  //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
+  //   printf("Data b is: index: %f and value: %f \n",plot_data_statvsys_b[0][g],plot_data_statvsys_b[1][g]);
+  // }
+  // plot_data_statvsys_a[1][0] = plot_data_statvsys_a[1][1];
+  // plot_data_statvsys_b[1][0] = plot_data_statvsys_b[1][1];
 
-  TLegend* legend = new TLegend();
-  legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: With Systematics","lp");
-  legend->AddEntry(spb,"series B: Statistics only","lp");
-  legend->Draw();
+  // auto myCanvas = new TCanvas("test");
+  // myCanvas->SetGrid();
+  // auto spa = new TGraph(tSteps,plot_data_statvsys_a[0],plot_data_statvsys_a[1]);
+  // auto spb = new TGraph(tSteps,plot_data_statvsys_b[0],plot_data_statvsys_b[1]);
 
-  myCanvas->Update();
+  // //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
+
+  // spa->SetMarkerStyle(4);
+  // spa->SetMarkerColor(4);
+  // spb->SetMarkerStyle(3);
+  // spb->SetMarkerColor(3);
   
-  myCanvas->Modified();
-  myCanvas->Update();
+  // auto mg = new TMultiGraph();
+
+  // mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
+  // mg->Add(spa);
+  // mg->Add(spb);
+  // mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
+  // mg->GetXaxis()->CenterTitle(true);
+  // mg->GetYaxis()->CenterTitle(true);
+  // // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  // // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  // // sp->SetMarkerStyle(4);
+  // // sp->SetMarkerColor(4);
+
+  // gPad->SetLogx();
+  // gPad->Update();
+  // mg->Draw("APL");
+
+  // TLegend* legend = new TLegend();
+  // legend->SetHeader("Legend Title");
+  // legend->AddEntry(spa,"series A: With Systematics","lp");
+  // legend->AddEntry(spb,"series B: Statistics only","lp");
+  // legend->Draw();
+
+  // myCanvas->Update();
+  
+  // myCanvas->Modified();
+  // myCanvas->Update();
 
 
 
