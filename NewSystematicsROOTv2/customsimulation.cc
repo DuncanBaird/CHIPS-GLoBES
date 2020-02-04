@@ -243,7 +243,7 @@ double DoChiSquare(double x, void *dummy)
 
   /* Compute Chi^2 for all loaded experiments and all rules
    * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */
-  chi2 = glbChiTheta13(test_values,NULL, GLB_ALL);
+  chi2 = glbChiSys(test_values,GLB_ALL,GLB_ALL);//glbChiTheta13(test_values,NULL, GLB_ALL);
 
   return chi2 - chi2_goal;
 }
