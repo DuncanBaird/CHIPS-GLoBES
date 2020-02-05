@@ -520,13 +520,23 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
   // return 0;
 }
 
-const int baseline_steps = 10;
-void getOscillation(double osc_data[][baseline_steps],double min_base,double max_base,double energy){
-  double baseline = (max_base-min_base)/baseline_steps;
+const int baseline_steps = 600;
+
+void getOscillation(double osc_data[][baseline_steps],double min_base,double max_base,double energy,int l,int m,int option){
+  double baseline = ((max_base-min_base)/baseline_steps)/energy;
+  if(option ==1){
   for(int i = 0;i< baseline_steps;i++){
-    // glbVacuumProbability(int l, int m, int panti,double E,double L)
-    osc_data[0][i] = baseline * i;
-    osc_data[1][i] = i*energy;
+    osc_data[0][i] = i * baseline;
+    osc_data[1][i] = glbVacuumProbability(l, m, 1,energy,i*baseline);
+    // osc_data[0][i] = baseline * i;
+    // osc_data[1][i] = i*energy;
+    }
+  }else if(option==0){
+    double energy_step = energy/baseline_steps;
+    for(int i = 0;i< baseline_steps;i++){
+    osc_data[0][i] = i * baseline;
+    osc_data[1][i] = glbProfileProbability(EXP_FAR,l, m, 1,i*energy_step);
+  }
   }
   
 }
@@ -641,10 +651,10 @@ for (int g = 0;g<baseline_steps; g++){
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("Plot of Probabilities");
+  mg->SetTitle("Plot of Probabilities for 10 GeV");
   mg->Add(spa);
   mg->Add(spb);
-  mg->GetXaxis()->SetTitle("Baseline length km");
+  mg->GetXaxis()->SetTitle("Baseline L/E km/GeV");
   mg->GetYaxis()->SetTitle("Probability of oscillation");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
@@ -654,14 +664,14 @@ for (int g = 0;g<baseline_steps; g++){
   // sp->SetMarkerStyle(4);
   // sp->SetMarkerColor(4);
 
-  gPad->SetLogx();
+  //gPad->SetLogx();
   gPad->Update();
   mg->Draw("APL");
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A:","lp");
-  legend->AddEntry(spb,"series B:","lp");
+  legend->AddEntry(spa,"series A: 2->3","lp");
+  legend->AddEntry(spb,"series B: 1->3","lp");
   legend->Draw();
 
   myCanvas->Update();
@@ -806,10 +816,21 @@ int main(int argc, char *argv[])
 
 
 double plot_data_prob_1[2][baseline_steps];
+double plot_data_prob_2[2][baseline_steps];
 
-getOscillation(plot_data_prob_1,100.0,1000.0,100);
+getOscillation(plot_data_prob_1,100.0,900000.0,10,1,3,1);
+getOscillation(plot_data_prob_2,100.0,900000.0,10,2,3,1);
 
-doPlotROOTProb(plot_data_prob_1,plot_data_prob_1,0,"prob test");
+doPlotROOTProb(plot_data_prob_2,plot_data_prob_1,0,"Probability Plot");
+
+userConfirm();
+double plot_data_probProf_1[2][baseline_steps];
+double plot_data_probProf_2[2][baseline_steps];
+
+getOscillation(plot_data_probProf_1,100.0,900000.0,10,1,3,0);
+getOscillation(plot_data_probProf_2,100.0,900000.0,10,2,3,0);
+
+doPlotROOTProb(plot_data_probProf_2,plot_data_probProf_1,0,"Probability Profile Plot");
 
 // double plot_data_statvsys_a[2][tSteps];
 // double plot_data_statvsys_b[2][tSteps];
