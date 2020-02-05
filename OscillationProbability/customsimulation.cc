@@ -520,6 +520,17 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
   // return 0;
 }
 
+const int baseline_steps = 10;
+void getOscillation(double osc_data[][baseline_steps],double min_base,double max_base,double energy){
+  double baseline = (max_base-min_base)/baseline_steps;
+  for(int i = 0;i< baseline_steps;i++){
+    // glbVacuumProbability(int l, int m, int panti,double E,double L)
+    osc_data[0][i] = baseline * i;
+    osc_data[1][i] = i*energy;
+  }
+  
+}
+
 /***************************************************************************
  *                   P L O T T I N G   F U N C T I O N                     *
  ***************************************************************************/
@@ -577,7 +588,90 @@ for (int g = 0;g<tSteps; g++){
 
   if (option == 1){
 
-  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOTv2/Plotting/Output/";
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/OscillationProbablity/Plotting/Output/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
+
+  // char filename1[256];
+  // strncat(filename1,filepath,sizeof(filename1));
+  // printf(filename1);
+  // strncat(filename1,canvas_name,sizeof(filename1));
+  // strncat(filename1,file_svg,sizeof(filename1));
+  // printf(filename1);
+  
+  // char filename2[256];
+  // strncat(filename2,filepath,sizeof(filename2));
+  // strncat(filename2,canvas_name,sizeof(filename2));
+  // strncat(filename2,file_pdf,sizeof(filename2));
+
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
+
+}
+
+void doPlotROOTProb(double plot_data_a[][baseline_steps],double plot_data_b[][baseline_steps],int option,const char* canvas_name){
+
+for (int g = 0;g<baseline_steps; g++){
+    printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+    printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+  }
+  plot_data_a[1][0] = plot_data_a[1][1];
+  plot_data_b[1][0] = plot_data_b[1][1];
+
+  auto myCanvas = new TCanvas(canvas_name,canvas_name);
+  myCanvas->SetGrid();
+  auto spa = new TGraph(baseline_steps,plot_data_a[0],plot_data_a[1]);
+  auto spb = new TGraph(baseline_steps,plot_data_b[0],plot_data_b[1]);
+
+  //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
+
+  spa->SetMarkerStyle(4);
+  spa->SetMarkerColor(4);
+  spb->SetMarkerStyle(3);
+  spb->SetMarkerColor(3);
+  
+  auto mg = new TMultiGraph();
+
+  mg->SetTitle("Plot of Probabilities");
+  mg->Add(spa);
+  mg->Add(spb);
+  mg->GetXaxis()->SetTitle("Baseline length km");
+  mg->GetYaxis()->SetTitle("Probability of oscillation");
+  mg->GetXaxis()->CenterTitle(true);
+  mg->GetYaxis()->CenterTitle(true);
+  // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  // sp->SetMarkerStyle(4);
+  // sp->SetMarkerColor(4);
+
+  gPad->SetLogx();
+  gPad->Update();
+  mg->Draw("APL");
+
+  TLegend* legend = new TLegend();
+  legend->SetHeader("Legend Title");
+  legend->AddEntry(spa,"series A:","lp");
+  legend->AddEntry(spb,"series B:","lp");
+  legend->Draw();
+
+  myCanvas->Update();
+  
+  myCanvas->Modified();
+  myCanvas->Update();
+
+  if (option == 1){
+
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/OscillationProbablity/Plotting/Output/";
   string file_svg = ".svg";
   string file_pdf = ".pdf";
 
@@ -711,37 +805,43 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 
-double plot_data_statvsys_a[2][tSteps];
-double plot_data_statvsys_b[2][tSteps];
+double plot_data_prob_1[2][baseline_steps];
 
-double plot_data_statvsysSPECTRAL_a[2][tSteps];
-double plot_data_statvsysSPECTRAL_b[2][tSteps];
+getOscillation(plot_data_prob_1,100.0,1000.0,100);
 
+doPlotROOTProb(plot_data_prob_1,plot_data_prob_1,0,"prob test");
 
-//ComputeSensitivityCurve();
+// double plot_data_statvsys_a[2][tSteps];
+// double plot_data_statvsys_b[2][tSteps];
 
-  // printf("1Before curve \n");
-  // double plot_data[3][max_index];
-  // ComputeSensitivityCurve2(plot_data);
-  // printf("1After curve");
+// double plot_data_statvsysSPECTRAL_a[2][tSteps];
+// double plot_data_statvsysSPECTRAL_b[2][tSteps];
 
 
-printf("Starting curve calculations \n");
-ComputeSensitivityCurve3(plot_data_statvsys_a,1);
-ComputeSensitivityCurve3(plot_data_statvsys_b,0);
+// //ComputeSensitivityCurve();
+
+//   // printf("1Before curve \n");
+//   // double plot_data[3][max_index];
+//   // ComputeSensitivityCurve2(plot_data);
+//   // printf("1After curve");
 
 
-old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
-  sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
-  for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
-    sys_errors[i] = old_sys_errors[i];
-  for (i=sys_dim; i < sys_dim + n_bins; i++)
-    sys_errors[i] = 0.02;                                          /* Spectral error */
-  sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
-  glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiZero", sys_errors);
-  glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
-  ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_a,1);
-  ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_b,0);
+// printf("Starting curve calculations \n");
+// ComputeSensitivityCurve3(plot_data_statvsys_a,1);
+// ComputeSensitivityCurve3(plot_data_statvsys_b,0);
+
+
+// old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
+//   sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
+//   for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
+//     sys_errors[i] = old_sys_errors[i];
+//   for (i=sys_dim; i < sys_dim + n_bins; i++)
+//     sys_errors[i] = 0.02;                                          /* Spectral error */
+//   sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
+//   glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiZero", sys_errors);
+//   glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
+//   ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_a,1);
+//   ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_b,0);
 
 
 
@@ -749,101 +849,17 @@ old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error arr
 
 
 
-printf("Curve calculations complete \n");
-printf("Commencing potting \n");
+// printf("Curve calculations complete \n");
+// printf("Commencing potting \n");
 
   
-  userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefault");
+//   userConfirm();
+//   doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefault");
 
-  userConfirm();
-  doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZero");
-
-  // for (int g = 0;g<tSteps; g++){
-  //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
-  //   printf("Data b is: index: %f and value: %f \n",plot_data_statvsys_b[0][g],plot_data_statvsys_b[1][g]);
-  // }
-  // plot_data_statvsys_a[1][0] = plot_data_statvsys_a[1][1];
-  // plot_data_statvsys_b[1][0] = plot_data_statvsys_b[1][1];
-
-  // auto myCanvas = new TCanvas("test");
-  // myCanvas->SetGrid();
-  // auto spa = new TGraph(tSteps,plot_data_statvsys_a[0],plot_data_statvsys_a[1]);
-  // auto spb = new TGraph(tSteps,plot_data_statvsys_b[0],plot_data_statvsys_b[1]);
-
-  // //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
-
-  // spa->SetMarkerStyle(4);
-  // spa->SetMarkerColor(4);
-  // spb->SetMarkerStyle(3);
-  // spb->SetMarkerColor(3);
-  
-  // auto mg = new TMultiGraph();
-
-  // mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
-  // mg->Add(spa);
-  // mg->Add(spb);
-  // mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  // mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
-  // mg->GetXaxis()->CenterTitle(true);
-  // mg->GetYaxis()->CenterTitle(true);
-  // // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
-  // // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  // // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
-  // // sp->SetMarkerStyle(4);
-  // // sp->SetMarkerColor(4);
-
-  // gPad->SetLogx();
-  // gPad->Update();
-  // mg->Draw("APL");
-
-  // TLegend* legend = new TLegend();
-  // legend->SetHeader("Legend Title");
-  // legend->AddEntry(spa,"series A: With Systematics","lp");
-  // legend->AddEntry(spb,"series B: Statistics only","lp");
-  // legend->Draw();
-
-  // myCanvas->Update();
-  
-  // myCanvas->Modified();
-  // myCanvas->Update();
+//   userConfirm();
+//   doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZero");
 
 
-
-
-
-/***************OLD**/
-
-  // printf("Before curve \n");
-  // double plot_data[3][max_index];
-  // ComputeSensitivityCurve2(plot_data);
-  // printf("After curve");
-
-
-
-  // auto myCanvas = new TCanvas();
-
-  // TH2* h2 = new TH2D("Experiment viability", "Surface plot of Chi Sensitivity Surface", 8, 200, 900, tSteps, plot_data[1][0], plot_data[1][29]);
-
-  // myCanvas->SetGrid();
-  // h2->GetXaxis()->SetTitle("Baseline km");
-  // h2->GetYaxis()->SetTitle("Integrated detector luminosity GW t years");
-  // h2->GetZaxis()->SetTitle("Chi Squared Sensitivity of 23 mixing angle");
-  
-  
-  // for(int q = 1; q < tSteps*8; ++q) {
-  //   //printf("Data inspection: index: %d, pow chi: %f, baseline: %f, exposure: %f \n",q,pow(10.0,plot_data[2][q]),plot_data[0][q],plot_data[1][q]);
-  
-  
-  // h2->Fill(plot_data[0][q],plot_data[1][q],pow(10.0,plot_data[2][q]));
-  // }
-
-  // h2->Draw("SURF");
-  // gPad->SetLogz();
-  // gPad->Update();
-  // TPaveStats *st = (TPaveStats*)h2->FindObject("stats");
-  // myCanvas->Update();
-  // //myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/HistSimulation/Plotting/CHIPShist-First.pdf");
 
   app->Run();
 
