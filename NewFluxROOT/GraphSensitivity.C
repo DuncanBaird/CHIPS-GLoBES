@@ -7,7 +7,7 @@ int GraphSensitivity(){
 
   ifstream infile;   
 
-  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOTv2/insima.dat");// file containing numbers in 3 columns 
+  infile.open("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewFluxROOT/insima.dat");// file containing numbers in 3 columns 
      if(infile.fail()) // checks to see if file opended 
     { 
       cout << "error" << endl; 
@@ -54,7 +54,7 @@ for(int u=0;u<31;++u){
   
   sp->Draw();
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOTv2/Plotting/SensitivityplotA.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewFluxROOT/Plotting/SensitivityplotA.pdf");
 
 return 0; // everything went right.
 }

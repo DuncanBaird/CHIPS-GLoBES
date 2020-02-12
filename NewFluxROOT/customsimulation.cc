@@ -577,7 +577,7 @@ for (int g = 0;g<tSteps; g++){
 
   if (option == 1){
 
-  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematicsROOTv2/Plotting/Output/";
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewFluxROOT/Plotting/Output/";
   string file_svg = ".svg";
   string file_pdf = ".pdf";
 
