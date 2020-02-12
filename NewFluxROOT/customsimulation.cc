@@ -617,7 +617,6 @@ void userConfirm(){
 }
 
 
-
 /***************************************************************************
  *                            M A I N   P R O G R A M                      *
  ***************************************************************************/
@@ -660,8 +659,11 @@ int main(int argc, char *argv[])
   s = gsl_root_fsolver_alloc(T);
 
   /* Load 2 experiments: DC far (#0) and near (#1) detectors */
-  char *Far_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb";
-  char *Near_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb";
+  // char *Far_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb";
+  // char *Near_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb";
+
+  char *Far_file = (char*)"CHIPS-GLB/CHIPSfarNewFlux.glb";
+  char *Near_file = (char*)"CHIPS-GLB/CHIPSnearNewFlux.glb";
 
 
   glbClearExperimentList();
@@ -711,6 +713,10 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 
+
+userConfirm();
+
+
 double plot_data_statvsys_a[2][tSteps];
 double plot_data_statvsys_b[2][tSteps];
 
@@ -727,6 +733,7 @@ double plot_data_statvsysSPECTRAL_b[2][tSteps];
 
 
 printf("Starting curve calculations \n");
+userConfirm();
 ComputeSensitivityCurve3(plot_data_statvsys_a,1);
 ComputeSensitivityCurve3(plot_data_statvsys_b,0);
 
@@ -754,10 +761,10 @@ printf("Commencing potting \n");
 
   
   userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefault");
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefaultNewFlux");
 
   userConfirm();
-  doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZero");
+  doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZeroNewFlux");
 
   // for (int g = 0;g<tSteps; g++){
   //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
