@@ -526,7 +526,7 @@ void getOscillation(double osc_data[][baseline_steps],double min_base,double max
   double baseline = ((max_base-min_base)/baseline_steps)/energy;
   if(option ==1){
   for(int i = 0;i< baseline_steps;i++){
-    osc_data[0][i] = i * baseline;
+    osc_data[0][i] = (i * baseline)/energy;
     osc_data[1][i] = glbVacuumProbability(l, m, 1,energy,i*baseline);
     // osc_data[0][i] = baseline * i;
     // osc_data[1][i] = i*energy;
@@ -534,7 +534,7 @@ void getOscillation(double osc_data[][baseline_steps],double min_base,double max
   }else if(option==0){
     double energy_step = energy/baseline_steps;
     for(int i = 0;i< baseline_steps;i++){
-    osc_data[0][i] = i * baseline;
+    osc_data[0][i] = i * energy_step;
     osc_data[1][i] = glbProfileProbability(EXP_FAR,l, m, 1,i*energy_step);
   }
   }
@@ -628,11 +628,24 @@ for (int g = 0;g<tSteps; g++){
 
 }
 
-void doPlotROOTProb(double plot_data_a[][baseline_steps],double plot_data_b[][baseline_steps],int option,const char* canvas_name){
+void doPlotROOTProb(double plot_data_a[][baseline_steps],double plot_data_b[][baseline_steps],int option,const char* canvas_name,int plot_type){
 
-for (int g = 0;g<baseline_steps; g++){
-    printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
-    printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+// for (int g = 0;g<baseline_steps; g++){
+//     printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+//     printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+//   }
+char *plottitle = NULL;
+char *xtitle = NULL;
+
+  if(plot_type == 1){
+    plottitle = (char*)"Plot of Vacuum Probabilities for 10 GeV";
+    xtitle = (char*)"Baseline L/E km/GeV";
+  }else if(plot_type == 0){
+    plottitle = (char*)"Plot of Matter Probabilities";
+    xtitle = (char*)"E GeV";
+  }else{
+    plottitle = (char*)"error1";
+    xtitle = (char*)"errorx1";
   }
   plot_data_a[1][0] = plot_data_a[1][1];
   plot_data_b[1][0] = plot_data_b[1][1];
@@ -651,10 +664,10 @@ for (int g = 0;g<baseline_steps; g++){
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("Plot of Probabilities for 10 GeV");
+  mg->SetTitle(plottitle);
   mg->Add(spa);
   mg->Add(spb);
-  mg->GetXaxis()->SetTitle("Baseline L/E km/GeV");
+  mg->GetXaxis()->SetTitle(xtitle);
   mg->GetYaxis()->SetTitle("Probability of oscillation");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
@@ -670,8 +683,8 @@ for (int g = 0;g<baseline_steps; g++){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: 2->3","lp");
-  legend->AddEntry(spb,"series B: 1->3","lp");
+  legend->AddEntry(spa,"series A: 1->2","lp");
+  legend->AddEntry(spb,"series B: 1->1","lp");
   legend->Draw();
 
   myCanvas->Update();
@@ -681,7 +694,7 @@ for (int g = 0;g<baseline_steps; g++){
 
   if (option == 1){
 
-  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/OscillationProbablity/Plotting/Output/";
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/OscillationProbability/Plotting/Output/";
   string file_svg = ".svg";
   string file_pdf = ".pdf";
 
@@ -818,19 +831,19 @@ int main(int argc, char *argv[])
 double plot_data_prob_1[2][baseline_steps];
 double plot_data_prob_2[2][baseline_steps];
 
-getOscillation(plot_data_prob_1,100.0,900000.0,10,1,3,1);
-getOscillation(plot_data_prob_2,100.0,900000.0,10,2,3,1);
+getOscillation(plot_data_prob_1,100.0,4E6,10,1,2,1);
+getOscillation(plot_data_prob_2,100.0,4E6,10,1,1,1);
 
-doPlotROOTProb(plot_data_prob_2,plot_data_prob_1,0,"Probability Plot");
+doPlotROOTProb(plot_data_prob_2,plot_data_prob_1,1,"OSCProbabilityPlot",1);
 
 userConfirm();
 double plot_data_probProf_1[2][baseline_steps];
 double plot_data_probProf_2[2][baseline_steps];
 
-getOscillation(plot_data_probProf_1,100.0,900000.0,10,1,3,0);
-getOscillation(plot_data_probProf_2,100.0,900000.0,10,2,3,0);
+getOscillation(plot_data_probProf_1,100.0,4E2,0.1,1,2,0);
+getOscillation(plot_data_probProf_2,100.0,4E2,0.1,1,1,0);
 
-doPlotROOTProb(plot_data_probProf_2,plot_data_probProf_1,0,"Probability Profile Plot");
+doPlotROOTProb(plot_data_probProf_2,plot_data_probProf_1,1,"OSCProbabilityProfilePlot",0);
 
 // double plot_data_statvsys_a[2][tSteps];
 // double plot_data_statvsys_b[2][tSteps];
