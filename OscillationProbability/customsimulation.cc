@@ -523,18 +523,18 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
 const int baseline_steps = 600;
 
 void getOscillation(double osc_data[][baseline_steps],double min_base,double max_base,double energy,int l,int m,int option){
-  double baseline = ((max_base-min_base)/baseline_steps)/energy;
+  double baseline = ((max_base-min_base)/baseline_steps)*1000;
   if(option ==1){
   for(int i = 0;i< baseline_steps;i++){
-    osc_data[0][i] = (i * baseline)/energy;
+    osc_data[0][i] = (i * baseline)/(energy*1000);
     osc_data[1][i] = glbVacuumProbability(l, m, 1,energy,i*baseline);
     // osc_data[0][i] = baseline * i;
     // osc_data[1][i] = i*energy;
     }
   }else if(option==0){
-    double energy_step = energy/baseline_steps;
+    double energy_step = energy*1000/baseline_steps;
     for(int i = 0;i< baseline_steps;i++){
-    osc_data[0][i] = i * energy_step;
+    osc_data[0][i] = i * energy_step/1000;
     osc_data[1][i] = glbProfileProbability(EXP_FAR,l, m, 1,i*energy_step);
   }
   }
@@ -630,10 +630,10 @@ for (int g = 0;g<tSteps; g++){
 
 void doPlotROOTProb(double plot_data_a[][baseline_steps],double plot_data_b[][baseline_steps],int option,const char* canvas_name,int plot_type){
 
-// for (int g = 0;g<baseline_steps; g++){
-//     printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
-//     printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
-//   }
+for (int g = 0;g<baseline_steps; g++){
+    printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+    printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+  }
 char *plottitle = NULL;
 char *xtitle = NULL;
 
@@ -831,19 +831,19 @@ int main(int argc, char *argv[])
 double plot_data_prob_1[2][baseline_steps];
 double plot_data_prob_2[2][baseline_steps];
 
-getOscillation(plot_data_prob_1,100.0,4E6,10,1,2,1);
-getOscillation(plot_data_prob_2,100.0,4E6,10,1,1,1);
+getOscillation(plot_data_prob_1,100.0,1E3,10,1,2,1);
+getOscillation(plot_data_prob_2,100.0,1E3,10,1,1,1);
 
-doPlotROOTProb(plot_data_prob_2,plot_data_prob_1,1,"OSCProbabilityPlot",1);
+doPlotROOTProb(plot_data_prob_1,plot_data_prob_2,1,"OSCProbabilityPlotC",1);
 
 userConfirm();
 double plot_data_probProf_1[2][baseline_steps];
 double plot_data_probProf_2[2][baseline_steps];
 
-getOscillation(plot_data_probProf_1,100.0,4E2,0.1,1,2,0);
-getOscillation(plot_data_probProf_2,100.0,4E2,0.1,1,1,0);
+getOscillation(plot_data_probProf_1,100.0,4E2,12,1,2,0);
+getOscillation(plot_data_probProf_2,100.0,4E2,12.1,1,1,0);
 
-doPlotROOTProb(plot_data_probProf_2,plot_data_probProf_1,1,"OSCProbabilityProfilePlot",0);
+doPlotROOTProb(plot_data_probProf_1,plot_data_probProf_2,1,"OSCProbabilityProfilePlotC",0);
 
 // double plot_data_statvsys_a[2][tSteps];
 // double plot_data_statvsys_b[2][tSteps];
