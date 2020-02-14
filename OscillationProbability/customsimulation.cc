@@ -532,10 +532,10 @@ void getOscillation(double osc_data[][baseline_steps],double min_base,double max
     // osc_data[1][i] = i*energy;
     }
   }else if(option==0){
-    double energy_step = energy*1000/baseline_steps;
+    double energy_step = energy/baseline_steps;
     for(int i = 0;i< baseline_steps;i++){
-    osc_data[0][i] = i * energy_step/1000;
-    osc_data[1][i] = glbProfileProbability(EXP_FAR,l, m, 1,i*energy_step);
+    osc_data[0][i] = i * energy_step;
+    osc_data[1][i] = glbProfileProbability(EXP_FAR,l, m, 1,i*energy_step/1000);
   }
   }
   
