@@ -6,6 +6,8 @@
 #include <TH2.h>
 #include <TFile.h>
 #include <TRandom.h>
+#include <TMatrix.h>
+#include <TMatrixD.h>
 
 /* 
 Try to make a correlation matrix
@@ -14,6 +16,11 @@ Try to make a correlation matrix
 
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
+
+  const int mat_len = 200;
+  TMatrixD covariance_matrix(200,200);
+  TMatrixD correlation_matrix(200,200);
+  double_t matrix_data[200*200];
 
   //two detectors, close together, energy from 0-5
 
@@ -116,7 +123,7 @@ int main(int argc, char* argv[])
 	     //fake11->Fill(Eres,ifake);
 
 	     Euniverse1[k]->Fill(E1,i1);
-	     Euniverse1[k]->Fill(E2+5.0,i2);
+	     Euniverse1[k]->Fill(E2,i2); //E2+5.0
 
 	  } ///finished spectrum generation for this k universe
 	std::cout<<" finished this universe "<<k<<std::endl;
@@ -142,15 +149,44 @@ int main(int argc, char* argv[])
 		    mary = Espec2->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
 		  }
 		mat->SetBinContent(i+1,j+1,alan*mary/float(iuniverse));
+
+    // storing covariance matrix data
+    matrix_data[i*(mat_len-1)+j] = alan*mary/float(iuniverse);
+    covariance_matrix[i][j] += alan*mary/float(iuniverse);
+    correlation_matrix[i][j] += alan*mary/float(iuniverse);
+
+    
 		if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
 	      }
 	  }
       }
+
+    for(int w=0;w<mat_len;w++){
+      printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
+      correlation_matrix[w][w] = correlation_matrix[w][w] + 0.001;
+      printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
+    }
+   //adding covariance values into matrix object
+    // covariance_matrix.SetMatrixArray(matrix_data);
+    // correlation_matrix.SetMatrixArray(matrix_data);
+
+    double_t det;
+    correlation_matrix.Invert(&det);
+
+    TH2D *cov_hist = new TH2D(covariance_matrix);
+    TH2D *cor_hist = new TH2D(correlation_matrix);
+    cov_hist->SetName("covariance1");
+    cor_hist->SetName("correlation1");
+    printf("The determinant is %f \n",det);
+
+
    std::cout<<" made the covey matrix "<<std::endl;
    TFile *newfile = new TFile("covey.root","RECREATE");
    newfile->cd();
    mat->Write();
    Euniverse1[4]->Write();
+   cov_hist->Write();
+   cor_hist->Write();
    newfile->Close();
 	  
 }
