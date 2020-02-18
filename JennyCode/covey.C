@@ -3,11 +3,26 @@
 #include <cmath>
 #include <stdlib.h>
 
+using namespace std;
+
 #include <TH2.h>
 #include <TFile.h>
 #include <TRandom.h>
 #include <TMatrix.h>
 #include <TMatrixD.h>
+#include <TCanvas.h>
+#include <TPaveStats.h>
+#include <TApplication.h>
+
+
+
+int userConfirm(){
+  int kz;
+  cout << "Please enter binary confirmation for plotting: ";
+  cin >> kz;
+  cout << "The value you entered is " << kz << ".\n";
+  return kz;
+}
 
 /* 
 Try to make a correlation matrix
@@ -16,6 +31,8 @@ Try to make a correlation matrix
 
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
+
+  TApplication *app = new TApplication("app", &argc, argv);
 
   const int mat_len = 200;
   TMatrixD covariance_matrix(200,200);
@@ -179,8 +196,8 @@ int main(int argc, char* argv[])
     cor_hist->SetName("correlation1");
     printf("The determinant is %f \n",det);
 
-
-   std::cout<<" made the covey matrix "<<std::endl;
+   //Output to file
+   std::cout<<" made the covey matrix \n";
    TFile *newfile = new TFile("covey.root","RECREATE");
    newfile->cd();
    mat->Write();
@@ -188,6 +205,88 @@ int main(int argc, char* argv[])
    cov_hist->Write();
    cor_hist->Write();
    newfile->Close();
+
+   if (userConfirm() == 1){
+//Some Plotting of matrices and other stuff
+    std::cout<<"Starting plotting \n ";
+
+    TH2D *cov_hist_plot = new TH2D("covaraince1","Covaraince",200,0.0,10.0,200,0.0,10.0);
+    TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
+    
+    const char* canvas_name = "Generated Covariance Matrices";
+
+
+    auto myCanvas = new TCanvas(canvas_name,canvas_name);
+
+    myCanvas->SetGrid();
+    myCanvas->Divide(2,1);
+
+
+    for(int i = 0; i<200; i++){
+      for(int j = 0; j<200; j++){
+        cov_hist_plot->SetBinContent(i+1,j+1,covariance_matrix[i][j]);
+        cor_hist_plot->SetBinContent(i+1,j+1,correlation_matrix[i][j]);
+      }
+    }
+    
+    myCanvas->cd(1);
+    gPad->SetLogz();
+    gPad->SetRightMargin(0.15);
+    cov_hist_plot->Draw("COLZ");
+    
+
+    myCanvas->cd(2);
+    gPad->SetLogz();
+    gPad->SetRightMargin(0.15);
+    cor_hist_plot->Draw("COLZ");
+
+    
+    
+    gPad->Update();
+    TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
+    TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
+
+    //stat box position
+    st1->SetX2NDC(0.2); 
+    st1->SetY2NDC(0.65); 
+    st1->SetX1NDC(0.4); 
+    st1->SetY1NDC(0.85); 
+
+    //myCanvas->Update();
+
+    st1->SetOptStat(111110110);
+
+    st2->SetX2NDC(0.2); 
+    st2->SetY2NDC(0.65); 
+    st2->SetX1NDC(0.4); 
+    st2->SetY1NDC(0.85); 
+
+    st2->SetOptStat(111110110);
+
+    myCanvas->Update();
+    
+    string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/JennyCode/Plotting/";
+    string file_svg = ".svg";
+    string file_pdf = ".pdf";
+
+
+    string filestring1 = filepath + (string)canvas_name + file_svg;
+    char filename1[filestring1.length() + 1];
+    strcpy(filename1,filestring1.c_str());
+
+    string filestring2 = filepath + (string)canvas_name + file_pdf;
+    char filename2[filestring2.length() + 1];
+    strcpy(filename2,filestring2.c_str());
+
+    if(userConfirm()==1){
+    myCanvas->SaveAs(filename1);
+    myCanvas->SaveAs(filename2);
+    }
+   }
+   
+    
+
+    app->Run();
 	  
 }
 
