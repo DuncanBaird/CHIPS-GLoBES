@@ -178,9 +178,10 @@ int main(int argc, char* argv[])
 	  }
       }
 
+    double singular_adjust = 0.001;
     for(int w=0;w<mat_len;w++){
       printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
-      correlation_matrix[w][w] = correlation_matrix[w][w] + 0.001;
+      correlation_matrix[w][w] = correlation_matrix[w][w] + singular_adjust;
       printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
     }
    //adding covariance values into matrix object
