@@ -8,6 +8,7 @@
 #include <TApplication.h>
 #include <TFile.h>
 #include <TCanvas.h>
+#include <TMatrixD.h>
 #include <TH2D.h>
 #include <TPaveStats.h>
 #include "initialsimulation.h"
@@ -83,6 +84,32 @@ inline double likelihood(double true_rate, double fit_rate, double sqr_sigma)
     return square(true_rate - fit_rate) / sqr_sigma;
   else
     return 0.0;
+}
+
+// Taken from glb_sys.c in GLoBES Library
+double glb_likelihood(double true_rate, double fit_rate)
+{
+  double res;
+  res = fit_rate - true_rate;
+  if (true_rate > 0)
+  {
+    if (fit_rate <= 0.0)
+      res = 1e100;
+    else
+      res += true_rate * log(true_rate/fit_rate);
+  }
+  else
+    res = fabs(res);
+
+  return 2.0 * res;
+
+}
+
+// Taken from glb_sys.c in GLoBES Library
+double glb_prior(double x, double center, double sigma)
+{
+  double tmp = (x - center)/sigma;
+  return tmp*tmp;
 }
 
 
@@ -221,6 +248,45 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
   return chi2;
 }
 
+/********************************************************
+ * My Custom chi squared function
+ * Uses covariance matrix in computation
+ ********************************************************/
+
+
+double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
+                 void *user_data)
+{
+  double *true_rates       = glbGetRuleRatePtr(exp, rule);
+  double *signal_fit_rates = glbGetSignalFitRatePtr(exp, rule);
+  double *bg_fit_rates     = glbGetBGFitRatePtr(exp, rule);
+  double bg_norm_center, bg_tilt_center;
+  int ew_low, ew_high;
+  double fit_rate;
+  double chi2 = 0.0;
+  int i;
+
+  glbGetEnergyWindowBins(exp, rule, &ew_low, &ew_high);
+  glbGetBGCenters(exp, rule, &bg_norm_center, &bg_tilt_center);
+  for (i=ew_low; i <= ew_high; i++)
+  {
+    fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
+    chi2 += glb_likelihood(true_rates[i], fit_rate);
+  }
+
+  //NEW Contribution
+  //define TMatrixD delta = fit - true;
+  // delta.Transpose()
+  //chi2+= delta_transpose * inverse_covariance * delta
+  TMatrixD testDelta;
+  //cout << "hello world\n";
+
+
+  return chi2 +0.5;
+}
+
+
+
 
 /***************************************************************************
  *          W R A P P E R   F O R   G S L   R O O T   F I N D E R          *
@@ -244,7 +310,7 @@ double DoChiSquare(double x, void *dummy)
   /* Compute Chi^2 for all loaded experiments and all rules
    * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */
   chi2 = glbChiSys(test_values,GLB_ALL,GLB_ALL);//glbChiTheta13(test_values,NULL, GLB_ALL);
-
+  cout << chi2<<"\n";
   return chi2 - chi2_goal;
 }
 
@@ -653,6 +719,9 @@ int main(int argc, char *argv[])
   glbDefineChiFunction(&chiDCNorm,     5,        "chiDCNorm",     NULL);
   glbDefineChiFunction(&chiDCSpectral, 5+n_bins, "chiDCSpectral", NULL);
 
+  // Defining my chi function in GLoBES
+  glbDefineChiFunction(&chiCOV,     5,        "chiCOV",     NULL);
+
   gsl_set_error_handler(&gslError);    /* Initialize GSL root finder */
   gsl_func.function = &DoChiSquare;
   gsl_func.params   = NULL;
@@ -717,6 +786,9 @@ double plot_data_statvsys_b[2][tSteps];
 double plot_data_statvsysSPECTRAL_a[2][tSteps];
 double plot_data_statvsysSPECTRAL_b[2][tSteps];
 
+double plot_data_statvsysCOV_a[2][tSteps];
+double plot_data_statvsysCOV_b[2][tSteps];
+
 
 //ComputeSensitivityCurve();
 
@@ -727,23 +799,27 @@ double plot_data_statvsysSPECTRAL_b[2][tSteps];
 
 
 printf("Starting curve calculations \n");
+glbSetChiFunction(EXP_FAR, 0, GLB_ON, "ChiNoSysSpectrum", sys_errors);
+glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "ChiNoSysSpectrum", sys_errors);
 ComputeSensitivityCurve3(plot_data_statvsys_a,1);
 ComputeSensitivityCurve3(plot_data_statvsys_b,0);
 
 
-old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
-  sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
-  for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
-    sys_errors[i] = old_sys_errors[i];
-  for (i=sys_dim; i < sys_dim + n_bins; i++)
-    sys_errors[i] = 0.02;                                          /* Spectral error */
-  sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
   glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiZero", sys_errors);
   glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiZero", sys_errors);
   ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_a,1);
   ComputeSensitivityCurve3(plot_data_statvsysSPECTRAL_b,0);
 
 
+  //glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiDCNormCOV", sys_errors);
+  //glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiDCNormCOV", sys_errors);
+  cout << "testing my function \n";
+  glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiCOV", sys_errors);
+  glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiCOV", sys_errors);
+
+  
+  ComputeSensitivityCurve3(plot_data_statvsysCOV_a,1);
+  ComputeSensitivityCurve3(plot_data_statvsysCOV_b,0);
 
 
 
@@ -754,10 +830,10 @@ printf("Commencing potting \n");
 
   
   userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"statvsysDefault");
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,0,"statvsysSpectrum");
 
   userConfirm();
-  doPlotROOT(plot_data_statvsysSPECTRAL_a,plot_data_statvsysSPECTRAL_b,1,"statvsysChiZero");
+  doPlotROOT(plot_data_statvsysCOV_a,plot_data_statvsysCOV_b,0,"statvCOV");
 
   // for (int g = 0;g<tSteps; g++){
   //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
