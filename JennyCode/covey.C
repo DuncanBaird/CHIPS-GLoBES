@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 	     //fake11->Fill(Eres,ifake);
 
 	     Euniverse1[k]->Fill(E1,i1);
-	     Euniverse1[k]->Fill(E2,i2); //E2+5.0
+	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
 
 	  } ///finished spectrum generation for this k universe
 	std::cout<<" finished this universe "<<k<<std::endl;
