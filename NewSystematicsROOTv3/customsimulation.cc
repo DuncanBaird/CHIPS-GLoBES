@@ -16,6 +16,7 @@
 #include <TGraph.h>
 #include <TMultiGraph.h>
 #include <TLegend.h>
+#include <TRandom.h>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -110,6 +111,172 @@ double glb_prior(double x, double center, double sigma)
 {
   double tmp = (x - center)/sigma;
   return tmp*tmp;
+}
+
+/***************************************************
+ * Function to create covariance matrix
+ * Pulled from covey.C
+ * 
+ ***************************************************/
+void generate_covariance(TMatrixD covariance_matrix){
+  
+ const int mat_len = 200;
+  //TMatrixD covariance_matrix(200,200);
+  TMatrixD correlation_matrix(200,200);
+  double_t matrix_data[200*200];
+
+  //two detectors, close together, energy from 0-5
+
+   TH2D *mat = new TH2D("mat","mat",200,0.0,10.0,200,0.0,10.0);
+   int iuniverse=100;
+   char no[5];
+
+   TH1F *Euniverse1[100];
+   TRandom *g = new TRandom();
+   for (int i=0; i<iuniverse; i++)
+     {
+       sprintf (no, "no%d",i);
+       Euniverse1[i] = new TH1F(no,no,200,0.0,10.0);
+     }
+
+   //generate the event spectra
+
+
+   /*MINOS*/
+
+   TFile *ff3 = new TFile("TrueE.root");
+   TH1F *Espec1 = (TH1F*)ff3->Get("trueE_0to5");
+   Espec1->SetName("Espec1");
+
+
+   double c = 2.99792458e8;
+   double pi = 3.1415926535;
+
+   double t23 = 45.0/360.0*2.0*pi;
+   double sint23 = sin(t23);
+   double sin2t23 = sin(2.0*t23);
+   double cost23 = cos(t23);
+   double sinsqt23 = sint23*sint23;
+   double cossqt23 = cost23*cost23;
+
+   //   double t13 = 8.73/360.0*2.0*pi; //Daya Bay
+   double t13 = 9.22/360.0*2.0*pi; //Average
+   //double t13 = 15.0/360.0*2.0*pi; //code testing
+
+   double sint13 = sin(t13);
+   double sin2t13 = sin(t13*2.0);
+   double sinsq2t13 = sin2t13*sin2t13;
+   double cost13 = cos(t13);
+   double cossqt13 = cost13*cost13;
+
+   double t12 = 33.96/360.0*2.0*pi;
+   double sin2t12 = sin(2.0*t12);
+   double sinsq2t12 = sin2t12*sin2t12;
+   double sint12 = sin(t12);
+   double sinsqt12 = sint12*sint12;
+
+   double Dmsq31NH = 2.45e-3;  //Sushant's values
+   double Dmsq31IH = -2.31e-3;
+   double Dmsq21 = 7.6e-5;
+
+   double countchips, countminos, countt2k, countnova;
+   double countminoschips, countminosnova, countt2knova, countall;
+   double a = 1./4000.0;
+   double ab = -1./4000.0;
+   double AhatNHn = a/Dmsq31NH;
+   double AhatIHn = a/Dmsq31IH;
+
+   double AhatNHb = ab/Dmsq31NH;
+   double AhatIHb = ab/Dmsq31IH;
+
+   double alphaNH = Dmsq21/Dmsq31NH;
+   double alphaIH = Dmsq21/Dmsq31IH;
+
+   double deltacp=0.0;
+
+   //make the NOVA spectrum
+   TH1D *Espec2 = new TH1D("Espec2","Espec2",100,0.0,5.0);
+   for (int i=0;i<10000;i++)
+     {
+       Espec2->Fill(g->Gaus(2.0,0.3));
+     }
+
+   //make the universes based on the real event spectrum
+   std::cout<<" making the universes "<<std::endl;
+   for (int k=0; k<100; k++) 
+      {
+	//use Fill instead of SetBinContent to allow for resolution smearing later
+	//clear and reset the spectra histograms for each fake experiment
+
+        for (int i=0; i<100; i++) //energy bins
+          {
+	    //E1 is MINOS or CHIPS, E2 is NOVA
+	     double E1 = Espec1->GetBinCenter(i+1);
+	     double Ewt1 = Espec1->GetBinContent(i+1);
+	     double E2 = Espec2->GetBinCenter(i+1);
+	     double Ewt2 = Espec2->GetBinContent(i+1);
+	     //for each energy bin, throw a possion based on no entries
+	     float i1 = g->Poisson(Ewt1);
+	     float i2 = g->Poisson(Ewt2);
+	     //now lets put in a constant E shift
+	     E1 = E1+0.05*E1;
+	     E2 = E2+0.05*E2;
+	     //float rfake = g->Gaus(E,res[0]/sqrt(E));
+	     //float Eres = E;//+rfake;
+	     //fake11->Fill(Eres,ifake);
+
+	     Euniverse1[k]->Fill(E1,i1);
+	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
+
+	  } ///finished spectrum generation for this k universe
+	std::cout<<" finished this universe "<<k<<std::endl;
+	for (int i=0; i<200; i++)
+	  {
+	    for (int j=0; j<200; j++)
+	      {
+		double alan, mary;
+		if(i<100)
+		  {
+		    alan = Espec1->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		  }
+		if(j<100)
+		  {
+		    mary = Espec1->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		  }
+		if(i>101)
+		  {
+		    alan = Espec2->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		  }
+		if(j>101)
+		  {
+		    mary = Espec2->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		  }
+		mat->SetBinContent(i+1,j+1,alan*mary/float(iuniverse));
+
+    // storing covariance matrix data
+    matrix_data[i*(mat_len-1)+j] = alan*mary/float(iuniverse);
+    covariance_matrix[i][j] += alan*mary/float(iuniverse);
+    correlation_matrix[i][j] += alan*mary/float(iuniverse);
+
+    
+		if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+	      }
+	  }
+      }
+
+    double singular_adjust = 0.001;
+    for(int w=0;w<mat_len;w++){
+      printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
+      correlation_matrix[w][w] = correlation_matrix[w][w] + singular_adjust;
+      printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
+    }
+   //adding covariance values into matrix object
+    // covariance_matrix.SetMatrixArray(matrix_data);
+    // correlation_matrix.SetMatrixArray(matrix_data);
+
+    double_t det;
+    correlation_matrix.Invert(&det);
+
 }
 
 
@@ -253,6 +420,10 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
  * Uses covariance matrix in computation
  ********************************************************/
 
+TMatrixD covariance_matrix_1(200,200);
+generate_covariance(covariance_matrix_1);
+  
+
 
 double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
                  void *user_data)
@@ -276,11 +447,30 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
 
   //NEW Contribution
   //define TMatrixD delta = fit - true;
-  // delta.Transpose()
-  //chi2+= delta_transpose * inverse_covariance * delta
-  TMatrixD testDelta;
-  //cout << "hello world\n";
+  TMatrixD delta1(200,1);
+  TMatrixD delta2(200,1);
 
+  for(int i=0;i<200;i++){
+    delta1[i][0] = 1;
+    delta2[i][0] = 1;
+  }
+
+  // delta.Transpose()
+  delta1.T();
+
+  //covariance
+  double_t det1;
+  covariance_matrix_1.Invert(&det1);
+  //chi2+= delta_transpose * inverse_covariance * delta
+  double test_result;
+  TMatrixD dummy1;
+  TMatrixD dummy2;
+
+  dummy1.Mult(delta1,covariance_matrix_1);
+  dummy2.Mult(dummy1,delta2);
+
+  test_result = 1;
+  //cout << "hello world\n";
 
   return chi2 +0.5;
 }
@@ -817,6 +1007,10 @@ ComputeSensitivityCurve3(plot_data_statvsys_b,0);
   glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiCOV", sys_errors);
   glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiCOV", sys_errors);
 
+  
+  // Moved to before function call
+  // TMatrixD covariance_matrix_1(200,200);
+  // generate_covariance(covariance_matrix_1);
   
   ComputeSensitivityCurve3(plot_data_statvsysCOV_a,1);
   ComputeSensitivityCurve3(plot_data_statvsysCOV_b,0);
