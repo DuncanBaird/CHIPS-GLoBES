@@ -274,8 +274,8 @@ void generate_covariance(TMatrixD covariance_matrix){
     // covariance_matrix.SetMatrixArray(matrix_data);
     // correlation_matrix.SetMatrixArray(matrix_data);
 
-    double_t det;
-    correlation_matrix.Invert(&det);
+    // double_t det;
+    // correlation_matrix.Invert(&det);
 
 }
 
@@ -421,7 +421,7 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
  ********************************************************/
 
 TMatrixD covariance_matrix_1(200,200);
-generate_covariance(covariance_matrix_1);
+
   
 
 
@@ -454,22 +454,25 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
     delta1[i][0] = 1;
     delta2[i][0] = 1;
   }
-
+  cout << "debug1";
   // delta.Transpose()
   delta1.T();
-
+  cout << "debug2";
   //covariance
   double_t det1;
   covariance_matrix_1.Invert(&det1);
+  cout << "debug3";
   //chi2+= delta_transpose * inverse_covariance * delta
   double test_result;
   TMatrixD dummy1;
   TMatrixD dummy2;
-
+  cout << "debug4";
   dummy1.Mult(delta1,covariance_matrix_1);
+  cout << "debug5";
   dummy2.Mult(dummy1,delta2);
-
+  cout << "debug6";
   test_result = 1;
+  cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
 
   return chi2 +0.5;
@@ -500,7 +503,7 @@ double DoChiSquare(double x, void *dummy)
   /* Compute Chi^2 for all loaded experiments and all rules
    * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */
   chi2 = glbChiSys(test_values,GLB_ALL,GLB_ALL);//glbChiTheta13(test_values,NULL, GLB_ALL);
-  cout << chi2<<"\n";
+  //cout << chi2<<"\n";
   return chi2 - chi2_goal;
 }
 
@@ -989,8 +992,9 @@ double plot_data_statvsysCOV_b[2][tSteps];
 
 
 printf("Starting curve calculations \n");
-glbSetChiFunction(EXP_FAR, 0, GLB_ON, "ChiNoSysSpectrum", sys_errors);
-glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "ChiNoSysSpectrum", sys_errors);
+glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiNoSysSpectrum", sys_errors);
+glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiNoSysSpectrum", sys_errors);
+cout <<"after break\n";
 ComputeSensitivityCurve3(plot_data_statvsys_a,1);
 ComputeSensitivityCurve3(plot_data_statvsys_b,0);
 
@@ -1004,6 +1008,9 @@ ComputeSensitivityCurve3(plot_data_statvsys_b,0);
   //glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiDCNormCOV", sys_errors);
   //glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiDCNormCOV", sys_errors);
   cout << "testing my function \n";
+
+  generate_covariance(covariance_matrix_1);
+
   glbSetChiFunction(EXP_FAR, 0, GLB_ON, "chiCOV", sys_errors);
   glbSetChiFunction(EXP_NEAR, 0, GLB_ON, "chiCOV", sys_errors);
 
