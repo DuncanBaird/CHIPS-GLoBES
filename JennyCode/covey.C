@@ -44,11 +44,29 @@ void histInterpolate(TH1F *Euniverse1){
      }
    }
 }
+/*
+* Apply errors to energy bins, specify errors as decimals
+* option = 1 for both, 0 for shift only, -1 for neither
+*/
+void errorApply(double &energy, double calibration, double shift,int option){
+  if(option == 1){
+    energy = (1-calibration)*energy + shift*energy;
+  }else if (option == 0)
+  {
+    energy = (1)*energy + shift*energy;
+  }else if (option == -1)
+  {
+    energy = energy;
+  } 
+}
 
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
 
   TApplication *app = new TApplication("app", &argc, argv);
+
+  double calibration_e = 0.04;
+  double shift_e = 0.05;
 
   const int mat_len = 200;
   TMatrixD covariance_matrix(200,200);
@@ -149,8 +167,11 @@ int main(int argc, char* argv[])
 	     float i1 = g->Poisson(Ewt1);
 	     float i2 = g->Poisson(Ewt2);
 	     //now lets put in a constant E shift
-	     E1 = E1+0.05*E1;
-	     E2 = E2+0.05*E2;
+
+       errorApply(E1,calibration_e,shift_e,1);
+       errorApply(E2,calibration_e,shift_e,1);
+	    //  E1 = E1+0.05*E1;
+	    //  E2 = E2+0.05*E2;
 	     //float rfake = g->Gaus(E,res[0]/sqrt(E));
 	     //float Eres = E;//+rfake;
 	     //fake11->Fill(Eres,ifake);
