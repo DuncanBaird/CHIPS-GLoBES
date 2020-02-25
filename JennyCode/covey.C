@@ -301,7 +301,7 @@ int main(int argc, char* argv[])
     cout << bin_label << "\n";
     Euniverse1[universe_choice]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
   }
-   Euniverse1[universe_choice]->LabelsOption("v","X");
+   Euniverse1[universe_choice]->LabelsOption("h","X");
    Euniverse1[universe_choice]->SetTitle("Energy Spectrum");
 
    Euniverse1[universe_choice]->GetXaxis()->SetTitle("E GeV");
@@ -312,13 +312,13 @@ int main(int argc, char* argv[])
     myCanvas->cd(1);
     gPad->SetRightMargin(0.15);
     Euniverse1[universe_choice]->Draw("hist");
-    Euniverse1[universe_choice]->LabelsOption("v","X");
+    //Euniverse1[universe_choice]->LabelsOption("v","X");
   
 
     myCanvas->cd(2);
     gPad->SetRightMargin(0.15);
     Euniverse1[universe_choice]->Draw("hist");
-    Euniverse1[universe_choice]->LabelsOption("v","X");
+    //Euniverse1[universe_choice]->LabelsOption("v","X");
 
     // TPaveStats *st3 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
     // TPaveStats *st4 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
