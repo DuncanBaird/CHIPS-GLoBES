@@ -29,6 +29,22 @@ Try to make a correlation matrix
 
 */
 
+void histInterpolate(TH1F *Euniverse1){
+  //Interpolate gaps
+  for(int i = 0; i<200; i++){
+     double bin_content =  Euniverse1->GetBinContent(i);
+     
+     if(bin_content == 0){
+       
+       double left_bin = Euniverse1->GetBinContent(i+1);
+       double right_bin = Euniverse1->GetBinContent(i-1);
+       if((left_bin != 0) && (right_bin!=0) ){
+         Euniverse1->SetBinContent(i,(left_bin+right_bin)/2);
+       }
+     }
+   }
+}
+
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
 
@@ -143,6 +159,7 @@ int main(int argc, char* argv[])
 	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
 
 	  } ///finished spectrum generation for this k universe
+    histInterpolate(Euniverse1[k]);
 	std::cout<<" finished this universe "<<k<<std::endl;
 	for (int i=0; i<200; i++)
 	  {
@@ -285,6 +302,8 @@ int main(int argc, char* argv[])
   // }
 
   int universe_choice = 3;
+
+  //Relabel axes
   for(int i=0; i<10; i++){
     int bin = Euniverse1[universe_choice]->GetXaxis()->FindBin(i);
     std::string bin_label;
@@ -301,6 +320,7 @@ int main(int argc, char* argv[])
     cout << bin_label << "\n";
     Euniverse1[universe_choice]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
   }
+  
    Euniverse1[universe_choice]->LabelsOption("h","X");
    Euniverse1[universe_choice]->SetTitle("Energy Spectrum");
 
@@ -341,6 +361,7 @@ int main(int argc, char* argv[])
     myCanvas->SaveAs(filename2);
     }
    }
+   
    
     
 
