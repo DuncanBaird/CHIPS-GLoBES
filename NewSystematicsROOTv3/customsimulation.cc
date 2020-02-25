@@ -17,6 +17,7 @@
 #include <TMultiGraph.h>
 #include <TLegend.h>
 #include <TRandom.h>
+#include <TError.h>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -451,8 +452,8 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   TMatrixD delta2(200,1);
 
   for(int i=0;i<200;i++){
-    delta1[i][0] = 1;
-    delta2[i][0] = 1;
+    delta1[i][0] = 50;
+    delta2[i][0] = 50;
   }
   cout << "debug1";
   // delta.Transpose()
@@ -460,18 +461,16 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   cout << "debug2";
   //covariance
   double_t det1;
-  covariance_matrix_1.Invert(&det1);
-  cout << "debug3";
   //chi2+= delta_transpose * inverse_covariance * delta
-  double test_result;
-  TMatrixD dummy1;
-  TMatrixD dummy2;
-  cout << "debug4";
-  dummy1.Mult(delta1,covariance_matrix_1);
-  cout << "debug5";
-  dummy2.Mult(dummy1,delta2);
-  cout << "debug6";
-  test_result = 1;
+  TMatrixD matrix_result = delta1 * covariance_matrix_1.Invert(&det1) * delta2;
+  // TMatrixD dummy1;
+  // TMatrixD dummy2;
+  // cout << "debug4";
+  // dummy1.Mult(delta1,covariance_matrix_1);
+  // cout << "debug5";
+  // dummy2.Mult(dummy1,delta2);
+   cout << "debug6";
+  double test_result = matrix_result[0][0];
   cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
 
@@ -885,6 +884,7 @@ int main(int argc, char *argv[])
 {
   //TApplication app{"customsimulation", &argc, argv};
   TApplication *app = new TApplication("app", &argc, argv);
+  gErrorIgnoreLevel = kFatal;
 
   TFile *file = new TFile("test.root", "RECREATE");
   file->Write();

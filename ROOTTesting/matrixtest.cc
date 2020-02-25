@@ -33,12 +33,13 @@ int setValue(TMatrixD &dummy1,int len_r,int len_c, int value){
 
 void matrixtest(){
 
-  const int len = 2;
+  const int len = 4;
 
   TMatrixD test1(len,len);
   TMatrixD test2(len,len);
 
   TMatrixD vertical(len,1);
+  TMatrixD vertical2(len,1);
   TMatrixD horizontal(1,len);
 
   // for(int i = 0;i<len;i++){
@@ -62,16 +63,46 @@ void matrixtest(){
   
 
   // test1.Print();
-  test2.Print();
+  // test2.Print();
 
   // TMatrixD test3 = test2 * test2;
 
   // test3.Print();
 
-  vertical.Print();
-  horizontal.Print();
+  // vertical.Print();
+  // horizontal.Print();
 
+  vertical2.T().Print();
+
+  test2[0][0] = 12.0;
+  test2.Print();
+
+
+  double det1;
+
+  test2.Invert(&det1);
+  test2.Print();
+
+  
   TMatrixD decomp = horizontal * test2 * vertical;
 
   decomp.Print();
+
+  double x = decomp[0][0];
+
+  cout << "chi is " << x << "\n";
+
+  TMatrixD delta1(200,1);
+  TMatrixD delta2(200,1);
+
+  TMatrixD covariance(200,200);
+  setValue(covariance,200,200,6);
+  covariance[0][0] = 100.0;
+
+  for(int i=0;i<200;i++){
+    delta1[i][0] = 1;
+    delta2[i][0] = 1;
+  }
+  delta1.T();
+  (delta1*covariance.Invert(&det1)*delta2).Print();
 }
