@@ -151,19 +151,19 @@ int main(int argc, char* argv[])
 		double alan, mary;
 		if(i<100)
 		  {
-		    alan = Espec1->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		    alan = Espec1->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i+1);
 		  }
 		if(j<100)
 		  {
-		    mary = Espec1->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		    mary = Espec1->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j+1);
 		  }
 		if(i>101)
 		  {
-		    alan = Espec2->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		    alan = Espec2->GetBinContent(i+1-100) - Euniverse1[k]->GetBinContent(i+1);
 		  }
 		if(j>101)
 		  {
-		    mary = Espec2->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		    mary = Espec2->GetBinContent(j+1-100) - Euniverse1[k]->GetBinContent(j+1);
 		  }
 		mat->SetBinContent(i+1,j+1,alan*mary/float(iuniverse));
 
@@ -199,7 +199,7 @@ int main(int argc, char* argv[])
 
    //Output to file
    std::cout<<" made the covey matrix \n";
-   TFile *newfile = new TFile("covey.root","RECREATE");
+   TFile *newfile = new TFile("coveySIM.root","RECREATE");
    newfile->cd();
    mat->Write();
    Euniverse1[4]->Write();
