@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
 //Some Plotting of matrices and other stuff
     std::cout<<"Starting plotting \n ";
 
-    TH2D *cov_hist_plot = new TH2D("covaraince1","Covaraince",200,0.0,10.0,200,0.0,10.0);
+    TH2D *cov_hist_plot = new TH2D("covariance1","Covariance",200,0.0,10.0,200,0.0,10.0);
     TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
     
     const char* canvas_name = "Generated Covariance Matrices";
@@ -220,7 +220,7 @@ int main(int argc, char* argv[])
     auto myCanvas = new TCanvas(canvas_name,canvas_name);
 
     myCanvas->SetGrid();
-    myCanvas->Divide(2,1);
+    myCanvas->Divide(2,2);
 
 
     for(int i = 0; i<200; i++){
@@ -230,13 +230,19 @@ int main(int argc, char* argv[])
       }
     }
     
-    myCanvas->cd(1);
+    cov_hist_plot->GetXaxis()->SetTitle("E GeV");
+    cor_hist_plot->GetXaxis()->SetTitle("E GeV");
+    cov_hist_plot->GetYaxis()->SetTitle("E GeV");
+    cor_hist_plot->GetYaxis()->SetTitle("E GeV");
+
+    //// Plotting Matrices
+    myCanvas->cd(3);
     gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cov_hist_plot->Draw("COLZ");
     
 
-    myCanvas->cd(2);
+    myCanvas->cd(4);
     gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cor_hist_plot->Draw("COLZ");
@@ -246,6 +252,8 @@ int main(int argc, char* argv[])
     gPad->Update();
     TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
     TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
+
+    
 
     //stat box position
     st1->SetX2NDC(0.2); 
@@ -266,6 +274,55 @@ int main(int argc, char* argv[])
 
     myCanvas->Update();
     
+    //Relabelling Spectra
+  //   for (int i = 0; i < 10-1; ++i) {
+  //   int bin{Euniverse1[4]->GetXaxis()->FindBin(i)};
+  //   printf("bin number: %d \n",bin);
+  //   std::string bin_label{std::to_string(i % 10)};
+  //   Euniverse1[4]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+  //   //bin = Euniverse1[4]->GetYaxis()->FindBin(i);
+  //   //Euniverse1[4]->GetYaxis()->SetBinLabel(bin, bin_label.c_str());
+  // }
+
+  int universe_choice = 3;
+  for(int i=0; i<10; i++){
+    int bin = Euniverse1[universe_choice]->GetXaxis()->FindBin(i);
+    std::string bin_label;
+
+    if(i<=5){
+      bin_label = std::to_string(i);
+    }else if (i>5)
+    {
+      bin_label = std::to_string(i%5);
+    }
+    
+    //std::string bin_label{std::to_string(i % 10)};
+    printf("bin number: %d \n",bin);
+    cout << bin_label << "\n";
+    Euniverse1[universe_choice]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+  }
+   Euniverse1[universe_choice]->LabelsOption("v","X");
+   Euniverse1[universe_choice]->SetTitle("Energy Spectrum");
+
+   Euniverse1[universe_choice]->GetXaxis()->SetTitle("E GeV");
+   Euniverse1[universe_choice]->SetName("Merged");   
+   Euniverse1[universe_choice]->SetStats(false);
+  
+    ///Plotting Spectra
+    myCanvas->cd(1);
+    gPad->SetRightMargin(0.15);
+    Euniverse1[universe_choice]->Draw("hist");
+    Euniverse1[universe_choice]->LabelsOption("v","X");
+  
+
+    myCanvas->cd(2);
+    gPad->SetRightMargin(0.15);
+    Euniverse1[universe_choice]->Draw("hist");
+    Euniverse1[universe_choice]->LabelsOption("v","X");
+
+    // TPaveStats *st3 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
+    // TPaveStats *st4 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
+
     string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/JennyCode/Plotting/";
     string file_svg = ".svg";
     string file_pdf = ".pdf";
