@@ -628,32 +628,45 @@ for (int g = 0;g<tSteps; g++){
 
 }
 
-void doPlotROOTProb(double plot_data_a[][baseline_steps],double plot_data_b[][baseline_steps],int option,const char* canvas_name,int plot_type){
+void doPlotROOTProb(int l1, int m1, int l2,int m2,int option,const char* canvas_name,int plot_type){
 
-for (int g = 0;g<baseline_steps; g++){
-    printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
-    printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
-  }
+
+  double plot_data_prob_1[2][baseline_steps];
+  double plot_data_prob_2[2][baseline_steps];
+
+// for (int g = 0;g<baseline_steps; g++){
+//     printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+//     printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+//   }
 char *plottitle = NULL;
 char *xtitle = NULL;
 
   if(plot_type == 1){
     plottitle = (char*)"Plot of Vacuum Probabilities for 10 GeV";
     xtitle = (char*)"Baseline L/E km/GeV";
+
+
+    getOscillation(plot_data_prob_1,10.0,5E2,10,l1,m1,1);
+    getOscillation(plot_data_prob_2,10.0,5E2,10,l2,m2,1);
+
   }else if(plot_type == 0){
     plottitle = (char*)"Plot of Matter Probabilities";
     xtitle = (char*)"E GeV";
+
+  getOscillation(plot_data_prob_1,100.0,4E2,10,l1,m1,0);
+  getOscillation(plot_data_prob_2,100.0,4E2,10,l2,m2,0);
+
   }else{
     plottitle = (char*)"error1";
     xtitle = (char*)"errorx1";
   }
-  plot_data_a[1][0] = plot_data_a[1][1];
-  plot_data_b[1][0] = plot_data_b[1][1];
+  plot_data_prob_1[1][0] = plot_data_prob_1[1][1];
+  plot_data_prob_2[1][0] = plot_data_prob_2[1][1];
 
   auto myCanvas = new TCanvas(canvas_name,canvas_name);
   myCanvas->SetGrid();
-  auto spa = new TGraph(baseline_steps,plot_data_a[0],plot_data_a[1]);
-  auto spb = new TGraph(baseline_steps,plot_data_b[0],plot_data_b[1]);
+  auto spa = new TGraph(baseline_steps,plot_data_prob_1[0],plot_data_prob_1[1]);
+  auto spb = new TGraph(baseline_steps,plot_data_prob_2[0],plot_data_prob_2[1]);
 
   //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
 
@@ -668,7 +681,7 @@ char *xtitle = NULL;
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle(xtitle);
-  mg->GetYaxis()->SetTitle("Probability of oscillation");
+  mg->GetYaxis()->SetTitle("Probability");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
   // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
@@ -683,8 +696,12 @@ char *xtitle = NULL;
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: 2->2","lp");
-  legend->AddEntry(spb,"series B: 2->1","lp");
+  char dummy1[30];
+  sprintf(dummy1,"series A: %d->%d",l1,m1);
+  char dummy2[30];
+  sprintf(dummy2,"series A: %d->%d",l2,m2);
+  legend->AddEntry(spa,dummy1,"lp");
+  legend->AddEntry(spb,dummy2,"lp");
   legend->Draw();
 
   myCanvas->Update();
@@ -828,22 +845,13 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 
-double plot_data_prob_1[2][baseline_steps];
-double plot_data_prob_2[2][baseline_steps];
-
-getOscillation(plot_data_prob_1,10.0,5E2,10,2,2,1);
-getOscillation(plot_data_prob_2,10.0,5E2,10,2,1,1);
-
-doPlotROOTProb(plot_data_prob_1,plot_data_prob_2,1,"OSCProbabilityPlotv2",1);
+doPlotROOTProb(3,3,2,2,0,"OSCProbabilityPlotSurvMUvTAU",1);
+doPlotROOTProb(1,1,2,2,0,"OSCProbabilityPlotSurvMUvE",1);
 
 userConfirm();
-double plot_data_probProf_1[2][baseline_steps];
-double plot_data_probProf_2[2][baseline_steps];
 
-getOscillation(plot_data_probProf_1,100.0,4E2,1,2,2,0);
-getOscillation(plot_data_probProf_2,100.0,4E2,1,2,1,0);
+doPlotROOTProb(2,2,2,1,1,"OSCProbabilityProfilePlotv3",0);
 
-doPlotROOTProb(plot_data_probProf_1,plot_data_probProf_2,1,"OSCProbabilityProfilePlotv2",0);
 
 // double plot_data_statvsys_a[2][tSteps];
 // double plot_data_statvsys_b[2][tSteps];
