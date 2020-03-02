@@ -1,0 +1,4 @@
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i '1,2d' -- {} +
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i '$d' -- {} +
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i 's/,/ /g' -- {} +
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i 's/[}{:;]//g' -- {} +

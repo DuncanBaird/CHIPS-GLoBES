@@ -1,0 +1,17 @@
+to remove first lines of smear files
+
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i '1,2d' -- {} +
+
+to remove last lines
+
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i '$d' -- {} +
+
+to remove commas and replace with space
+
+
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i 's/,/ /g' -- {} +
+
+
+to remove curly braces
+'s/[aoe]//g'
+find "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear" -name '*.dat' -type f -exec sed -i 's/[}{:;]//g' -- {} +
