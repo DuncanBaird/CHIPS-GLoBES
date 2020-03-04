@@ -776,12 +776,20 @@ int main(int argc, char *argv[])
     sys_startval[i] = 0.0;
 
   /* Set standard oscillation parameters (cf. hep-ph/0405172v5) */
-  theta12 = asin(sqrt(0.3));
-  theta13 = 0.0;
-  theta23 = M_PI/4;
-  deltacp = M_PI/2;
+  // theta12 = asin(sqrt(0.3));
+  // theta13 = 0.0;
+  // theta23 = M_PI/4;
+  // deltacp = M_PI/2;
+  // sdm = 7.9e-5;
+  // ldm = 2.6e-3;
+
+  //NEW
+  theta12 = 0.586168;
+  theta13 = 0.147693;
+  theta23 = 0.72626;
+  deltacp = 0.0;
   sdm = 7.9e-5;
-  ldm = 2.6e-3;
+  ldm = 0.002524;
 
   glbInit(argv[0]);                    /* Initialize GLoBES and define chi^2 functions */
   glbDefineChiFunction(&chiDCNorm,     5,        "chiDCNorm",     NULL);
@@ -845,12 +853,16 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 
-doPlotROOTProb(3,3,2,2,0,"OSCProbabilityPlotSurvMUvTAU",1);
-doPlotROOTProb(1,1,2,2,0,"OSCProbabilityPlotSurvMUvE",1);
+doPlotROOTProb(3,3,2,2,1,"OSCProbabilityPlotSurvMUvTAUv4.1",1);
+doPlotROOTProb(1,1,2,2,1,"OSCProbabilityPlotSurvMUvEv4.1",1);
 
 userConfirm();
 
-doPlotROOTProb(2,2,2,1,1,"OSCProbabilityProfilePlotv3",0);
+doPlotROOTProb(2,2,2,1,1,"OSCProbabilityProfilePlotv4.1",0);
+
+userConfirm();
+
+doPlotROOTProb(2,2,2,1,1,"OSCProbabilityPlotSurvMUvE2v4.1",1);
 
 
 // double plot_data_statvsys_a[2][tSteps];
