@@ -236,12 +236,120 @@ void doPlotResolutions(std::vector<std::pair<std::string, std::vector<float>>> p
   for(auto i = energy_val.begin(); i!= energy_val.end();++i ){
 
     doResolutionHist(hs,energy_val[count],getSigma(mu_val[count],energy_val[count]),count);
-    printf("Number is %d: \n",count);
+    //printf("Number is %d: \n",count);
     ++count;
     
   }
   
   hs->Draw("nostack");
+}
+
+void doResolutionHist2(THStack* hs,float mean,float sigma,int j){
+  TRandom3 rndgen;
+  char no[5];
+  sprintf (no, "no-%d",j);
+  TH1* h1 = new TH1D(no, no, 1000, 0.0, 5000.0);
+
+  TF1  *f1 = new TF1(no,"gausn(0)",0,5500);
+  // f1->FixParameter(1,1.0);
+  // f1->FixParameter(2,0.5);
+  // f1->SetParameters(1.0,mean,sigma);
+  f1->SetParameter(0,1);
+  f1->SetParameter(1,mean);
+  f1->SetParameter(2,sigma);
+  printf("For mean: %f, sigma is: %f \n",mean,sigma);
+  f1->SetParameter(0,1/(f1->GetMaximum()));
+
+    
+
+
+  // for (int i=0;i < 1E3; ++i){
+
+  //   h1->Fill(rndgen.Gaus(mean,sigma));
+  // }
+
+  // h1->Fit(f1);
+
+  // for (int i = 0;i<h1->GetNbinsX();i++){
+
+  //   h1->SetBinContent(i,0.0);
+  // }
+
+  // h1->SetFillColorAlpha(0,0);
+  // h1->SetMarkerColorAlpha(0,0);
+
+  // h1->Draw("C");
+  // f1->Draw("SAME");
+
+  // hs->Add(h1);
+
+  if(j>0){
+    f1->Draw("SAME");
+  }else
+  {
+    f1->Draw();
+    f1->SetTitle("Energy Resolution Peaks");
+    f1->GetXaxis()->SetTitle("Energy MeV");
+    f1->GetYaxis()->SetTitle("Normalised Gaussian");
+  }
+  
+  TLine *line = new TLine(mean,0,mean,1);
+  line->SetLineStyle(kDashed);
+  line->Draw("SAME");
+
+  
+  //delete h1;
+  //delete f1;
+
+}
+
+void doPlotResolutions2(std::vector<std::pair<std::string, std::vector<float>>> plot_data,int option){
+  const char* canvas_name = "Energy Resolution Peak";
+  const char* canvas_name2 = "Energy Resolution Peak Stack";
+
+  THStack* hs = new THStack("hs",canvas_name2);
+
+
+  
+  auto myCanvas = new TCanvas(canvas_name,canvas_name);
+  myCanvas->SetGrid();
+
+  
+
+  //gPad->SetLogy();
+  
+  std::vector<float> energy_val = plot_data[0].second;
+  std::vector<float> e_val = plot_data[1].second;
+  std::vector<float> mu_val = plot_data[2].second;
+  int count = 0;
+  for(auto i = energy_val.begin(); i!= energy_val.end();++i ){
+
+    doResolutionHist2(hs,energy_val[count],getSigma(mu_val[count],energy_val[count]),count);
+    printf("Number is %d: \n",count);
+    ++count;
+    
+  }
+  
+  if (option == 1){
+
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/EnergyResolution/Plotting/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
+
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
+
+  
+  //hs->Draw("nostack");
 }
 
 /***************************************************************************
@@ -271,7 +379,11 @@ int main(int argc, char *argv[])
  *                                P L O T T I N G                          *
  ***************************************************************************/
 
-  doPlotResolutions(data);
+  //doPlotResolutions(data);
+
+  userConfirm();
+
+  doPlotResolutions2(data,1);
 
   app->Run();
 
