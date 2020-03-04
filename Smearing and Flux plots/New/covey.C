@@ -92,6 +92,44 @@ void plotCross(){
 
 }
 
+void doPlotSmear(int option){
+  
+  const char* canvas_name = "Smearing Matrices";
+
+
+    auto myCanvas = new TCanvas(canvas_name,canvas_name);
+
+    myCanvas->SetGrid();
+    myCanvas->Divide(3,3);
+
+    string smear_filenames[7] = {"smear_anu_mucc_sk2","smear_anu_nqe_sk2","smear_anu_qe_sk2","smear_nc_sk2","smear_nu_mucc_sk2","smear_nu_nqe_sk2","smear_nu_qe_sk2"};
+
+    for(int i=0;i<7;i++){
+      myCanvas->cd(i+1);
+      plotSmear(smear_filenames[i]);
+    }
+  
+  
+  
+  if (option == 1){
+
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
+
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
+}
+
 
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
@@ -111,20 +149,9 @@ int main(int argc, char* argv[])
    if (userConfirm() == 1){
 //Some Plotting of matrices and other stuff
     
-    const char* canvas_name = "Smearing Matrices";
-
-
-    auto myCanvas = new TCanvas(canvas_name,canvas_name);
-
-    myCanvas->SetGrid();
-    myCanvas->Divide(3,3);
-
-    string smear_filenames[7] = {"smear_anu_mucc_sk2","smear_anu_nqe_sk2","smear_anu_qe_sk2","smear_nc_sk2","smear_nu_mucc_sk2","smear_nu_nqe_sk2","smear_nu_qe_sk2"};
-
-    for(int i=0;i<7;i++){
-      myCanvas->cd(i+1);
-      plotSmear(smear_filenames[i]);
-    }
+    doPlotSmear(1);
+    
+    
 
     // for(int i = 0; i<200; i++){
     //   for(int j = 0; j<200; j++){
