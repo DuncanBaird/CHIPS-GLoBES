@@ -13,6 +13,10 @@ using namespace std;
 #include <TCanvas.h>
 #include <TPaveStats.h>
 #include <TApplication.h>
+#include <TMultiGraph.h>
+#include <TGraph.h>
+#include <TLatex.h>
+#include <TLegend.h>
 
 
 
@@ -88,8 +92,96 @@ for (int i{}; i != number_rows; ++i) {
   //st->SetOptStat(111110110);
 }
 
-void plotCross(){
+void plotCross(string filename){
 
+  //wc_XCC.dat
+  
+  auto graph = new TMultiGraph();
+
+  
+  graph->GetXaxis()->SetTitle("E GeV");
+  graph->GetYaxis()->SetTitle("#sigma_{L}");
+
+  string title = filename;
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Cross/";
+  filepath.append(filename.append(".dat"));
+
+  graph->SetTitle(title.c_str());
+
+  cout << filepath;
+
+  const int file_length = 1001;
+  double e[file_length];
+  double loge[file_length];
+  double sig_mu[file_length];
+  double sig_e[file_length];
+  double sig_tau[file_length];
+  double sig_mu_a[file_length];
+  double sig_e_a[file_length];
+  double sig_tau_a[file_length];
+
+  ifstream infile;   
+
+  infile.open(filepath.c_str());// file containing numbers in 3 columns 
+     if (!infile.is_open()) {printf("Error file could not open\n");}
+       
+       int counter = 0;
+       while(
+         infile >> loge[counter] >> sig_mu[counter] >> sig_e[counter] >> sig_tau[counter] >> sig_mu_a[counter] >> sig_e_a[counter] >> sig_tau_a[counter])
+         {
+            //Looped area
+            ++counter;
+       } 
+
+         printf("Values for 1000 are %f,%f,%f,%f\n",loge[1000],sig_mu[1000],sig_e[1000]);
+        for(int i=0;i<file_length;++i){
+          e[i] = pow(10.0,loge[i]);
+          //printf("Sig mu value at point %d,energy %f, is %f \n",i,e[i],sig_mu[i]);
+        }
+        auto spa = new TGraph(file_length,e,sig_mu);
+        auto spb = new TGraph(file_length,e,sig_e);
+        auto spc = new TGraph(file_length,e,sig_tau);
+        auto spd = new TGraph(file_length,e,sig_mu_a);
+        auto spe = new TGraph(file_length,e,sig_e_a);
+        auto spf = new TGraph(file_length,e,sig_tau_a);
+        
+        spa->SetMarkerStyle(2);
+        spb->SetMarkerStyle(4);
+        spc->SetMarkerStyle(26);
+        spd->SetMarkerStyle(37);
+        spe->SetMarkerStyle(40);
+        spf->SetMarkerStyle(42);
+        
+        spa->SetMarkerColor(2);
+        spb->SetMarkerColor(3);
+        spc->SetMarkerColor(4);
+        spd->SetMarkerColor(1);
+        spe->SetMarkerColor(6);
+        spf->SetMarkerColor(7);
+
+        graph->Add(spa);
+        graph->Add(spb);
+        graph->Add(spc);
+        graph->Add(spd);
+        graph->Add(spe);
+        graph->Add(spf);
+
+        
+
+        graph->Draw("APL");
+
+        TLegend* legend = new TLegend();
+        legend->SetHeader("Neutrino Flavour: L");
+        legend->AddEntry(spa,"#mu","p");
+        legend->AddEntry(spb,"e","p");
+        legend->AddEntry(spc,"#tau","p");
+        legend->AddEntry(spd,"#bar{#mu}","p");
+        legend->AddEntry(spe,"#bar{e}","p");
+        legend->AddEntry(spf,"#bar{#tau}","p");
+        legend->Draw("SAME");
+
+        gPad->SetLogx();
+        gPad->SetLogy();
 }
 
 void doPlotSmear(int option){
@@ -130,6 +222,47 @@ void doPlotSmear(int option){
   }
 }
 
+void doPlotCross(int option){
+
+   const char* canvas_name = "Cross Sections";
+
+
+    auto myCanvas = new TCanvas(canvas_name,canvas_name);
+
+    myCanvas->SetGrid();
+    myCanvas->Divide(2,2);
+
+  string smear_filenames[4] = {"wc_XCC","wc_XCCNonQE","wc_XNC","wc_XQE"};
+
+  
+for(int i=0;i<4;i++){
+      myCanvas->cd(i+1);
+      plotCross(smear_filenames[i]);
+    }
+  
+  
+  
+  if (option == 1){
+
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
+
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
+  
+
+
+}
 
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
@@ -151,79 +284,10 @@ int main(int argc, char* argv[])
     
     doPlotSmear(1);
     
-    
-
-    // for(int i = 0; i<200; i++){
-    //   for(int j = 0; j<200; j++){
-    //     cov_hist_plot->SetBinContent(i+1,j+1,covariance_matrix[i][j]);
-    //     cor_hist_plot->SetBinContent(i+1,j+1,correlation_matrix[i][j]);
-    //   }
-    // }
-    
-    // cov_hist_plot->GetXaxis()->SetTitle("E GeV");
-    // cor_hist_plot->GetXaxis()->SetTitle("E GeV");
-    // cov_hist_plot->GetYaxis()->SetTitle("E GeV");
-    // cor_hist_plot->GetYaxis()->SetTitle("E GeV");
-
-    // //// Plotting Matrices
-    // myCanvas->cd(3);
-    // gPad->SetLogz();
-    // gPad->SetRightMargin(0.15);
-    // cov_hist_plot->Draw("COLZ");
-    
-
-    // myCanvas->cd(4);
-    // gPad->SetLogz();
-    // gPad->SetRightMargin(0.15);
-    // cor_hist_plot->Draw("COLZ");
-
-    
-    
-    // gPad->Update();
-    // TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
-    // TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
-
-    
-
-    // //stat box position
-    // st1->SetX2NDC(0.2); 
-    // st1->SetY2NDC(0.65); 
-    // st1->SetX1NDC(0.4); 
-    // st1->SetY1NDC(0.85); 
-
-    // //myCanvas->Update();
-
-    // st1->SetOptStat(111110110);
-
-    // st2->SetX2NDC(0.2); 
-    // st2->SetY2NDC(0.65); 
-    // st2->SetX1NDC(0.4); 
-    // st2->SetY1NDC(0.85); 
-
-    // st2->SetOptStat(111110110);
-
-    // myCanvas->Update();
-    
-
-
- 
-    // string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux Plots/New/";
-    // string file_svg = ".svg";
-    // string file_pdf = ".pdf";
-
-
-    // string filestring1 = filepath + (string)canvas_name + file_svg;
-    // char filename1[filestring1.length() + 1];
-    // strcpy(filename1,filestring1.c_str());
-
-    // string filestring2 = filepath + (string)canvas_name + file_pdf;
-    // char filename2[filestring2.length() + 1];
-    // strcpy(filename2,filestring2.c_str());
-
-    // if(userConfirm()==1){
-    // myCanvas->SaveAs(filename1);
-    // myCanvas->SaveAs(filename2);
     }
+    userConfirm();
+
+    doPlotCross(1);
    
    
     
