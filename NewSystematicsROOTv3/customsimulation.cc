@@ -139,7 +139,7 @@ double glb_prior(double x, double center, double sigma)
  * Pulled from covey.C
  * 
  ***************************************************/
-void generate_covariance(TMatrixD covariance_matrix){
+void generate_covariance(TMatrixD &covariance_matrix){
   
  const int mat_len = 200;
   //TMatrixD covariance_matrix(200,200);
@@ -473,15 +473,15 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   TMatrixD delta3(200,1);
 
   for(int i=0;i<200;i++){
-    delta1[i][0] = 5E10;
-    delta2[i][0] = 5E10;
+    delta1[i][0] = 5E-5;
+    delta2[i][0] = 5E-5;
   }
 
   createMergedRate(delta3);
-  cout << "debug1";
+  //cout << "debug1";
   // delta.Transpose()
   delta1.T();
-  cout << "debug2";
+  //cout << "debug2";
   //covariance
   double_t det1;
   //chi2+= delta_transpose * inverse_covariance * delta
@@ -492,7 +492,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // dummy1.Mult(delta1,covariance_matrix_1);
   // cout << "debug5";
   // dummy2.Mult(dummy1,delta2);
-   cout << "debug6";
+  // cout << "debug6";
   double test_result = matrix_result[0][0];
   cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
