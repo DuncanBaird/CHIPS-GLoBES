@@ -471,6 +471,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   TMatrixD delta1(200,1);
   TMatrixD delta2(200,1);
   TMatrixD delta3(200,1);
+  TMatrixD delta4(200,1);
 
   for(int i=0;i<200;i++){
     delta1[i][0] = 5E-5;
@@ -478,14 +479,16 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   }
 
   createMergedRate(delta3);
+  createMergedRate(delta4);
   //cout << "debug1";
   // delta.Transpose()
   delta1.T();
+  delta3.T();
   //cout << "debug2";
   //covariance
   double_t det1;
   //chi2+= delta_transpose * inverse_covariance * delta
-  TMatrixD matrix_result = delta1 * covariance_matrix_1.Invert(&det1) * delta2;
+  TMatrixD matrix_result = delta3 * covariance_matrix_1.Invert(&det1) * delta4;
   // TMatrixD dummy1;
   // TMatrixD dummy2;
   // cout << "debug4";
