@@ -10,6 +10,7 @@ using namespace std;
 #include <TH2D.h>
 #include <TRandom.h>
 #include <TFile.h>
+#include <TCanvas.h>
 
 int setIdentitiy(TMatrixD &dummy1,int len){
   for(int i = 0;i<len;i++){
@@ -35,7 +36,7 @@ int setValue(TMatrixD &dummy1,int len_r,int len_c, int value){
   return 0;
 }
 
-void generate_covariance(TMatrixD covariance_matrix){
+void generate_covariance(TMatrixD &covariance_matrix){
   
  const int mat_len = 200;
   //TMatrixD covariance_matrix(200,200);
@@ -263,6 +264,8 @@ void matrixtest(){
 
   TMatrixD covariance(200,200);
   generate_covariance(covariance);
+  cout << "covariance matrix \n ";
+  
   // setValue(covariance,200,200,0.1);
   // covariance[0][0] = 100.0;
 
@@ -272,4 +275,12 @@ void matrixtest(){
   }
   delta1.T();
   (delta1*covariance.Invert(&det1)*delta2).Print();
+
+  auto test = new TH2D(covariance);
+  auto mycanvas = new TCanvas("canvas","canvas");
+  test->Draw();
+
+  for(int i = 0; i<200;++i){
+    cout << "diag is " << covariance[i][i] << "\n";
+  }
 }
