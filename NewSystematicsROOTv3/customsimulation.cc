@@ -63,121 +63,24 @@ double sigma_binbin = 0.0;        /* Bin-to-bin error */
  *                        H E L P E R   F U N C T I O N S                  *
  ***************************************************************************/
 
-/* Interpolation stuff */
-struct Point {
-    double x, y;
-};
+/************************
+ * Interpolate
+ * 
+ */
 
-// Distance gives the Euclidean distance between two Points
-double Distance(const Point& a, const Point& b) {
-    const double dx = b.x - a.x;
-    const double dy = b.y - a.y;
-    const double lsq = dx*dx + dy*dy;
-    return std::sqrt(lsq);
+void createMergedRate(TMatrixD data){
+  int bins = glbGetNumberOfSamplingPoints(EXP_FAR);
+
+  int far_rules = glbGetNumberOfRules(EXP_FAR);
+  int near_rules = glbGetNumberOfRules(EXP_FAR);
+  double *true_rate_0 = glbGetRuleRatePtr(EXP_FAR, 0);
+  double *true_rate_1 = glbGetRuleRatePtr(EXP_FAR, 1);
+
+for(int i = 0; i<bins;++i){
+  data[i][0] = true_rate_0[i] + true_rate_1[i];
 }
 
-// LinearCurveLength calculates the total length of the linear
-// interpolation through a vector of Points.  It is the sum of
-// the Euclidean distances between all consecutive points in
-// the vector.
-double LinearCurveLength(std::vector<Point> const &points) {
-    auto start = points.begin();
-    if(start == points.end()) return 0;
-    auto finish = start + 1;
-    double sum = 0;
-    while(finish != points.end()) {
-        sum += Distance(*start, *finish);
-        start = finish++;
-    }
-    return sum;
 }
-
-// Gives a vector of Points which are sampled as equally-spaced segments
-// taken along the linear interpolation between points in the source.
-// In general, consecutive points in the result will not be equidistant,
-// because of a corner-cutting effect.
-std::vector<Point> UniformLinearInterpolation(std::vector<Point> const &source, std::size_t target_count) {
-    std::vector<Point> result;
-    if(source.size() < 2 || target_count < 2) {
-        // degenerate source vector or target_count value
-        // for simplicity, this returns an empty result
-        // but special cases may be handled when appropriate for the application
-        return result;
-    }
-    // total_length is the total length along a linear interpolation
-    // of the source points.
-    const double total_length = LinearCurveLength(source);
-
-    // segment_length is the length between result points, taken as
-    // distance traveled between these points on a linear interpolation
-    // of the source points.  The actual Euclidean distance between
-    // points in the result vector can vary, and is always less than
-    // or equal to segment_length.
-    const double segment_length = total_length / (target_count - 1);
-
-    // start and finish are the current source segment's endpoints
-    auto start = source.begin();
-    auto finish = start + 1;
-
-    // src_segment_offset is the distance along a linear interpolation
-    // of the source curve from its first point to the start of the current
-    // source segment.
-    double src_segment_offset = 0;
-
-    // src_segment_length is the length of a line connecting the current
-    // source segment's start and finish points.
-    double src_segment_length = Distance(*start, *finish);
-
-    // The first point in the result is the same as the first point
-    // in the source.
-    result.push_back(*start);
-
-    for(std::size_t i=1; i<target_count-1; ++i) {
-        // next_offset is the distance along a linear interpolation
-        // of the source curve from its beginning to the location
-        // of the i'th point in the result.
-        // segment_length is multiplied by i here because iteratively
-        // adding segment_length could accumulate error.
-        const double next_offset = segment_length * i;
-
-        // Check if next_offset lies inside the current source segment.
-        // If not, move to the next source segment and update the
-        // source segment offset and length variables.
-        while(src_segment_offset + src_segment_length < next_offset) {
-            src_segment_offset += src_segment_length;
-            start = finish++;
-            src_segment_length = Distance(*start, *finish);
-        }
-        // part_offset is the distance into the current source segment
-        // associated with the i'th point's offset.
-        const double part_offset = next_offset - src_segment_offset;
-
-        // part_ratio is part_offset's normalized distance into the 
-        // source segment. Its value is between 0 and 1,
-        // where 0 locates the next point at "start" and 1
-        // locates it at "finish".  In-between values represent a
-        // weighted location between these two extremes.
-        const double part_ratio = part_offset / src_segment_length;
-
-        // Use part_ratio to calculate the next point's components
-        // as weighted averages of components of the current
-        // source segment's points.
-        result.push_back({
-            start->x + part_ratio * (finish->x - start->x),
-            start->y + part_ratio * (finish->y - start->y)
-        });
-    }
-
-    // The first and last points of the result are exactly
-    // the same as the first and last points from the input,
-    // so the iterated calculation above skips calculating
-    // the last point in the result, which is instead copied
-    // directly from the source vector here.
-    result.push_back(source.back());
-    return result;
-}
-
-
 
 
 /* Minimum of two numbers */
@@ -567,11 +470,14 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   //define TMatrixD delta = fit - true;
   TMatrixD delta1(200,1);
   TMatrixD delta2(200,1);
+  TMatrixD delta3(200,1);
 
   for(int i=0;i<200;i++){
-    delta1[i][0] = 50;
-    delta2[i][0] = 50;
+    delta1[i][0] = 5E10;
+    delta2[i][0] = 5E10;
   }
+
+  createMergedRate(delta3);
   cout << "debug1";
   // delta.Transpose()
   delta1.T();
@@ -591,7 +497,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
 
-  return chi2 +0.5;
+  return chi2 +test_result;
 }
 
 
@@ -1090,42 +996,6 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 cout << "Starting testing stuff \n";
-
-int far_rules = glbGetNumberOfRules(EXP_FAR);
-int near_rules = glbGetNumberOfRules(EXP_FAR);
-double *true_rate_0 = glbGetRuleRatePtr(EXP_FAR, 0);
-double *true_rate_1 = glbGetRuleRatePtr(EXP_FAR, 1);
-
-for(int i = 0; i<glbGetNumberOfBins(EXP_FAR);++i){
-  cout << "bin " << i << " far rule 0 " << true_rate_0[i] << "\n";
-  cout << "bin " << i << " far rule 1 " << true_rate_0[i] << "\n";
-}
-
-// vector<Point> points;
-// Point dummy_point;
-
-// for(int i = 0; i<glbGetNumberOfBins(EXP_FAR);++i){
-//   dummy_point.x = i;
-//   dummy_point.y = true_rate_0[i];
-//   points.push_back(dummy_point);
-// }
-
-// int number_interpolated = 100;
-// std::cout << "Source Points:\n";
-//     for(const auto& point : points) {
-//         std::cout << std::setw(14) << point.x << "    " << std::setw(14) << point.y << '\n';
-//     }
-//     std::cout << '\n';
-//     auto interpolated = UniformLinearInterpolation(points, 20);
-//     std::cout << "Interpolated Points:\n";
-//     for(const auto& point : interpolated) {
-//         std::cout << std::setw(14) << point.x << "    " << std::setw(14) << point.y << '\n';
-//     }
-//     std::cout << '\n';
-//     std::cout << "Source linear interpolated length:           " << LinearCurveLength(points) << '\n';
-//     std::cout << "Interpolation's linear interpolated length:  " << LinearCurveLength(interpolated) << '\n';
-
-
 
 
 
