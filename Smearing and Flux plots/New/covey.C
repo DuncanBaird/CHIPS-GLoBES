@@ -17,6 +17,7 @@ using namespace std;
 #include <TGraph.h>
 #include <TLatex.h>
 #include <TLegend.h>
+#include <TStyle.h>
 
 
 
@@ -28,10 +29,13 @@ int userConfirm(){
   return kz;
 }
 
-void plotSmear(string filename){
+void plotSmear(string filename, string title){
+
+  string title_prefix = "Smearing Matrix of ";
+  title_prefix.append(title);
 
   ifstream file;
-  string title = filename;
+  //string title = filename;
   string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Smear/";
   filepath.append(filename.append(".dat"));
 file.open(filepath.c_str());
@@ -64,7 +68,7 @@ for (int i{}; i != number_rows; ++i) {
   char dist_title[30];
   strcpy(dist_title,title.c_str());
 
-  TH2D *hist = new TH2D(dist_title,"2D Histrogram of Smearing Matrix",number_rows,bins_array,number_columns-2,bins_array);//"distribution name","Name of plot",86,0,86,86,0,86);
+  TH2D *hist = new TH2D(dist_title,title_prefix.c_str(),number_rows,bins_array,number_columns-2,bins_array);//"distribution name","Name of plot",86,0,86,86,0,86);
   //hist->Fill(smear);
   hist->GetXaxis()->SetTitle("Real energy GeV (Matrix Row i)");
   hist->GetYaxis()->SetTitle("Reconstructed energy GeV (Matrix Column j)");
@@ -81,28 +85,29 @@ for (int i{}; i != number_rows; ++i) {
   hist->Draw("COLZ");
 
   gPad->Update();
-  TPaveStats *st = (TPaveStats*)hist->FindObject("stats");
+  //TPaveStats *st = (TPaveStats*)hist->FindObject("stats");
 
-  //stat box position
-  st->SetX2NDC(0.6); 
-  st->SetY2NDC(0.15); 
-  st->SetX1NDC(0.8); 
-  st->SetY1NDC(0.35); 
+  // //stat box position
+  // st->SetX2NDC(0.6); 
+  // st->SetY2NDC(0.15); 
+  // st->SetX1NDC(0.8); 
+  // st->SetY1NDC(0.35); 
 
   //st->SetOptStat(111110110);
+  
 }
 
-void plotCross(string filename){
+void plotCross(string filename, string title){
 
   //wc_XCC.dat
   
   auto graph = new TMultiGraph();
 
   
-  graph->GetXaxis()->SetTitle("E GeV");
-  graph->GetYaxis()->SetTitle("#sigma_{L}");
+  graph->GetXaxis()->SetTitle("E_{#nu} GeV");
+  graph->GetYaxis()->SetTitle("#frac{#sigma_{L}}{E_{#nu_{L}}} #frac{10^{-14} b}{GeV}");
 
-  string title = filename;
+  // string title = filename;
   string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/Smearing and Flux plots/New/Data/Cross/";
   filepath.append(filename.append(".dat"));
 
@@ -136,6 +141,12 @@ void plotCross(string filename){
          printf("Values for 1000 are %f,%f,%f,%f\n",loge[1000],sig_mu[1000],sig_e[1000]);
         for(int i=0;i<file_length;++i){
           e[i] = pow(10.0,loge[i]);
+          sig_mu[i] = sig_mu[i]/e[i];
+          sig_e[i] = sig_e[i]/e[i];
+          sig_tau[i] = sig_tau[i]/e[i];
+          sig_mu_a[i] = sig_mu_a[i]/e[i];
+          sig_e_a[i] = sig_e_a[i]/e[i];
+          sig_tau_a[i] = sig_tau_a[i]/e[i];
           //printf("Sig mu value at point %d,energy %f, is %f \n",i,e[i],sig_mu[i]);
         }
         auto spa = new TGraph(file_length,e,sig_mu);
@@ -145,12 +156,38 @@ void plotCross(string filename){
         auto spe = new TGraph(file_length,e,sig_e_a);
         auto spf = new TGraph(file_length,e,sig_tau_a);
         
-        spa->SetMarkerStyle(2);
-        spb->SetMarkerStyle(4);
-        spc->SetMarkerStyle(26);
-        spd->SetMarkerStyle(37);
-        spe->SetMarkerStyle(40);
-        spf->SetMarkerStyle(42);
+        // spa->SetMarkerStyle(2);
+        // spb->SetMarkerStyle(4);
+        // spc->SetMarkerStyle(26);
+        // spd->SetMarkerStyle(37);
+        // spe->SetMarkerStyle(40);
+        // spf->SetMarkerStyle(42);
+        
+        // spa->SetMarkerColor(2);
+        // spb->SetMarkerColor(3);
+        // spc->SetMarkerColor(4);
+        // spd->SetMarkerColor(1);
+        // spe->SetMarkerColor(6);
+        // spf->SetMarkerColor(7);
+
+        int marker_style = 5;
+        int marker_style2 = 4;
+
+        spa->SetMarkerStyle(marker_style);
+        spb->SetMarkerStyle(marker_style2);
+        spc->SetMarkerStyle(marker_style);
+        spd->SetMarkerStyle(marker_style2);
+        spe->SetMarkerStyle(marker_style);
+        spf->SetMarkerStyle(marker_style);
+
+        double marker_scale = 0.1;
+
+        spa->SetMarkerSize(6*marker_scale);
+        spb->SetMarkerSize(2*marker_scale);
+        spc->SetMarkerSize(3*marker_scale);
+        spd->SetMarkerSize(4*marker_scale);
+        spe->SetMarkerSize(2*marker_scale);
+        spf->SetMarkerSize(2*marker_scale);
         
         spa->SetMarkerColor(2);
         spb->SetMarkerColor(3);
@@ -195,10 +232,12 @@ void doPlotSmear(int option){
     myCanvas->Divide(3,3);
 
     string smear_filenames[7] = {"smear_anu_mucc_sk2","smear_anu_nqe_sk2","smear_anu_qe_sk2","smear_nc_sk2","smear_nu_mucc_sk2","smear_nu_nqe_sk2","smear_nu_qe_sk2"};
+    string smear_titles[7] = {"#bar{#nu}_{#mu} CC","#bar{#nu}_{e} NQE","#bar{#nu}_{e} QE","#nu_{#mu} NC","#nu_{#mu} CC","#nu_{e} CC NQE","#nu_{e} CC QE"};
+
 
     for(int i=0;i<7;i++){
       myCanvas->cd(i+1);
-      plotSmear(smear_filenames[i]);
+      plotSmear(smear_filenames[i],smear_titles[i]);
     }
   
   
@@ -232,12 +271,14 @@ void doPlotCross(int option){
     myCanvas->SetGrid();
     myCanvas->Divide(2,2);
 
-  string smear_filenames[4] = {"wc_XCC","wc_XCCNonQE","wc_XNC","wc_XQE"};
+  string cross_filenames[4] = {"wc_XCC","wc_XCCNonQE","wc_XNC","wc_XQE"};
+  string cross_titles[4] = {"Charged Current","Charged Current \n Non-Quasielastic","Neutral Current","Charged Current Quasielastic"};
 
   
 for(int i=0;i<4;i++){
       myCanvas->cd(i+1);
-      plotCross(smear_filenames[i]);
+      gPad->SetLeftMargin(0.15);
+      plotCross(cross_filenames[i],cross_titles[i]);
     }
   
   
@@ -278,6 +319,12 @@ int main(int argc, char* argv[])
   //  cov_hist->Write();
   //  cor_hist->Write();
   //  newfile->Close();
+  /* Sets width of marker lines*/
+  gStyle->SetLineScalePS(0.25);
+  
+  gStyle->SetOptStat(0);
+  
+
 
    if (userConfirm() == 1){
 //Some Plotting of matrices and other stuff
