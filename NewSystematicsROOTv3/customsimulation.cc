@@ -1092,10 +1092,10 @@ printf("Commencing potting \n");
 
   
   userConfirm();
-  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"CPstatvsysSpectrum");
+  doPlotROOT(plot_data_statvsys_a,plot_data_statvsys_b,1,"TESTCPstatvsysSpectrum");
 
   userConfirm();
-  doPlotROOT(plot_data_statvsysCOV_a,plot_data_statvsysCOV_b,1,"CPstatvCOV");
+  doPlotROOT(plot_data_statvsysCOV_a,plot_data_statvsysCOV_b,1,"TESTCPstatvCOV");
 
   // for (int g = 0;g<tSteps; g++){
   //   printf("Data a is: index: %f and value: %f \n",plot_data_statvsys_a[0][g],plot_data_statvsys_a[1][g]);
