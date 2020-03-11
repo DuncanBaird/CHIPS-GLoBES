@@ -18,6 +18,7 @@
 #include <TLegend.h>
 #include <TRandom.h>
 #include <TError.h>
+#include <TLatex.h>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -225,7 +226,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
      }
 
    //make the universes based on the real event spectrum
-   std::cout<<" making the universes "<<std::endl;
+   //std::cout<<" making the universes "<<std::endl;
    for (int k=0; k<100; k++) 
       {
 	//use Fill instead of SetBinContent to allow for resolution smearing later
@@ -252,7 +253,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
 	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
 
 	  } ///finished spectrum generation for this k universe
-	std::cout<<" finished this universe "<<k<<std::endl;
+	//std::cout<<" finished this universe "<<k<<std::endl;
 	for (int i=0; i<200; i++)
 	  {
 	    for (int j=0; j<200; j++)
@@ -282,7 +283,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
     correlation_matrix[i][j] += alan*mary/float(iuniverse);
 
     
-		if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+		// if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
 	      }
 	  }
       }
@@ -499,7 +500,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // dummy2.Mult(dummy1,delta2);
   // cout << "debug6";
   double test_result = matrix_result[0][0];
-  cout << "testing output: "<< test_result << "\n";
+  // cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
 
   return chi2 +test_result;
@@ -837,11 +838,11 @@ for (int g = 0;g<tSteps; g++){
   
   auto mg = new TMultiGraph();
 
-  mg->SetTitle("AB: Log Plot of sensitivity curve systematics vs stats only.");
+  mg->SetTitle("Log Plot of Sensitivity Curve.");
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  mg->GetYaxis()->SetTitle("#sin(2 \theta_{23})^2 sensitivity");
+  mg->GetYaxis()->SetTitle("#delta_{CP} sensitivity @ 90% CL");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
   // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
@@ -856,8 +857,8 @@ for (int g = 0;g<tSteps; g++){
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"series A: With Systematics","lp");
-  legend->AddEntry(spb,"series B: Statistics only","lp");
+  legend->AddEntry(spa,"With Systematics","lp");
+  legend->AddEntry(spb,"Statistics only","lp");
   legend->Draw();
 
   myCanvas->Update();

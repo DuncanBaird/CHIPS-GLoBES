@@ -36,7 +36,7 @@ int setValue(TMatrixD &dummy1,int len_r,int len_c, int value){
   return 0;
 }
 
-void generate_covariance(TMatrixD &covariance_matrix){
+void generate_covariance(TMatrixD &covariance_matrix, TMatrixD &inverse_matrix){
   
  const int mat_len = 200;
   //TMatrixD covariance_matrix(200,200);
@@ -174,7 +174,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
     // storing covariance matrix data
     matrix_data[i*(mat_len-1)+j] = alan*mary/float(iuniverse);
     covariance_matrix[i][j] += alan*mary/float(iuniverse);
-    correlation_matrix[i][j] += alan*mary/float(iuniverse);
+    inverse_matrix[i][j] += alan*mary/float(iuniverse);
 
     
 		if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
@@ -184,9 +184,9 @@ void generate_covariance(TMatrixD &covariance_matrix){
 
     double singular_adjust = 0.001;
     for(int w=0;w<mat_len;w++){
-      printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
-      correlation_matrix[w][w] = correlation_matrix[w][w] + singular_adjust;
-      printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
+      printf("diagonal %d value is %f \n",w,inverse_matrix[w][w]);
+      inverse_matrix[w][w] = inverse_matrix[w][w] + singular_adjust;
+      printf("diagonal %d value is now %f \n",w,inverse_matrix[w][w]);
     }
    //adding covariance values into matrix object
     // covariance_matrix.SetMatrixArray(matrix_data);
@@ -263,24 +263,39 @@ void matrixtest(){
   TMatrixD delta2(200,1);
 
   TMatrixD covariance(200,200);
-  generate_covariance(covariance);
+  TMatrixD inverse(200,200);
+  generate_covariance(covariance,inverse);
   cout << "covariance matrix \n ";
   
   // setValue(covariance,200,200,0.1);
   // covariance[0][0] = 100.0;
 
   for(int i=0;i<200;i++){
-    delta1[i][0] = 5E10;
-    delta2[i][0] = 5E10;
+    delta1[i][0] = 15-(i*0.075);
+    delta2[i][0] = 15-(i*0.075);
   }
   delta1.T();
-  (delta1*covariance.Invert(&det1)*delta2).Print();
-
-  auto test = new TH2D(covariance);
+  //(delta1*covariance.Invert(&det1)*delta2).Print();
+  inverse.Invert(&det1);
+  auto h1 = new TH2D(covariance);
+  auto h2 = new TH2D(inverse);
   auto mycanvas = new TCanvas("canvas","canvas");
-  test->Draw();
+  mycanvas->Divide(2,1);
+  mycanvas->cd(1);
+  h1->Draw("CONTZ");
+  //gPad->SetLogz();
+  gPad->SetRightMargin(0.15);
+  mycanvas->cd(2);
+  h2->Draw("CONTZ");
+  gPad->SetRightMargin(0.15);
+  //gPad->SetLogz();
 
+  cout << (delta1*inverse*delta2)[0][0] << "\n";
+  cout << log((delta1*inverse*delta2)[0][0]) << "\n";
+
+double sum_test;
   for(int i = 0; i<200;++i){
-    cout << "diag is " << covariance[i][i] << "\n";
+    sum_test += inverse[i][20];
   }
+  cout << "sum test: " << sum_test << "\n";
 }
