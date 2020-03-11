@@ -96,6 +96,14 @@ int main(int argc, char* argv[])
    TH1F *Espec1 = (TH1F*)ff3->Get("trueE_0to5");
    Espec1->SetName("Espec1");
 
+   
+   // Adds some floor noise to bottom of MINOS spectrum
+   for(int i = 1; i < Espec1->GetXaxis()->FindBin(1);++i){
+     if(Espec1->GetBinContent(i)==0){
+       Espec1->SetBinContent(i,3.0);
+     }
+   }
+
 
    double c = 2.99792458e8;
    double pi = 3.1415926535;
@@ -144,10 +152,22 @@ int main(int argc, char* argv[])
 
    //make the NOVA spectrum
    TH1D *Espec2 = new TH1D("Espec2","Espec2",100,0.0,5.0);
-   for (int i=0;i<10000;i++)
+   for (int i=0;i<1E4;i++)
      {
        Espec2->Fill(g->Gaus(2.0,0.3));
      }
+
+    // FLoor noise addition
+    for(int i = 1; i < Espec2->GetXaxis()->FindBin(1);++i){
+     if(Espec2->GetBinContent(i)==0){
+       Espec2->SetBinContent(i,3.0);
+     }
+    }
+    for(int i = Espec2->GetNbinsX(); i > Espec2->GetXaxis()->FindBin(3);--i){
+     if(Espec2->GetBinContent(i)==0){
+       Espec2->SetBinContent(i,3.0);
+     }
+    }
 
    //make the universes based on the real event spectrum
    std::cout<<" making the universes "<<std::endl;
@@ -178,6 +198,7 @@ int main(int argc, char* argv[])
 
 	     Euniverse1[k]->Fill(E1,i1);
 	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
+
 
 	  } ///finished spectrum generation for this k universe
     histInterpolate(Euniverse1[k]);
@@ -252,7 +273,7 @@ int main(int argc, char* argv[])
     TH2D *cov_hist_plot = new TH2D("covariance1","Covariance",200,0.0,10.0,200,0.0,10.0);
     TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
     
-    const char* canvas_name = "Generated Covariance Matrices No Errors";
+    const char* canvas_name = "FULL Generated Covariance Matrices No Errors";
 
 
     auto myCanvas = new TCanvas(canvas_name,canvas_name);
@@ -273,44 +294,7 @@ int main(int argc, char* argv[])
     cov_hist_plot->GetYaxis()->SetTitle("E GeV");
     cor_hist_plot->GetYaxis()->SetTitle("E GeV");
 
-    //// Plotting Matrices
-    myCanvas->cd(3);
-    gPad->SetLogz();
-    gPad->SetRightMargin(0.15);
-    cov_hist_plot->Draw("COLZ");
     
-
-    myCanvas->cd(4);
-    gPad->SetLogz();
-    gPad->SetRightMargin(0.15);
-    cor_hist_plot->Draw("COLZ");
-
-    
-    
-    gPad->Update();
-    TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
-    TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
-
-    
-
-    //stat box position
-    st1->SetX2NDC(0.2); 
-    st1->SetY2NDC(0.65); 
-    st1->SetX1NDC(0.4); 
-    st1->SetY1NDC(0.85); 
-
-    //myCanvas->Update();
-
-    st1->SetOptStat(111110110);
-
-    st2->SetX2NDC(0.2); 
-    st2->SetY2NDC(0.65); 
-    st2->SetX1NDC(0.4); 
-    st2->SetY1NDC(0.85); 
-
-    st2->SetOptStat(111110110);
-
-    myCanvas->Update();
     
     //Relabelling Spectra
   //   for (int i = 0; i < 10-1; ++i) {
@@ -340,7 +324,51 @@ int main(int argc, char* argv[])
     printf("bin number: %d \n",bin);
     cout << bin_label << "\n";
     Euniverse1[universe_choice]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    cor_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    cov_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
   }
+
+
+    //// Plotting Matrices
+    myCanvas->cd(3);
+    gPad->SetLogz();
+    gPad->SetRightMargin(0.15);
+    cov_hist_plot->Draw("COLZ");
+    cov_hist_plot->LabelsOption("h","X");
+    
+
+    myCanvas->cd(4);
+    gPad->SetLogz();
+    gPad->SetRightMargin(0.15);
+    cor_hist_plot->Draw("COLZ");
+    cor_hist_plot->LabelsOption("h","X");
+
+    
+    
+    gPad->Update();
+    TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
+    TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
+
+    
+
+    //stat box position
+    st1->SetX2NDC(0.2); 
+    st1->SetY2NDC(0.65); 
+    st1->SetX1NDC(0.4); 
+    st1->SetY1NDC(0.85); 
+
+    //myCanvas->Update();
+
+    st1->SetOptStat(111110110);
+
+    st2->SetX2NDC(0.2); 
+    st2->SetY2NDC(0.65); 
+    st2->SetX1NDC(0.4); 
+    st2->SetY1NDC(0.85); 
+
+    st2->SetOptStat(111110110);
+
+    myCanvas->Update();
   
    Euniverse1[universe_choice]->LabelsOption("h","X");
    Euniverse1[universe_choice]->SetTitle("Energy Spectrum");
