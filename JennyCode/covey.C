@@ -188,8 +188,8 @@ int main(int argc, char* argv[])
 	     float i2 = g->Poisson(Ewt2);
 	     //now lets put in a constant E shift
 
-       errorApply(E1,calibration_e,shift_e,-1);
-       errorApply(E2,calibration_e,shift_e,-1);
+       errorApply(E1,calibration_e,shift_e,1);
+       errorApply(E2,calibration_e,shift_e,1);
 	    //  E1 = E1+0.05*E1;
 	    //  E2 = E2+0.05*E2;
 	     //float rfake = g->Gaus(E,res[0]/sqrt(E));
@@ -273,7 +273,7 @@ int main(int argc, char* argv[])
     TH2D *cov_hist_plot = new TH2D("covariance1","Covariance",200,0.0,10.0,200,0.0,10.0);
     TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
     
-    const char* canvas_name = "FULL Generated Covariance Matrices No Errors";
+    const char* canvas_name = "FULL Generated Covariance Matrices Both Errors";
 
 
     auto myCanvas = new TCanvas(canvas_name,canvas_name);
