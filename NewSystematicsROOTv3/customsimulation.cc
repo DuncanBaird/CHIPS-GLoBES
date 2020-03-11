@@ -49,6 +49,8 @@ const double max_runtime = 1e4;   /* Maximum running time to consider [years] */
 const double chi2_goal   =  2.7;  /* Desired chi^2 value in root finder (2.7 = 90% C.L.) */
 const int tSteps = 30;            /* Number of data points for each curve */
 const double logs22th13_precision = 0.005; /* Desired precision of log(sin[th13]^2) in root finder */
+const double error_abs = 0.1;
+const double error_rel = 0.01;
 
 #define MAX_SYS 200
 double sys_errors[MAX_SYS];       /* Uncertainties of systematics params */
@@ -516,9 +518,10 @@ double DoChiSquare(double x, void *dummy)
   double thetheta13, chi2;
 
   /* Set vector of test values */
-  thetheta13 = asin(sqrt(pow(10,x)))/2;
-  glbSetOscParams(test_values, thetheta13, GLB_THETA_13);
-  glbSetOscParams(test_values, 200.0/2 * (x+4)*M_PI/180, GLB_DELTA_CP);
+  //thetheta13 = asin(sqrt(pow(10,x)))/2;
+  //glbSetOscParams(test_values, thetheta13, GLB_THETA_13);
+  //glbSetOscParams(test_values, 200.0/2 * (x+4)*M_PI/180, GLB_DELTA_CP);
+  glbSetOscParams(test_values, x, GLB_DELTA_CP);
 
   /* Set starting values for systematics minimiyer to the coordinates of
    * minimum in the last iteration. This accelerates the minimization and
@@ -539,7 +542,7 @@ void gslError(const char *reason, const char *file, int line, int gsl_errno)
   static int n_errors=0;
 
   printf("GSL Error in file %s:%d : %s\n", file, line, gsl_strerror(gsl_errno));
-  if (++n_errors > 1000)
+  if (++n_errors > 10000)
   {
     printf("Too many GSL errors. Program aborted.\n");
     abort();
@@ -766,8 +769,8 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
 
     /* Determine sensitivity to sin^2(2*th13) by  using the GSL Brent-Dekker
      * algorithm to find the th13, for which chi^2 = 2.7 (90%) */
-    x_lo = -3.0;
-    x_hi = -0.1;
+    x_lo = M_PI/2;
+    x_hi = (3*M_PI)/2;
     iter = 0;
 
     /* Start root finder. The initial search interval is guessed based on the
@@ -784,11 +787,14 @@ void ComputeSensitivityCurve3(double plot_data[][tSteps],int option)
 
     /* Iterate root finder */
     do {
+            // cout << "debug du1\n";
       gsl_status = gsl_root_fsolver_iterate(s);
+            // cout << "debug du2\n";
       x          = gsl_root_fsolver_root(s);
       x_lo       = gsl_root_fsolver_x_lower(s);
+            // cout << "debug du3\n";
       x_hi       = gsl_root_fsolver_x_upper(s);
-      gsl_status = gsl_root_test_interval (x_lo, x_hi, logs22th13_precision, 0);
+      gsl_status = gsl_root_test_interval (x_lo, x_hi, error_abs, error_rel);
     } while (gsl_status == GSL_CONTINUE && iter < max_iter);
 
     /* Save results */
@@ -835,7 +841,7 @@ for (int g = 0;g<tSteps; g++){
   mg->Add(spa);
   mg->Add(spb);
   mg->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
-  mg->GetYaxis()->SetTitle("sin(2*theta_13)^2 sensitiivity");
+  mg->GetYaxis()->SetTitle("#sin(2 \theta_{23})^2 sensitivity");
   mg->GetXaxis()->CenterTitle(true);
   mg->GetYaxis()->CenterTitle(true);
   // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
@@ -927,12 +933,20 @@ int main(int argc, char *argv[])
     sys_startval[i] = 0.0;
 
   /* Set standard oscillation parameters (cf. hep-ph/0405172v5) */
-  theta12 = asin(sqrt(0.3));
-  theta13 = 0.0;
-  theta23 = M_PI/4;
-  deltacp = M_PI/2;
+  //theta12 = asin(sqrt(0.3));
+  //theta13 = 0.0;
+  //theta23 = M_PI/4;
+  //deltacp = M_PI/2;
+  //sdm = 7.9e-5;
+  //ldm = 2.6e-3;
+
+  //NEW
+  theta12 = 0.586168;
+  theta13 = 0.147693;
+   theta23 = 0.72626;
+  deltacp = 3.87463; //222 degress from PDG
   sdm = 7.9e-5;
-  ldm = 2.6e-3;
+  ldm = 0.002524;
 
   glbInit(argv[0]);                    /* Initialize GLoBES and define chi^2 functions */
   glbDefineChiFunction(&chiDCNorm,     5,        "chiDCNorm",     NULL);
@@ -975,7 +989,7 @@ int main(int argc, char *argv[])
   glbSetDensityParams(true_values,1.0,GLB_ALL);
   glbDefineParams(test_values,theta12,theta13,theta23,deltacp,sdm,ldm);
   glbSetDensityParams(test_values,1.0,GLB_ALL);
-  glbDefineParams(input_errors, 0.1*theta12, 0, 0.15*theta23, 0, 0.05*sdm, 0.05*ldm);
+  glbDefineParams(input_errors, 0.1*theta12, 0.1*theta13, 0.15*theta23, 0.1*deltacp, 0.05*sdm, 0.05*ldm);
   glbSetDensityParams(input_errors, 0.05, GLB_ALL);
   glbSetOscillationParameters(true_values);
   glbSetInputErrors(input_errors);
@@ -1000,7 +1014,21 @@ int main(int argc, char *argv[])
 
 cout << "Starting testing stuff \n";
 
+//   int bins = glbGetNumberOfSamplingPoints(EXP_FAR);
 
+//   int far_rules = glbGetNumberOfRules(EXP_FAR);
+//   int near_rules = glbGetNumberOfRules(EXP_FAR);
+//   double *true_rate_0 = glbSh;//glbGetSignalRatePtr(EXP_FAR, 0);//glbTotalRuleRate(EXP_FAR, 0, GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);//glbGetRuleRatePtr(EXP_FAR, 0);
+//   double *true_rate_1 = ;//glbGetSignalRatePtr(EXP_FAR, 1);//glbTotalRuleRate(EXP_NEAR, 1, GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);//glbGetRuleRatePtr(EXP_FAR, 1);
+// double sum;
+// for(int i = 0; i<bins;++i){
+//   cout << "for bin: " << i << " the rate is: " << (true_rate_0[i]) << "\n";
+//   sum += true_rate_0[i];
+// }
+
+glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
+//cout << "total is: " << sum << "\n";
+// cout << glbTotalRuleRate(EXP_FAR, 0, GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
 
 cout << "Finished testing stuff \n";
 userConfirm();
