@@ -1,0 +1,2053 @@
+Starting testing stuff 
+
+0.5625	    0.336318	      1.8187	
+0.6875	    0.689322	     2.23171	
+0.8125	     1.05408	     2.48753	
+0.9375	     1.47325	     2.73856	
+ 1.062	     1.93152	     2.80537	
+ 1.188	     2.33632	     2.73703	
+ 1.312	      2.5448	     2.52549	
+ 1.438	     2.57262	      2.3031	
+ 1.562	      2.3951	     1.89075	
+ 1.688	     2.17587	     1.46385	
+ 1.812	     1.96466	     1.00136	
+ 1.938	     1.47816	    0.582073	
+ 2.062	      0.9996	    0.365374	
+ 2.188	    0.638319	    0.226467	
+ 2.312	    0.318743	    0.157524	
+ 2.438	    0.201836	   0.0982439	
+ 2.562	    0.110886	   0.0723383	
+ 2.688	   0.0691926	   0.0612603	
+ 2.812	    0.051004	    0.043859	
+ 2.938	   0.0357474	   0.0376855	
+ 3.062	   0.0259717	   0.0254797	
+ 3.188	   0.0186563	   0.0231022	
+ 3.312	   0.0190304	   0.0224935	
+ 3.438	   0.0138305	   0.0172809	
+ 3.562	   0.0100836	   0.0138785	
+ 3.688	  0.00847785	   0.0134398	
+ 3.812	  0.00718887	   0.0124551	
+ 3.938	  0.00599148	   0.0100831	
+ 4.062	  0.00537797	  0.00898743	
+ 4.188	  0.00437367	  0.00824298	
+ 4.312	  0.00391544	  0.00630941	
+ 4.438	  0.00515995	  0.00698946	
+ 4.562	  0.00258394	  0.00541959	
+ 4.688	  0.00222589	   0.0052563	
+ 4.812	  0.00184618	  0.00580635	
+ 4.938	   0.0015097	  0.00399818	
+ 5.062	  0.00163958	  0.00398248	
+ 5.188	  0.00120307	  0.00338181	
+ 5.312	  0.00111455	   0.0037472	
+ 5.438	  0.00137201	  0.00390635	
+ 5.562	   0.0010297	  0.00310478	
+ 5.688	  0.00102453	  0.00266835	
+ 5.812	   0.0019158	  0.00331048	
+ 5.938	 0.000779164	  0.00247417	
+ 6.062	  0.00128291	   0.0026749	
+ 6.188	 0.000714189	  0.00202842	
+ 6.312	  0.00142088	  0.00251251	
+ 6.438	 0.000402604	  0.00233436	
+ 6.562	 0.000524514	  0.00164637	
+ 6.688	  0.00145003	  0.00174797	
+ 6.812	 0.000531787	  0.00137363	
+ 6.938	 0.000447964	  0.00140125	
+ 7.062	  0.00030823	   0.0015967	
+ 7.188	 0.000326742	  0.00121002	
+ 7.312	 0.000429929	   0.0010365	
+ 7.438	 0.000214949	 0.000801871	
+ 7.562	 0.000151282	 0.000499312	
+ 7.688	 0.000302735	 0.000659606	
+ 7.812	 0.000184227	 0.000334348	
+ 7.938	  0.00015738	 0.000373742	
+     9	 0.000482734	   0.0020336	
+    11	  0.00103079	  0.00189109	
+    13	  0.00108264	  0.00149668	
+    15	 0.000298581	  0.00146878	
+    17	 0.000143497	  0.00135092	
+    19	 0.000114528	  0.00115692	
+    21	  0.00104324	  0.00118526	
+    23	 6.52576e-05	  0.00111129	
+    25	 0.000121308	 0.000708809	
+    27	 0.000183869	 0.000817415	
+    29	 9.25943e-05	 0.000579739	
+    31	  0.00022021	 0.000443577	
+    33	           0	 0.000621925	
+    35	 1.93308e-05	 0.000435182	
+    37	           0	 0.000729316	
+    39	 4.90192e-05	  0.00066944	
+    41	           0	 0.000377486	
+    43	           0	  0.00039111	
+    45	           0	 0.000247487	
+    47	           0	 0.000242225	
+    49	 1.93308e-05	 0.000121341	
+    51	 4.34271e-05	 0.000184568	
+    53	           0	 0.000225364	
+    55	           0	 2.89705e-05	
+    58	           0	 0.000122911	
+    62	 0.000576357	 0.000172482	
+--------------------------------------
+Total:	     23.5381	     25.9051	
+
+200x1 matrix is as follows
+
+     |      0    |
+------------------
+   0 |       13.6 
+   1 |      13.71 
+   2 |      14.42 
+   3 |      14.68 
+   4 |      14.59 
+   5 |      14.71 
+   6 |      14.88 
+   7 |      14.51 
+   8 |      12.99 
+   9 |      11.73 
+  10 |         10 
+  11 |      7.269 
+  12 |      5.981 
+  13 |      4.501 
+  14 |      3.659 
+  15 |      3.128 
+  16 |      2.727 
+  17 |       2.34 
+  18 |      2.209 
+  19 |      1.797 
+  20 |      1.664 
+  21 |      1.484 
+  22 |      1.433 
+  23 |       1.34 
+  24 |      1.243 
+  25 |      1.138 
+  26 |      1.121 
+  27 |      1.015 
+  28 |      1.002 
+  29 |     0.9248 
+  30 |     0.7555 
+  31 |     0.8069 
+  32 |      0.769 
+  33 |     0.6755 
+  34 |     0.6583 
+  35 |     0.5335 
+  36 |      0.568 
+  37 |     0.5205 
+  38 |     0.5118 
+  39 |     0.4858 
+  40 |     0.4315 
+  41 |     0.4301 
+  42 |     0.4733 
+  43 |      0.431 
+  44 |      0.417 
+  45 |     0.3635 
+  46 |     0.4003 
+  47 |     0.4051 
+  48 |     0.3062 
+  49 |     0.3129 
+  50 |      0.251 
+  51 |     0.2221 
+  52 |     0.2468 
+  53 |     0.2004 
+  54 |     0.1963 
+  55 |     0.1707 
+  56 |      0.154 
+  57 |     0.1522 
+  58 |     0.1012 
+  59 |     0.1019 
+  60 |     0.8252 
+  61 |     0.7461 
+  62 |     0.6662 
+  63 |     0.4831 
+  64 |     0.3621 
+  65 |      0.316 
+  66 |     0.3323 
+  67 |     0.2514 
+  68 |     0.2369 
+  69 |     0.2224 
+  70 |     0.1381 
+  71 |      0.158 
+  72 |     0.1583 
+  73 |    0.09324 
+  74 |     0.1351 
+  75 |     0.1268 
+  76 |    0.05603 
+  77 |    0.07574 
+  78 |    0.05428 
+  79 |    0.02726 
+  80 |    0.03222 
+  81 |    0.02768 
+  82 |     0.0387 
+  83 |    0.01432 
+  84 |    0.04137 
+  85 |     0.2002 
+  86 | 1.043e-320 
+  87 | 4.121e-321 
+  88 |  1.16e-309 
+  89 |  1.16e-309 
+  90 | 1.075e-320 
+  91 | 3.162e-322 
+  92 | 9.332e-310 
+  93 |     0.0222 
+  94 | 1.107e-320 
+  95 | 3.162e-322 
+  96 | 9.332e-310 
+  97 |      0.025 
+  98 | 1.138e-320 
+  99 | 3.162e-322 
+ 100 |          0 
+ 101 |          0 
+ 102 |          0 
+ 103 |          0 
+ 104 |          0 
+ 105 |          0 
+ 106 |          0 
+ 107 |          0 
+ 108 |          0 
+ 109 |          0 
+ 110 |          0 
+ 111 |          0 
+ 112 |          0 
+ 113 |          0 
+ 114 |          0 
+ 115 |          0 
+ 116 |          0 
+ 117 |          0 
+ 118 |          0 
+ 119 |          0 
+ 120 |          0 
+ 121 |          0 
+ 122 |          0 
+ 123 |          0 
+ 124 |          0 
+ 125 |          0 
+ 126 |          0 
+ 127 |          0 
+ 128 |          0 
+ 129 |          0 
+ 130 |          0 
+ 131 |          0 
+ 132 |          0 
+ 133 |          0 
+ 134 |          0 
+ 135 |          0 
+ 136 |          0 
+ 137 |          0 
+ 138 |          0 
+ 139 |          0 
+ 140 |          0 
+ 141 |          0 
+ 142 |          0 
+ 143 |          0 
+ 144 |          0 
+ 145 |          0 
+ 146 |          0 
+ 147 |          0 
+ 148 |          0 
+ 149 |          0 
+ 150 |          0 
+ 151 |          0 
+ 152 |          0 
+ 153 |          0 
+ 154 |          0 
+ 155 |          0 
+ 156 |          0 
+ 157 |          0 
+ 158 |          0 
+ 159 |          0 
+ 160 |          0 
+ 161 |          0 
+ 162 |          0 
+ 163 |          0 
+ 164 |          0 
+ 165 |          0 
+ 166 |          0 
+ 167 |          0 
+ 168 |          0 
+ 169 |          0 
+ 170 |          0 
+ 171 |          0 
+ 172 |          0 
+ 173 |          0 
+ 174 |          0 
+ 175 |          0 
+ 176 |          0 
+ 177 |          0 
+ 178 |          0 
+ 179 |          0 
+ 180 |          0 
+ 181 |          0 
+ 182 |          0 
+ 183 |          0 
+ 184 |          0 
+ 185 |          0 
+ 186 |          0 
+ 187 |          0 
+ 188 |          0 
+ 189 |          0 
+ 190 |          0 
+ 191 |          0 
+ 192 |          0 
+ 193 |          0 
+ 194 |          0 
+ 195 |          0 
+ 196 |          0 
+ 197 |          0 
+ 198 |          0 
+ 199 |          0 
+
+Finished testing stuff 
+Please enter an integer to proceed: The value you entered is 1 and its double is 2.
+Starting curve calculations 
+after break
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+testing my function 
+diagonal 0 value is 0.000000 
+diagonal 0 value is now 0.001000 
+diagonal 1 value is 0.000000 
+diagonal 1 value is now 0.001000 
+diagonal 2 value is 0.000000 
+diagonal 2 value is now 0.001000 
+diagonal 3 value is 0.000000 
+diagonal 3 value is now 0.001000 
+diagonal 4 value is 0.000000 
+diagonal 4 value is now 0.001000 
+diagonal 5 value is 0.000000 
+diagonal 5 value is now 0.001000 
+diagonal 6 value is 0.000000 
+diagonal 6 value is now 0.001000 
+diagonal 7 value is 0.000000 
+diagonal 7 value is now 0.001000 
+diagonal 8 value is 0.000000 
+diagonal 8 value is now 0.001000 
+diagonal 9 value is 0.000000 
+diagonal 9 value is now 0.001000 
+diagonal 10 value is 0.000000 
+diagonal 10 value is now 0.001000 
+diagonal 11 value is 2.554698 
+diagonal 11 value is now 2.555698 
+diagonal 12 value is 46.305466 
+diagonal 12 value is now 46.306466 
+diagonal 13 value is 123.806436 
+diagonal 13 value is now 123.807436 
+diagonal 14 value is 176.823032 
+diagonal 14 value is now 176.824032 
+diagonal 15 value is 790.562033 
+diagonal 15 value is now 790.563033 
+diagonal 16 value is 88.070147 
+diagonal 16 value is now 88.071147 
+diagonal 17 value is 109.696894 
+diagonal 17 value is now 109.697894 
+diagonal 18 value is 1010.935928 
+diagonal 18 value is now 1010.936928 
+diagonal 19 value is 261.319256 
+diagonal 19 value is now 261.320256 
+diagonal 20 value is 2473.196557 
+diagonal 20 value is now 2473.197557 
+diagonal 21 value is 6222.519294 
+diagonal 21 value is now 6222.520294 
+diagonal 22 value is 2313.464067 
+diagonal 22 value is now 2313.465067 
+diagonal 23 value is 644.760576 
+diagonal 23 value is now 644.761576 
+diagonal 24 value is 4527.371543 
+diagonal 24 value is now 4527.372543 
+diagonal 25 value is 6415.569800 
+diagonal 25 value is now 6415.570800 
+diagonal 26 value is 6237.052172 
+diagonal 26 value is now 6237.053172 
+diagonal 27 value is 5103.640740 
+diagonal 27 value is now 5103.641740 
+diagonal 28 value is 4048.086716 
+diagonal 28 value is now 4048.087716 
+diagonal 29 value is 1156.678138 
+diagonal 29 value is now 1156.679138 
+diagonal 30 value is 351.030600 
+diagonal 30 value is now 351.031600 
+diagonal 31 value is 10173.322355 
+diagonal 31 value is now 10173.323355 
+diagonal 32 value is 208594.107299 
+diagonal 32 value is now 208594.108299 
+diagonal 33 value is 29327.559165 
+diagonal 33 value is now 29327.560165 
+diagonal 34 value is 2231.482228 
+diagonal 34 value is now 2231.483228 
+diagonal 35 value is 8750.693125 
+diagonal 35 value is now 8750.694125 
+diagonal 36 value is 789.775443 
+diagonal 36 value is now 789.776443 
+diagonal 37 value is 8280.751555 
+diagonal 37 value is now 8280.752555 
+diagonal 38 value is 7474.493768 
+diagonal 38 value is now 7474.494768 
+diagonal 39 value is 37212.815096 
+diagonal 39 value is now 37212.816096 
+diagonal 40 value is 14233.940926 
+diagonal 40 value is now 14233.941926 
+diagonal 41 value is 2098.897413 
+diagonal 41 value is now 2098.898413 
+diagonal 42 value is 1385.472265 
+diagonal 42 value is now 1385.473265 
+diagonal 43 value is 13949.485379 
+diagonal 43 value is now 13949.486379 
+diagonal 44 value is 43198.223865 
+diagonal 44 value is now 43198.224865 
+diagonal 45 value is 13150.625479 
+diagonal 45 value is now 13150.626479 
+diagonal 46 value is 3517.664203 
+diagonal 46 value is now 3517.665203 
+diagonal 47 value is 6603.098795 
+diagonal 47 value is now 6603.099795 
+diagonal 48 value is 3685.776522 
+diagonal 48 value is now 3685.777522 
+diagonal 49 value is 13023.634624 
+diagonal 49 value is now 13023.635624 
+diagonal 50 value is 2386.049221 
+diagonal 50 value is now 2386.050221 
+diagonal 51 value is 37157.131061 
+diagonal 51 value is now 37157.132061 
+diagonal 52 value is 32133.919115 
+diagonal 52 value is now 32133.920115 
+diagonal 53 value is 1224172.877074 
+diagonal 53 value is now 1224172.878074 
+diagonal 54 value is 35977.091155 
+diagonal 54 value is now 35977.092155 
+diagonal 55 value is 6873.785471 
+diagonal 55 value is now 6873.786471 
+diagonal 56 value is 16236.991398 
+diagonal 56 value is now 16236.992398 
+diagonal 57 value is 41433.399429 
+diagonal 57 value is now 41433.400429 
+diagonal 58 value is 25386.197364 
+diagonal 58 value is now 25386.198364 
+diagonal 59 value is 25453.257835 
+diagonal 59 value is now 25453.258835 
+diagonal 60 value is 4228.162222 
+diagonal 60 value is now 4228.163222 
+diagonal 61 value is 1510.919095 
+diagonal 61 value is now 1510.920095 
+diagonal 62 value is 3639.695370 
+diagonal 62 value is now 3639.696370 
+diagonal 63 value is 10774.964095 
+diagonal 63 value is now 10774.965095 
+diagonal 64 value is 28093.899219 
+diagonal 64 value is now 28093.900219 
+diagonal 65 value is 5983.695938 
+diagonal 65 value is now 5983.696938 
+diagonal 66 value is 6071.204447 
+diagonal 66 value is now 6071.205447 
+diagonal 67 value is 13948.324185 
+diagonal 67 value is now 13948.325185 
+diagonal 68 value is 1496.568893 
+diagonal 68 value is now 1496.569893 
+diagonal 69 value is 25974.274691 
+diagonal 69 value is now 25974.275691 
+diagonal 70 value is 3864.981323 
+diagonal 70 value is now 3864.982323 
+diagonal 71 value is 21497.852287 
+diagonal 71 value is now 21497.853287 
+diagonal 72 value is 13157.600443 
+diagonal 72 value is now 13157.601443 
+diagonal 73 value is 18866.398597 
+diagonal 73 value is now 18866.399597 
+diagonal 74 value is 1728044.077420 
+diagonal 74 value is now 1728044.078420 
+diagonal 75 value is 2317.277570 
+diagonal 75 value is now 2317.278570 
+diagonal 76 value is 2822.611788 
+diagonal 76 value is now 2822.612788 
+diagonal 77 value is 2662.975545 
+diagonal 77 value is now 2662.976545 
+diagonal 78 value is 4756.406350 
+diagonal 78 value is now 4756.407350 
+diagonal 79 value is 2487.395029 
+diagonal 79 value is now 2487.396029 
+diagonal 80 value is 23192.661719 
+diagonal 80 value is now 23192.662719 
+diagonal 81 value is 50757.106754 
+diagonal 81 value is now 50757.107754 
+diagonal 82 value is 98042.342101 
+diagonal 82 value is now 98042.343101 
+diagonal 83 value is 61936.867916 
+diagonal 83 value is now 61936.868916 
+diagonal 84 value is 55436.064477 
+diagonal 84 value is now 55436.065477 
+diagonal 85 value is 49319.183170 
+diagonal 85 value is now 49319.184170 
+diagonal 86 value is 10239.395523 
+diagonal 86 value is now 10239.396523 
+diagonal 87 value is 18251.979736 
+diagonal 87 value is now 18251.980736 
+diagonal 88 value is 8830.814113 
+diagonal 88 value is now 8830.815113 
+diagonal 89 value is 53571.130392 
+diagonal 89 value is now 53571.131392 
+diagonal 90 value is 54659.067356 
+diagonal 90 value is now 54659.068356 
+diagonal 91 value is 89499.238579 
+diagonal 91 value is now 89499.239579 
+diagonal 92 value is 48629.207687 
+diagonal 92 value is now 48629.208687 
+diagonal 93 value is 74549.311980 
+diagonal 93 value is now 74549.312980 
+diagonal 94 value is 24684.766389 
+diagonal 94 value is now 24684.767389 
+diagonal 95 value is 459468.260426 
+diagonal 95 value is now 459468.261426 
+diagonal 96 value is 33249.597798 
+diagonal 96 value is now 33249.598798 
+diagonal 97 value is 24479.548325 
+diagonal 97 value is now 24479.549325 
+diagonal 98 value is 15007.668429 
+diagonal 98 value is now 15007.669429 
+diagonal 99 value is 12085.218413 
+diagonal 99 value is now 12085.219413 
+diagonal 100 value is 12085.218413 
+diagonal 100 value is now 12085.219413 
+diagonal 101 value is 12085.218413 
+diagonal 101 value is now 12085.219413 
+diagonal 102 value is 363619.450000 
+diagonal 102 value is now 363619.451000 
+diagonal 103 value is 343849.820000 
+diagonal 103 value is now 343849.821000 
+diagonal 104 value is 393073.330000 
+diagonal 104 value is now 393073.331000 
+diagonal 105 value is 370797.570000 
+diagonal 105 value is now 370797.571000 
+diagonal 106 value is 0.000000 
+diagonal 106 value is now 0.001000 
+diagonal 107 value is 0.000000 
+diagonal 107 value is now 0.001000 
+diagonal 108 value is 0.000000 
+diagonal 108 value is now 0.001000 
+diagonal 109 value is 0.000000 
+diagonal 109 value is now 0.001000 
+diagonal 110 value is 0.000000 
+diagonal 110 value is now 0.001000 
+diagonal 111 value is 0.000000 
+diagonal 111 value is now 0.001000 
+diagonal 112 value is 0.000000 
+diagonal 112 value is now 0.001000 
+diagonal 113 value is 0.000000 
+diagonal 113 value is now 0.001000 
+diagonal 114 value is 0.000000 
+diagonal 114 value is now 0.001000 
+diagonal 115 value is 0.000000 
+diagonal 115 value is now 0.001000 
+diagonal 116 value is 0.000000 
+diagonal 116 value is now 0.001000 
+diagonal 117 value is 0.000000 
+diagonal 117 value is now 0.001000 
+diagonal 118 value is 5.610000 
+diagonal 118 value is now 5.611000 
+diagonal 119 value is 2.610000 
+diagonal 119 value is now 2.611000 
+diagonal 120 value is 2.280000 
+diagonal 120 value is now 2.281000 
+diagonal 121 value is 4.110000 
+diagonal 121 value is now 4.111000 
+diagonal 122 value is 19.150000 
+diagonal 122 value is now 19.151000 
+diagonal 123 value is 20.230000 
+diagonal 123 value is now 20.231000 
+diagonal 124 value is 256.950000 
+diagonal 124 value is now 256.951000 
+diagonal 125 value is 138.600000 
+diagonal 125 value is now 138.601000 
+diagonal 126 value is 422.900000 
+diagonal 126 value is now 422.901000 
+diagonal 127 value is 1094.970000 
+diagonal 127 value is now 1094.971000 
+diagonal 128 value is 2977.630000 
+diagonal 128 value is now 2977.631000 
+diagonal 129 value is 6735.740000 
+diagonal 129 value is now 6735.741000 
+diagonal 130 value is 10747.200000 
+diagonal 130 value is now 10747.201000 
+diagonal 131 value is 19528.550000 
+diagonal 131 value is now 19528.551000 
+diagonal 132 value is 0.000000 
+diagonal 132 value is now 0.001000 
+diagonal 133 value is 32619.690000 
+diagonal 133 value is now 32619.691000 
+diagonal 134 value is 78007.260000 
+diagonal 134 value is now 78007.261000 
+diagonal 135 value is 109547.480000 
+diagonal 135 value is now 109547.481000 
+diagonal 136 value is 131070.510000 
+diagonal 136 value is now 131070.511000 
+diagonal 137 value is 172568.400000 
+diagonal 137 value is now 172568.401000 
+diagonal 138 value is 224532.440000 
+diagonal 138 value is now 224532.441000 
+diagonal 139 value is 282895.620000 
+diagonal 139 value is now 282895.621000 
+diagonal 140 value is 349877.670000 
+diagonal 140 value is now 349877.671000 
+diagonal 141 value is 407834.130000 
+diagonal 141 value is now 407834.131000 
+diagonal 142 value is 436548.940000 
+diagonal 142 value is now 436548.941000 
+diagonal 143 value is 497791.630000 
+diagonal 143 value is now 497791.631000 
+diagonal 144 value is 413922.430000 
+diagonal 144 value is now 413922.431000 
+diagonal 145 value is 419721.390000 
+diagonal 145 value is now 419721.391000 
+diagonal 146 value is 282618.570000 
+diagonal 146 value is now 282618.571000 
+diagonal 147 value is 254540.380000 
+diagonal 147 value is now 254540.381000 
+diagonal 148 value is 201363.860000 
+diagonal 148 value is now 201363.861000 
+diagonal 149 value is 111347.420000 
+diagonal 149 value is now 111347.421000 
+diagonal 150 value is 96567.040000 
+diagonal 150 value is now 96567.041000 
+diagonal 151 value is 60935.430000 
+diagonal 151 value is now 60935.431000 
+diagonal 152 value is 45727.150000 
+diagonal 152 value is now 45727.151000 
+diagonal 153 value is 0.000000 
+diagonal 153 value is now 0.001000 
+diagonal 154 value is 26294.980000 
+diagonal 154 value is now 26294.981000 
+diagonal 155 value is 11345.160000 
+diagonal 155 value is now 11345.161000 
+diagonal 156 value is 7014.000000 
+diagonal 156 value is now 7014.001000 
+diagonal 157 value is 2611.420000 
+diagonal 157 value is now 2611.421000 
+diagonal 158 value is 1494.410000 
+diagonal 158 value is now 1494.411000 
+diagonal 159 value is 468.090000 
+diagonal 159 value is now 468.091000 
+diagonal 160 value is 113.270000 
+diagonal 160 value is now 113.271000 
+diagonal 161 value is 52.440000 
+diagonal 161 value is now 52.441000 
+diagonal 162 value is 23.480000 
+diagonal 162 value is now 23.481000 
+diagonal 163 value is 12.120000 
+diagonal 163 value is now 12.121000 
+diagonal 164 value is 1.400000 
+diagonal 164 value is now 1.401000 
+diagonal 165 value is 0.000000 
+diagonal 165 value is now 0.001000 
+diagonal 166 value is 1.670000 
+diagonal 166 value is now 1.671000 
+diagonal 167 value is 0.000000 
+diagonal 167 value is now 0.001000 
+diagonal 168 value is 1.940000 
+diagonal 168 value is now 1.941000 
+diagonal 169 value is 0.000000 
+diagonal 169 value is now 0.001000 
+diagonal 170 value is 0.000000 
+diagonal 170 value is now 0.001000 
+diagonal 171 value is 0.000000 
+diagonal 171 value is now 0.001000 
+diagonal 172 value is 0.000000 
+diagonal 172 value is now 0.001000 
+diagonal 173 value is 0.000000 
+diagonal 173 value is now 0.001000 
+diagonal 174 value is 0.000000 
+diagonal 174 value is now 0.001000 
+diagonal 175 value is 0.000000 
+diagonal 175 value is now 0.001000 
+diagonal 176 value is 0.000000 
+diagonal 176 value is now 0.001000 
+diagonal 177 value is 0.000000 
+diagonal 177 value is now 0.001000 
+diagonal 178 value is 0.000000 
+diagonal 178 value is now 0.001000 
+diagonal 179 value is 0.000000 
+diagonal 179 value is now 0.001000 
+diagonal 180 value is 0.000000 
+diagonal 180 value is now 0.001000 
+diagonal 181 value is 0.000000 
+diagonal 181 value is now 0.001000 
+diagonal 182 value is 0.000000 
+diagonal 182 value is now 0.001000 
+diagonal 183 value is 0.000000 
+diagonal 183 value is now 0.001000 
+diagonal 184 value is 0.000000 
+diagonal 184 value is now 0.001000 
+diagonal 185 value is 0.000000 
+diagonal 185 value is now 0.001000 
+diagonal 186 value is 0.000000 
+diagonal 186 value is now 0.001000 
+diagonal 187 value is 0.000000 
+diagonal 187 value is now 0.001000 
+diagonal 188 value is 0.000000 
+diagonal 188 value is now 0.001000 
+diagonal 189 value is 0.000000 
+diagonal 189 value is now 0.001000 
+diagonal 190 value is 0.000000 
+diagonal 190 value is now 0.001000 
+diagonal 191 value is 0.000000 
+diagonal 191 value is now 0.001000 
+diagonal 192 value is 0.000000 
+diagonal 192 value is now 0.001000 
+diagonal 193 value is 0.000000 
+diagonal 193 value is now 0.001000 
+diagonal 194 value is 0.000000 
+diagonal 194 value is now 0.001000 
+diagonal 195 value is 0.000000 
+diagonal 195 value is now 0.001000 
+diagonal 196 value is 0.000000 
+diagonal 196 value is now 0.001000 
+diagonal 197 value is 0.000000 
+diagonal 197 value is now 0.001000 
+diagonal 198 value is 0.000000 
+diagonal 198 value is now 0.001000 
+diagonal 199 value is 0.000000 
+diagonal 199 value is now 0.001000 
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+w value: 5 
+Starting baseline: 700.000000 
+Baselines set 
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file fsolver.c:58 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+GSL Error in file brent.c:74 : invalid argument supplied by user
+Curve calculations complete 
+Commencing potting 
+Please enter an integer to proceed: The value you entered is 1 and its double is 2.
+Data a is: index: 0.010000 and value: 10000.000000 
+Data b is: index: 0.010000 and value: 10000.000000 
+Data a is: index: 0.015849 and value: 0.375996 
+Data b is: index: 0.015849 and value: 0.346055 
+Data a is: index: 0.025119 and value: 0.372213 
+Data b is: index: 0.025119 and value: 0.342925 
+Data a is: index: 0.039811 and value: 0.370514 
+Data b is: index: 0.039811 and value: 0.341146 
+Data a is: index: 0.063096 and value: 0.367965 
+Data b is: index: 0.063096 and value: 0.338843 
+Data a is: index: 0.100000 and value: 0.364027 
+Data b is: index: 0.100000 and value: 0.335528 
+Data a is: index: 0.158489 and value: 0.357698 
+Data b is: index: 0.158489 and value: 0.329811 
+Data a is: index: 0.251189 and value: 0.347790 
+Data b is: index: 0.251189 and value: 0.320864 
+Data a is: index: 0.398107 and value: 0.332401 
+Data b is: index: 0.398107 and value: 0.306975 
+Data a is: index: 0.630957 and value: 0.308839 
+Data b is: index: 0.630957 and value: 0.285727 
+Data a is: index: 1.000000 and value: 0.273736 
+Data b is: index: 1.000000 and value: 0.254077 
+Data a is: index: 1.584893 and value: 0.224089 
+Data b is: index: 1.584893 and value: 0.209342 
+Data a is: index: 2.511886 and value: 0.161751 
+Data b is: index: 2.511886 and value: 0.152852 
+Data a is: index: 3.981072 and value: 0.097941 
+Data b is: index: 3.981072 and value: 0.094557 
+Data a is: index: 6.309573 and value: 0.053192 
+Data b is: index: 6.309573 and value: 0.052383 
+Data a is: index: 10.000000 and value: 0.030019 
+Data b is: index: 10.000000 and value: 0.029870 
+Data a is: index: 15.848932 and value: 0.019013 
+Data b is: index: 15.848932 and value: 0.018983 
+Data a is: index: 25.118864 and value: 0.013410 
+Data b is: index: 25.118864 and value: 0.013403 
+Data a is: index: 39.810717 and value: 0.010285 
+Data b is: index: 39.810717 and value: 0.010284 
+Data a is: index: 63.095734 and value: 0.008357 
+Data b is: index: 63.095734 and value: 0.008357 
+Data a is: index: 100.000000 and value: 0.007123 
+Data b is: index: 100.000000 and value: 0.007123 
+Data a is: index: 158.489319 and value: 0.006292 
+Data b is: index: 158.489319 and value: 0.006292 
+Data a is: index: 251.188643 and value: 0.005719 
+Data b is: index: 251.188643 and value: 0.005719 
+Data a is: index: 398.107171 and value: 0.005335 
+Data b is: index: 398.107171 and value: 0.005335 
+Data a is: index: 630.957344 and value: 0.005115 
+Data b is: index: 630.957344 and value: 0.005115 
+Data a is: index: 1000.000000 and value: 0.005049 
+Data b is: index: 1000.000000 and value: 0.005049 
+Data a is: index: 1584.893192 and value: 0.004943 
+Data b is: index: 1584.893192 and value: 0.004943 
+Data a is: index: 2511.886432 and value: 0.005018 
+Data b is: index: 2511.886432 and value: 0.005018 
+Data a is: index: 3981.071706 and value: 0.004580 
+Data b is: index: 3981.071706 and value: 0.004580 
+Data a is: index: 6309.573445 and value: 0.004585 
+Data b is: index: 6309.573445 and value: 0.004585 
+Please enter an integer to proceed: 
