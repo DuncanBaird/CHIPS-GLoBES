@@ -705,11 +705,12 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
   // sp->SetMarkerColor(4);
 
   //gPad->SetLogx();
+  gPad->SetLeftMargin(0.15);
   gPad->Update();
   mg->Draw("APL");
 
   TLegend* legend = new TLegend();
-  legend->SetHeader("Legend Title");
+  legend->SetHeader("Legend");
   legend->AddEntry(spa,"#chi^{2} curve","lp");
   // legend->AddEntry(spb,"Statistics only","lp");
   legend->Draw();
