@@ -506,6 +506,33 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   return chi2 +test_result;
 }
 
+double chiNoCOV(int exp, int rule, int n_params, double *x, double *errors,
+                 void *user_data)
+{
+  double *true_rates       = glbGetRuleRatePtr(exp, rule);
+  double *signal_fit_rates = glbGetSignalFitRatePtr(exp, rule);
+  double *bg_fit_rates     = glbGetBGFitRatePtr(exp, rule);
+  double bg_norm_center, bg_tilt_center;
+  int ew_low, ew_high;
+  double fit_rate;
+  double chi2 = 0.0;
+  int i;
+
+  glbGetEnergyWindowBins(exp, rule, &ew_low, &ew_high);
+  glbGetBGCenters(exp, rule, &bg_norm_center, &bg_tilt_center);
+  for (i=ew_low; i <= ew_high; i++)
+  {
+    fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
+    chi2 += glb_likelihood(true_rates[i], fit_rate);
+  }
+  /* Systematical part of chi^2 (= priors) */
+  for (i=0; i < n_params; i++)
+    chi2 += square(x[i] / errors[i]);
+
+
+  return chi2;
+}
+
 
 
 
@@ -614,7 +641,7 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
 
   if (sys_option == 1){
-  glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_ON, "glbChiSpectrumOnly", sys_errors);//glbSetChiFunction(GLB_ALL,GLB_ALL,GLB_ON,"chiDCNorm",sys_errors);
+  glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_ON, "chiNoCOV", sys_errors);//glbSetChiFunction(GLB_ALL,GLB_ALL,GLB_ON,"chiDCNorm",sys_errors);
   }else if (sys_option == 0){
   glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_ON, "chiCOV", sys_errors);
   }
@@ -637,10 +664,13 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
   for (int i = 0; i<cp_steps; ++i){
     
      glbSetOscParams(test_values, cp_current, GLB_DELTA_CP);
-     glbSetNewRates();
-     chi_current = glbChiSys(true_values,GLB_ALL,GLB_ALL); //log(glbChiNP(test_values,NULL,GLB_ALL));
+     glbSetRates();
+     chi_current = glbChiSys(test_values,GLB_ALL,GLB_ALL); //log(glbChiNP(test_values,NULL,GLB_ALL));
      cout << "current cp value is: " << cp_current << "\n";
      cout << "current chi value is: " << chi_current << "\n";
+     if(chi_current > 1.0){
+       chi_current = 0.0;
+     }
      chi_data[0][i] = cp_current;
      chi_data[1][i] = chi_current;
      cp_current += cp_step;
@@ -680,7 +710,7 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
   TLegend* legend = new TLegend();
   legend->SetHeader("Legend Title");
-  legend->AddEntry(spa,"With Systematics","lp");
+  legend->AddEntry(spa,"#chi^{2} curve","lp");
   // legend->AddEntry(spb,"Statistics only","lp");
   legend->Draw();
 
@@ -732,6 +762,8 @@ int main(int argc, char *argv[])
   for (i=0; i < MAX_SYS; i++)
     sys_startval[i] = 0.0;
 
+  
+
   /* Set standard oscillation parameters (cf. hep-ph/0405172v5) */
   //theta12 = asin(sqrt(0.3));
   //theta13 = 0.0;
@@ -754,6 +786,7 @@ int main(int argc, char *argv[])
 
   // Defining my chi function in GLoBES
   glbDefineChiFunction(&chiCOV,     5,        "chiCOV",     NULL);
+  glbDefineChiFunction(&chiNoCOV,     5,        "chiNoCOV",     NULL);
 
   /* Load 2 experiments: DC far (#0) and near (#1) detectors */
   char *Far_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb";
@@ -775,6 +808,14 @@ int main(int argc, char *argv[])
   else
     n_bins = glbGetNumberOfBins(EXP_FAR);
 
+  old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
+  sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
+  for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
+    sys_errors[i] = old_sys_errors[i];
+  for (i=sys_dim; i < sys_dim + n_bins; i++)
+    sys_errors[i] = 0.02;                                          /* Spectral error */
+  sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
+
   /* Initialize parameter vectors */
   true_values  = glbAllocParams();
   test_values  = glbAllocParams();
@@ -792,8 +833,11 @@ cout << "Starting testing stuff \n";
 
 glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
 
-runChiCurve(0,2*M_PI,100,1,1,0,"spec");
-runChiCurve(0,2*M_PI,100,0,1,0,"cov");
+runChiCurve(0,2*M_PI,100,0,1,1,"cov sys on");
+runChiCurve(0,2*M_PI,100,0,0,1,"cov sys off");
+
+runChiCurve(0,2*M_PI,100,1,1,1,"spec sys on");
+runChiCurve(0,2*M_PI,100,1,0,1,"spec sys off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 cout << "Finished testing stuff \n";
