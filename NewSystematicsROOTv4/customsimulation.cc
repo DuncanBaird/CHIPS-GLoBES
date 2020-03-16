@@ -72,16 +72,38 @@ double sigma_binbin = 0.0;        /* Bin-to-bin error */
  */
 
 void createMergedRate(TMatrixD data){
-  int bins = glbGetNumberOfSamplingPoints(EXP_FAR);
+  int bins = glbGetNumberOfBins(EXP_FAR);
+  int points = 100;
+  int bin_inter = points/bins;
+  double bin_placeholder;
+  //cout << "bin is: " << bins << "\n";
 
   int far_rules = glbGetNumberOfRules(EXP_FAR);
   int near_rules = glbGetNumberOfRules(EXP_FAR);
-  double *true_rate_0 = glbGetRuleRatePtr(EXP_FAR, 0);
-  double *true_rate_1 = glbGetRuleRatePtr(EXP_FAR, 1);
+  double *true_rate_0_f = glbGetRuleRatePtr(EXP_FAR, 0);
+  double *true_rate_1_f = glbGetRuleRatePtr(EXP_FAR, 1);
+  double *true_rate_0_n = glbGetRuleRatePtr(EXP_NEAR, 0);
+  double *true_rate_1_n = glbGetRuleRatePtr(EXP_NEAR, 1);
 
-for(int i = 0; i<bins;++i){
-  data[i][0] = true_rate_0[i] + true_rate_1[i];
-}
+  //cout << glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG) << "\n";
+
+
+  for(int i = 0; i < 200;++i){
+    data[i][0] = glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
+  }
+
+// for(int i = 0; i<bins;++i){
+//    bin_placeholder = true_rate_0_f[i] + true_rate_1_f[i];
+//    for (int k = 0; k < bin_inter;++k){
+//      data[i*bin_inter+k][0] = bin_placeholder / bin_inter;
+//    }
+//    bin_placeholder = true_rate_0_n[i] + true_rate_1_n[i];
+//    for (int k = 0; k < bin_inter;++k){
+//      data[99+i*bin_inter+k][0] = bin_placeholder / bin_inter;
+//    }
+// }
+// data[100][0] = data[99][0];
+// data[200][0] = data[199][0];
 
 }
 
@@ -361,7 +383,7 @@ double chiDCNorm(int exp, int rule, int n_params, double *x, double *errors,
 
   /* Systematical part of chi^2 (= priors) */
   for (i=0; i < n_params; i++)
-    chi2 += square(x[i] / errors[i]);
+    chi2 += square(x[i] / errors[i]);//
 
   /* Save the systematics parameters as starting values for the next step */
   for (i=0; i < n_params; i++)
@@ -483,6 +505,12 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
 
   createMergedRate(delta3);
   createMergedRate(delta4);
+
+  double dummy_sum;
+  for (int i = 0; i<200;++i){
+    dummy_sum += delta3[i][0];
+  }
+  //cout << "dummy sum is: " << dummy_sum << "\n";
   //cout << "debug1";
   // delta.Transpose()
   delta1.T();
@@ -500,10 +528,33 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // dummy2.Mult(dummy1,delta2);
   // cout << "debug6";
   double test_result = matrix_result[0][0];
-  // cout << "testing output: "<< test_result << "\n";
+  //cout << "testing output: "<< test_result << "\n";
   //cout << "hello world\n";
 
   return chi2 +test_result;
+}
+
+double chiCOVStat(int exp, int rule, int n_params, double *x, double *errors,
+                 void *user_data)
+{
+  double *true_rates       = glbGetRuleRatePtr(exp, rule);
+  double *signal_fit_rates = glbGetSignalFitRatePtr(exp, rule);
+  double *bg_fit_rates     = glbGetBGFitRatePtr(exp, rule);
+  double bg_norm_center, bg_tilt_center;
+  int ew_low, ew_high;
+  double fit_rate;
+  double chi2 = 0.0;
+  int i;
+
+  glbGetEnergyWindowBins(exp, rule, &ew_low, &ew_high);
+  glbGetBGCenters(exp, rule, &bg_norm_center, &bg_tilt_center);
+  for (i=ew_low; i <= ew_high; i++)
+  {
+    fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
+    chi2 += glb_likelihood(true_rates[i], fit_rate);
+  }
+
+  return chi2;
 }
 
 double chiNoCOV(int exp, int rule, int n_params, double *x, double *errors,
@@ -525,10 +576,37 @@ double chiNoCOV(int exp, int rule, int n_params, double *x, double *errors,
     fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
     chi2 += glb_likelihood(true_rates[i], fit_rate);
   }
+  double chi_sys = 0;
   /* Systematical part of chi^2 (= priors) */
-  for (i=0; i < n_params; i++)
-    chi2 += square(x[i] / errors[i]);
+  for (i=0; i < n_params; i++){
+    chi2 += square(1 / errors[i]); //chi2 += square(x[i] / errors[i]);
 
+  }
+  
+
+
+  return chi2;
+}
+
+double chiNoCOVStat(int exp, int rule, int n_params, double *x, double *errors,
+                 void *user_data)
+{
+  double *true_rates       = glbGetRuleRatePtr(exp, rule);
+  double *signal_fit_rates = glbGetSignalFitRatePtr(exp, rule);
+  double *bg_fit_rates     = glbGetBGFitRatePtr(exp, rule);
+  double bg_norm_center, bg_tilt_center;
+  int ew_low, ew_high;
+  double fit_rate;
+  double chi2 = 0.0;
+  int i;
+
+  glbGetEnergyWindowBins(exp, rule, &ew_low, &ew_high);
+  glbGetBGCenters(exp, rule, &bg_norm_center, &bg_tilt_center);
+  for (i=ew_low; i <= ew_high; i++)
+  {
+    fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
+    chi2 += glb_likelihood(true_rates[i], fit_rate);
+  }
 
   return chi2;
 }
@@ -593,7 +671,7 @@ int userConfirm(){
 
 /**
  * Function to plot Chi squared curve over CP values.
- * sysoption = 1 for spectrum, 0 for cov
+ * sysoption = 1 for nocov, 0 for cov
  * Option =1 for sys on, 0 for sys off.
  * plot option = 1 for saving plot
  *
@@ -625,25 +703,29 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
   input_errors = glbAllocParams();
   glbDefineParams(input_errors, e_theta12 ,e_theta13, e_theta23, 0.1, e_sdm, e_ldm);
-  glbSetDensityParams(input_errors, 0.05, GLB_ALL);
+  glbSetDensityParams(input_errors, 0.1, GLB_ALL);
 
   double deltacp_fit = 0.;
   test_values  = glbAllocParams(); 
   glbDefineParams(test_values, theta12 ,theta13, theta23, deltacp_fit, sdm, ldm);
   glbSetDensityParams(test_values, 1.0, GLB_ALL);
 
-  glbSetCentralValues(true_values);
+  glbSetCentralValues(test_values);
   glbSetInputErrors(input_errors);
 
 
   glbSetBaselineInExperiment(EXP_NEAR,700);
   glbSetBaselineInExperiment(EXP_FAR,750);
 
+  glbSetRunningTime(GLB_ALL,GLB_ALL,1.0);
+
 
   if (sys_option == 1){
   glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_ON, "chiNoCOV", sys_errors);//glbSetChiFunction(GLB_ALL,GLB_ALL,GLB_ON,"chiDCNorm",sys_errors);
+  glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_OFF, "chiNoCOVStat", sys_errors);
   }else if (sys_option == 0){
   glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_ON, "chiCOV", sys_errors);
+  glbSetChiFunction(GLB_ALL, GLB_ALL, GLB_OFF, "chiCOVStat", sys_errors);
   }
     
   
@@ -664,13 +746,22 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
   for (int i = 0; i<cp_steps; ++i){
     
      glbSetOscParams(test_values, cp_current, GLB_DELTA_CP);
+
+     glbSetOscParams(true_values, 3.141592654, GLB_DELTA_CP);
+     glbSetOscillationParameters(true_values);
      glbSetRates();
-     chi_current = glbChiSys(test_values,GLB_ALL,GLB_ALL); //log(glbChiNP(test_values,NULL,GLB_ALL));
-     cout << "current cp value is: " << cp_current << "\n";
-     cout << "current chi value is: " << chi_current << "\n";
-     if(chi_current > 1.0){
-       chi_current = 0.0;
-     }
+
+     glbSetCentralValues(test_values);
+    glbSetInputErrors(input_errors);
+
+
+     chi_current = glbChiSys(test_values,GLB_ALL,GLB_ALL); //glbChiNP(test_values,NULL,GLB_ALL);
+    //  cout << "current cp value is: " << cp_current << "\n";
+    //  cout << "current chi value is: " << chi_current << "\n";
+
+    //  if(chi_current > 1.0){
+    //    chi_current = 0.0;
+    //  }
      chi_data[0][i] = cp_current;
      chi_data[1][i] = chi_current;
      cp_current += cp_step;
@@ -756,11 +847,10 @@ int main(int argc, char *argv[])
 
   double *old_sys_errors = NULL;      /* Temp. pointer to systematical error array */
   int sys_dim;                        /* Abbrv. for number of systematical errors */
-  int n_bins=86;                      /* Number of bins */
-  int i;
+  int n_bins=9; //86                      /* Number of bins */
 
   /* Initialization */
-  for (i=0; i < MAX_SYS; i++)
+  for (int i=0; i < MAX_SYS; i++)
     sys_startval[i] = 0.0;
 
   
@@ -788,10 +878,12 @@ int main(int argc, char *argv[])
   // Defining my chi function in GLoBES
   glbDefineChiFunction(&chiCOV,     5,        "chiCOV",     NULL);
   glbDefineChiFunction(&chiNoCOV,     5,        "chiNoCOV",     NULL);
+  glbDefineChiFunction(&chiCOVStat,     5,        "chiCOVStat",     NULL);
+  glbDefineChiFunction(&chiNoCOVStat,     5,        "chiNoCOVStat",     NULL);
 
   /* Load 2 experiments: DC far (#0) and near (#1) detectors */
-  char *Far_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-FAR.glb";
-  char *Near_file = (char*)"CHIPS-GLB/glb-CHIPS10-7mrad-ME-NEAR.glb";
+  char *Far_file = (char*)"CHIPS-GLB/TOMCHIPS_far.glb"; //glb-CHIPS10-7mrad-ME-FAR.glb
+  char *Near_file = (char*)"CHIPS-GLB/TOMCHIPS_near.glb"; //glb-CHIPS10-7mrad-ME-NEAR.glb
 
 
   glbClearExperimentList();
@@ -811,11 +903,24 @@ int main(int argc, char *argv[])
 
   old_sys_errors = glbGetSysErrorsListPtr(EXP_FAR, 0, GLB_ON);   /* Fill error array */
   sys_dim        = glbGetSysDimInExperiment(EXP_FAR, 0, GLB_ON);
-  for (i=0; i < sys_dim; i++)         /* Normalization and energy calibration errors */
-    sys_errors[i] = old_sys_errors[i];
-  for (i=sys_dim; i < sys_dim + n_bins; i++)
-    sys_errors[i] = 0.02;                                          /* Spectral error */
+
+  sys_dim = 5;
+
+  double sys_e[5] = {1,1,1,1,1};
+
+  for (int i=0; i < sys_dim; i++){         /* Normalization and energy calibration errors */
+    sys_errors[i] = 0.05;//old_sys_errors[i];
+    cout << i << " error val is: "<< sys_errors[i]<< "\n";
+  }
+  for (int i=sys_dim; i < sys_dim + n_bins; i++){
+    sys_errors[i] += 0.02;                                          /* Spectral error */
+  }
   sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
+
+  for (int i =0; i< glbGetNumberOfRules(EXP_FAR);++i){
+  cout << glbValueToName(EXP_FAR,"rule",i)<<"\n";
+  }
+
 
   /* Initialize parameter vectors */
   true_values  = glbAllocParams();
@@ -830,15 +935,22 @@ int main(int argc, char *argv[])
   glbSetOscillationParameters(true_values);
   glbSetInputErrors(input_errors);
 
+  glbSetOscParams(true_values, 3.141592654, GLB_DELTA_CP);
+  glbSetOscillationParameters(true_values);
+  glbSetRates();
+
 cout << "Starting testing stuff \n";
+
+cout << glbGetRunningTime(EXP_FAR,0) << "\n";
 
 glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
 
-runChiCurve(0,2*M_PI,100,0,1,1,"cov sys on");
-runChiCurve(0,2*M_PI,100,0,0,1,"cov sys off");
+userConfirm();
+runChiCurve(0,2*M_PI,100,0,1,0,"chicov sys on");
+runChiCurve(0,2*M_PI,100,0,0,0,"chicov sys off");
 
-runChiCurve(0,2*M_PI,100,1,1,1,"spec sys on");
-runChiCurve(0,2*M_PI,100,1,0,1,"spec sys off");
+runChiCurve(0,2*M_PI,100,1,1,0,"chinocov sys on");
+runChiCurve(0,2*M_PI,100,1,0,0,"chinocov sys off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 cout << "Finished testing stuff \n";
