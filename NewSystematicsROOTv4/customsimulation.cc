@@ -22,6 +22,7 @@
 #include <iostream>
 #include <stdio.h>
 using namespace std;
+using namespace chrono;
 
 
 /* If filenames given, write to file; for empty filenames, write to screen */
@@ -71,7 +72,7 @@ double sigma_binbin = 0.0;        /* Bin-to-bin error */
  * 
  */
 
-void createMergedRate(TMatrixD data){
+void createMergedRate(TMatrixD &data){
   int bins = glbGetNumberOfBins(EXP_FAR);
   int points = 100;
   int bin_inter = points/bins;
@@ -88,22 +89,22 @@ void createMergedRate(TMatrixD data){
   //cout << glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG) << "\n";
 
 
-  for(int i = 0; i < 200;++i){
-    data[i][0] = glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
-  }
+  // for(int i = 0; i < 200;++i){
+  //   data[i][0] = 10;//glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
+  // }
 
-// for(int i = 0; i<bins;++i){
-//    bin_placeholder = true_rate_0_f[i] + true_rate_1_f[i];
-//    for (int k = 0; k < bin_inter;++k){
-//      data[i*bin_inter+k][0] = bin_placeholder / bin_inter;
-//    }
-//    bin_placeholder = true_rate_0_n[i] + true_rate_1_n[i];
-//    for (int k = 0; k < bin_inter;++k){
-//      data[99+i*bin_inter+k][0] = bin_placeholder / bin_inter;
-//    }
-// }
-// data[100][0] = data[99][0];
-// data[200][0] = data[199][0];
+for(int i = 0; i<bins;++i){
+   bin_placeholder = true_rate_0_f[i] + true_rate_1_f[i];
+   for (int k = 0; k < bin_inter;++k){
+     data[i*bin_inter+k][0] = bin_placeholder / bin_inter;
+   }
+   bin_placeholder = true_rate_0_n[i] + true_rate_1_n[i];
+   for (int k = 0; k < bin_inter;++k){
+     data[99+i*bin_inter+k][0] = bin_placeholder / bin_inter;
+   }
+}
+data[100][0] = data[99][0];
+data[200][0] = data[199][0];
 
 }
 
@@ -312,9 +313,9 @@ void generate_covariance(TMatrixD &covariance_matrix){
 
     double singular_adjust = 0.001;
     for(int w=0;w<mat_len;w++){
-      printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
+      //printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
       correlation_matrix[w][w] = correlation_matrix[w][w] + singular_adjust;
-      printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
+      //printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
     }
    //adding covariance values into matrix object
     // covariance_matrix.SetMatrixArray(matrix_data);
@@ -506,10 +507,14 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   createMergedRate(delta3);
   createMergedRate(delta4);
 
-  double dummy_sum;
-  for (int i = 0; i<200;++i){
-    dummy_sum += delta3[i][0];
-  }
+
+  cout << "generating covariance matrix\n";
+  generate_covariance(covariance_matrix_1);
+
+  // double dummy_sum = 0.0;
+  // for (int i = 0; i<200;++i){
+  //   dummy_sum += delta3[i][0];
+  // }
   //cout << "dummy sum is: " << dummy_sum << "\n";
   //cout << "debug1";
   // delta.Transpose()
@@ -579,8 +584,7 @@ double chiNoCOV(int exp, int rule, int n_params, double *x, double *errors,
   double chi_sys = 0;
   /* Systematical part of chi^2 (= priors) */
   for (i=0; i < n_params; i++){
-    chi2 += square(1 / errors[i]); //chi2 += square(x[i] / errors[i]);
-
+    chi2 += square(0.04/ errors[i]); //chi2 += square(x[i] / errors[i]);
   }
   
 
@@ -912,9 +916,9 @@ int main(int argc, char *argv[])
     sys_errors[i] = 0.05;//old_sys_errors[i];
     cout << i << " error val is: "<< sys_errors[i]<< "\n";
   }
-  for (int i=sys_dim; i < sys_dim + n_bins; i++){
-    sys_errors[i] += 0.02;                                          /* Spectral error */
-  }
+  // for (int i=sys_dim; i < sys_dim + n_bins; i++){
+  //   sys_errors[i] += 0.02;                                          /* Spectral error */
+  // }
   sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
 
   for (int i =0; i< glbGetNumberOfRules(EXP_FAR);++i){
@@ -946,6 +950,7 @@ cout << glbGetRunningTime(EXP_FAR,0) << "\n";
 glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
 
 userConfirm();
+auto start = high_resolution_clock::now();
 runChiCurve(0,2*M_PI,100,0,1,0,"chicov sys on");
 runChiCurve(0,2*M_PI,100,0,0,0,"chicov sys off");
 
@@ -953,7 +958,10 @@ runChiCurve(0,2*M_PI,100,1,1,0,"chinocov sys on");
 runChiCurve(0,2*M_PI,100,1,0,0,"chinocov sys off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
+auto end =high_resolution_clock::now();
 cout << "Finished testing stuff \n";
+auto duration = duration_cast<seconds>(end-start);
+cout << "Time to compute: " << duration.count() << "s" << endl;
 
   app->Run();
 
