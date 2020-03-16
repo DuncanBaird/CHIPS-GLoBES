@@ -77,16 +77,20 @@ void createMergedRate(TMatrixD &data){
   int points = 100;
   int bin_inter = points/bins;
   double bin_placeholder;
-  //cout << "bin is: " << bins << "\n";
+  //std::cout << "bin is: " << bins << "\n";
 
   int far_rules = glbGetNumberOfRules(EXP_FAR);
   int near_rules = glbGetNumberOfRules(EXP_FAR);
-  double *true_rate_0_f = glbGetRuleRatePtr(EXP_FAR, 0);
-  double *true_rate_1_f = glbGetRuleRatePtr(EXP_FAR, 1);
-  double *true_rate_0_n = glbGetRuleRatePtr(EXP_NEAR, 0);
-  double *true_rate_1_n = glbGetRuleRatePtr(EXP_NEAR, 1);
+  double *true_rate_0_f = glbGetSignalRatePtr(EXP_FAR, 0);
+  double *true_rate_1_f = glbGetSignalRatePtr(EXP_FAR, 1);
+  double *true_rate_0_n = glbGetSignalRatePtr(EXP_NEAR, 0);
+  double *true_rate_1_n = glbGetSignalRatePtr(EXP_NEAR, 1);
+  double *fit_rate_0_f = glbGetSignalFitRatePtr(EXP_FAR, 0);
+  double *fit_rate_1_f = glbGetSignalFitRatePtr(EXP_FAR, 1);
+  double *fit_rate_0_n = glbGetSignalFitRatePtr(EXP_NEAR, 0);
+  double *fit_rate_1_n = glbGetSignalFitRatePtr(EXP_NEAR, 1);
 
-  //cout << glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG) << "\n";
+  //std::cout << glbTotalRuleRate(EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG) << "\n";
 
 
   // for(int i = 0; i < 200;++i){
@@ -94,11 +98,11 @@ void createMergedRate(TMatrixD &data){
   // }
 
 for(int i = 0; i<bins;++i){
-   bin_placeholder = true_rate_0_f[i] + true_rate_1_f[i];
+   bin_placeholder = (true_rate_0_f[i] + true_rate_1_f[i])-(fit_rate_0_f[i] + fit_rate_1_f[i]);
    for (int k = 0; k < bin_inter;++k){
      data[i*bin_inter+k][0] = bin_placeholder / bin_inter;
    }
-   bin_placeholder = true_rate_0_n[i] + true_rate_1_n[i];
+   bin_placeholder = (true_rate_0_n[i] + true_rate_1_n[i])-(fit_rate_0_n[i] + fit_rate_1_n[i]);;
    for (int k = 0; k < bin_inter;++k){
      data[99+i*bin_inter+k][0] = bin_placeholder / bin_inter;
    }
@@ -249,7 +253,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
      }
 
    //make the universes based on the real event spectrum
-   //std::cout<<" making the universes "<<std::endl;
+   //std::std::cout<<" making the universes "<<std::endl;
    for (int k=0; k<100; k++) 
       {
 	//use Fill instead of SetBinContent to allow for resolution smearing later
@@ -276,7 +280,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
 	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
 
 	  } ///finished spectrum generation for this k universe
-	//std::cout<<" finished this universe "<<k<<std::endl;
+	//std::std::cout<<" finished this universe "<<k<<std::endl;
 	for (int i=0; i<200; i++)
 	  {
 	    for (int j=0; j<200; j++)
@@ -306,7 +310,7 @@ void generate_covariance(TMatrixD &covariance_matrix){
     correlation_matrix[i][j] += alan*mary/float(iuniverse);
 
     
-		// if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+		// if(k==4&&i==120&&j==120)std::std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
 	      }
 	  }
       }
@@ -508,35 +512,34 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   createMergedRate(delta4);
 
 
-  cout << "generating covariance matrix\n";
-  generate_covariance(covariance_matrix_1);
+  
 
   // double dummy_sum = 0.0;
   // for (int i = 0; i<200;++i){
   //   dummy_sum += delta3[i][0];
   // }
-  //cout << "dummy sum is: " << dummy_sum << "\n";
-  //cout << "debug1";
+  //std::cout << "dummy sum is: " << dummy_sum << "\n";
+  //std::cout << "debug1";
   // delta.Transpose()
   delta1.T();
   delta3.T();
-  //cout << "debug2";
+  //std::cout << "debug2";
   //covariance
   double_t det1;
   //chi2+= delta_transpose * inverse_covariance * delta
   TMatrixD matrix_result = delta3 * covariance_matrix_1.Invert(&det1) * delta4;
   // TMatrixD dummy1;
   // TMatrixD dummy2;
-  // cout << "debug4";
+  // std::cout << "debug4";
   // dummy1.Mult(delta1,covariance_matrix_1);
-  // cout << "debug5";
+  // std::cout << "debug5";
   // dummy2.Mult(dummy1,delta2);
-  // cout << "debug6";
-  double test_result = matrix_result[0][0];
-  //cout << "testing output: "<< test_result << "\n";
-  //cout << "hello world\n";
+  // std::cout << "debug6";
+  double test_result = sqrt(abs(log(matrix_result[0][0])));
+  //std::cout << "testing output: "<< test_result << "\n";
+  //std::cout << "hello world\n";
 
-  return chi2 +test_result;
+  return chi2+test_result; //+test_result;
 }
 
 double chiCOVStat(int exp, int rule, int n_params, double *x, double *errors,
@@ -584,7 +587,7 @@ double chiNoCOV(int exp, int rule, int n_params, double *x, double *errors,
   double chi_sys = 0;
   /* Systematical part of chi^2 (= priors) */
   for (i=0; i < n_params; i++){
-    chi2 += square(0.04/ errors[i]); //chi2 += square(x[i] / errors[i]);
+    chi2 += square(0.01/ errors[i]); //chi2 += square(x[i] / errors[i]);
   }
   
 
@@ -641,7 +644,7 @@ double DoChiSquare(double x, void *dummy)
   /* Compute Chi^2 for all loaded experiments and all rules
    * Correlations are unimportant in reactor experiments, so glbChiSys is sufficient */
   chi2 = glbChiSys(test_values,GLB_ALL,GLB_ALL);//glbChiTheta13(test_values,NULL, GLB_ALL);
-  //cout << chi2<<"\n";
+  //std::cout << chi2<<"\n";
   return chi2 - chi2_goal;
 }
 
@@ -666,10 +669,10 @@ void gslError(const char *reason, const char *file, int line, int gsl_errno)
 
 int userConfirm(){
   int kz;
-  cout << "Please enter an integer to proceed: ";
+  std::cout << "Please enter an integer to proceed: ";
   cin >> kz;
-  cout << "The value you entered is " << kz;
-  cout << " and its double is " << kz*2 << ".\n";
+  std::cout << "The value you entered is " << kz;
+  std::cout << " and its double is " << kz*2 << ".\n";
   return kz;
 }
 
@@ -747,7 +750,9 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
   double cp_step = (max_cp - min_cp)/cp_steps;
 
+
   for (int i = 0; i<cp_steps; ++i){
+    
     
      glbSetOscParams(test_values, cp_current, GLB_DELTA_CP);
 
@@ -760,8 +765,8 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
 
      chi_current = glbChiSys(test_values,GLB_ALL,GLB_ALL); //glbChiNP(test_values,NULL,GLB_ALL);
-    //  cout << "current cp value is: " << cp_current << "\n";
-    //  cout << "current chi value is: " << chi_current << "\n";
+    //  std::cout << "current cp value is: " << cp_current << "\n";
+    //  std::cout << "current chi value is: " << chi_current << "\n";
 
     //  if(chi_current > 1.0){
     //    chi_current = 0.0;
@@ -914,7 +919,7 @@ int main(int argc, char *argv[])
 
   for (int i=0; i < sys_dim; i++){         /* Normalization and energy calibration errors */
     sys_errors[i] = 0.05;//old_sys_errors[i];
-    cout << i << " error val is: "<< sys_errors[i]<< "\n";
+    std::cout << i << " error val is: "<< sys_errors[i]<< "\n";
   }
   // for (int i=sys_dim; i < sys_dim + n_bins; i++){
   //   sys_errors[i] += 0.02;                                          /* Spectral error */
@@ -922,7 +927,7 @@ int main(int argc, char *argv[])
   sigma_binbin = 0.0;                          /* No bin-to-bin error for the moment */
 
   for (int i =0; i< glbGetNumberOfRules(EXP_FAR);++i){
-  cout << glbValueToName(EXP_FAR,"rule",i)<<"\n";
+  std::cout << glbValueToName(EXP_FAR,"rule",i)<<"\n";
   }
 
 
@@ -943,14 +948,15 @@ int main(int argc, char *argv[])
   glbSetOscillationParameters(true_values);
   glbSetRates();
 
-cout << "Starting testing stuff \n";
+std::cout << "Starting testing stuff \n";
 
-cout << glbGetRunningTime(EXP_FAR,0) << "\n";
+std::cout << glbGetRunningTime(EXP_FAR,0) << "\n";
 
 glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
 
 userConfirm();
 auto start = high_resolution_clock::now();
+generate_covariance(covariance_matrix_1);
 runChiCurve(0,2*M_PI,100,0,1,0,"chicov sys on");
 runChiCurve(0,2*M_PI,100,0,0,0,"chicov sys off");
 
@@ -959,9 +965,9 @@ runChiCurve(0,2*M_PI,100,1,0,0,"chinocov sys off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 auto end =high_resolution_clock::now();
-cout << "Finished testing stuff \n";
+std::cout << "Finished testing stuff \n";
 auto duration = duration_cast<seconds>(end-start);
-cout << "Time to compute: " << duration.count() << "s" << endl;
+std::cout << "Time to compute: " << duration.count() << "s" << endl;
 
   app->Run();
 
