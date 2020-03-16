@@ -1,0 +1,66 @@
+%!GLoBES
+
+$version="3.1.7"
+
+/* AEDL file for CHIPS far Detector */
+
+
+/* ####### Reactor flux ####### */
+
+nuflux(#pos_beam)<
+  @flux_file="CHIPS-GLB/flux-numi-me-7mrad-plus.dat"
+  @time = 5 /* years */
+  @stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/
+        @norm = 1.12*6.47886918e-19 /* 1.12 is necessary to match the
+        numbers in the 2007 TDR */ 
+>
+
+
+nuflux(#neg_beam)<
+  @flux_file="CHIPS-GLB/flux-numi-me-7mrad-minus.dat"
+  @time = 5 /* years */
+  @stored_muons = 6e20 /* POT yrs^-1 for 0.7 MW*/     
+  @norm = 1.12* 6.47886918e-19 /* 1.12 is necessary to match the
+        numbers in the 2007 TDR */
+>
+
+
+/* ######## Baseline setting ######## */
+$profiletype = 3
+//$baseline = 700.0
+
+//$profiletype =   3
+
+$densitytab =   {2.8}
+$lengthtab =    {700}   /* km */
+
+
+/* ####### Detector settings ####### */
+
+$target_mass = 100  /* tons (fiducial mass) */
+
+
+/* ######## Technical information ######## */
+
+$filter_state = 0 
+$filter_value = 1000000 
+
+
+//include "new_template_v3.glb"
+include "CHIPS-GLB/template_WC_far.glb"
+//include "template_WC_Rates.glb"
+
+/* ####### Baseline setting ####### */
+
+
+
+/* The relatively larger signal is due to matter effects
+ * whereas the event numbers in the proposal assume two-flavour 
+ * vacuum oscillations
+ */
+
+//$densitytab =     {2.8} 
+//$lengthtab =    {950} /* km */
+
+/**********************END**********************/
+

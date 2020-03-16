@@ -1,0 +1,259 @@
+/*
+Modified Water Cherenkov template using WCSimAnalysis results
+v3: Use preliminary efficiencies in the range 0-5 GeV, no pre-smearing
+    efficiencies; new binning schemes and smearing matrices (directly from reco
+    trees); Keep old rule definitions and systematics
+*/
+
+
+
+$emin =                 0.5
+$emax =                 5.0
+$binsize= {0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5}
+
+
+$sampling_min =                 0.0
+$sampling_max =                 20.0
+$sampling_stepsize= {0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 5.0, 5.0, 5.0}
+
+
+/*       Energy Resolution       */
+energy(#nc)<>
+energy(#nue_qe)<>
+energy(#nue_nqe)<>
+energy(#numu_cc)<>
+
+include "TOMsmearing/smear_nc.dat"
+include "TOMsmearing/smear_nue_qe.dat"
+include "TOMsmearing/smear_nue_nqe.dat"
+include "TOMsmearing/smear_numu_cc.dat"
+
+
+/* 	 Cross sections 	 */
+
+cross(#NC)<
+	@cross_file = "TOMcross/wc_XNC.dat"
+>
+
+cross(#QE)<
+	@cross_file = "TOMcross/wc_XQE.dat"
+>
+
+cross(#CC)<
+	@cross_file = "TOMcross/wc_XCC.dat"
+>
+
+cross(#CCNonQE)<
+	@cross_file = "TOMcross/wc_XCCNonQE.dat"
+>
+
+/* Post-smearing efficiencies only (interpolate with fine binning) */
+%energy_post = {0.25, 0.75, 1.25, 1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75, 65}
+%bc = bincenter()
+
+%postcuts_NUE_QE_orig = {0, 0.0351906, 0.284768, 0.444444, 0.56338, 0.608319, 0.60177, 0.624549, 0.675325, 0.642857, 0.642857}
+%postcuts_NUE_QE = interpolation(%energy_post,%postcuts_NUE_QE_orig,1,%bc)
+
+%postcuts_NUE_NQE_orig = {0, 0.00735294, 0.0636943, 0.127473, 0.21097, 0.243902, 0.265734, 0.323353, 0.267442, 0.277778, 0.277778}
+%postcuts_NUE_NQE = interpolation(%energy_post,%postcuts_NUE_NQE_orig,1,%bc)
+
+%postcuts_numuCC_orig = {0, 0, 0.000259508, 0.0063567, 0.00904357, 0.00291002, 0.00469631, 0.00811278, 0, 0, 0}
+%postcuts_numuCC = interpolation(%energy_post,%postcuts_numuCC_orig,1,%bc)
+
+%postcuts_NC_orig = {0, 0.00069927, 0.0115429, 0.0339583, 0.0599014, 0.0581348, 0.0741913, 0.023338, 0.154975, 0.30485, 0.30485}
+%postcuts_NC = interpolation(%energy_post,%postcuts_NC_orig,1,%bc)
+
+// FIXME: Use same efficiencies as for neutrinos - WRONG!
+%postcuts_ANUE_QE_orig = {0, 0.0351906, 0.284768, 0.444444, 0.56338, 0.608319, 0.60177, 0.624549, 0.675325, 0.642857, 0.642857}
+%postcuts_ANUE_QE = interpolation(%energy_post,%postcuts_ANUE_QE_orig,1,%bc)
+
+%postcuts_ANUE_NQE_orig ={0, 0.00735294, 0.0636943, 0.127473, 0.21097, 0.243902, 0.265734, 0.323353, 0.267442, 0.277778, 0.277778}
+%postcuts_ANUE_NQE = interpolation(%energy_post,%postcuts_ANUE_NQE_orig,1,%bc)
+
+
+/*Channels*/
+channel(#nc_bg)<
+	@channel = 	#pos_beam:	+:	m:	NOSC_m:	#NC:    #nc							
+	@post_smearing_efficiencies = copy(%postcuts_NC)
+>
+
+channel(#nu_mu_bg)<
+	@channel = 	#pos_beam:	+:	m:	m:	#CC:    #numu_cc
+	@post_smearing_efficiencies = copy(%postcuts_numuCC)
+>
+
+channel(#nu_e_beam_qe)<
+	@channel = 	#pos_beam:	+:	e:	e:	#QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_QE)
+>
+
+channel(#nu_e_beam_nqe)<
+	@channel = 	#pos_beam:	+:	e:	e:	#CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_NQE)
+>
+
+channel(#nu_e_signal_nqe)<
+	@channel = 	#pos_beam:	+:	m:	e:	#CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_NQE)
+>
+channel(#nu_e_signal_qe)<
+	@channel = 	#pos_beam:	+:	m:	e:	#QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_QE)
+>
+
+channel(#anc_bg)<
+    @channel =      #neg_beam:   -:      m:      NOSC_m: #NC:    #nc
+	@post_smearing_efficiencies = copy(%postcuts_NC)
+>
+channel(#anu_e_beam_qe)<
+    @channel =      #neg_beam:   -:      e:      e:      #QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_ANUE_QE)
+>
+channel(#anu_e_beam_nqe)<
+    @channel =      #neg_beam:   -:      e:      e:      #CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_ANUE_NQE)
+>
+channel(#anu_mu_bg)<
+	@channel = 	#neg_beam:	-:	m:	m:	#CC:    #numu_cc
+	@post_smearing_efficiencies = copy(%postcuts_numuCC)
+>
+channel(#anu_e_signal_qe)<
+    @channel =      #neg_beam:   -:      m:      e:      #QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_ANUE_QE)
+>
+channel(#anu_e_signal_nqe)<
+    @channel =      #neg_beam:   -:      m:      e:      #CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_ANUE_NQE)
+>
+
+channel(#canc_bg)<
+    @channel =      #neg_beam:   +:      m:      NOSC_m: #NC:    #nc
+	@post_smearing_efficiencies = copy(%postcuts_NC)
+>
+channel(#canu_e_beam_qe)<
+    @channel =      #neg_beam:   +:      e:      e:      #QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_QE)
+>
+channel(#canu_e_beam_nqe)<
+    @channel =      #neg_beam:   +:      e:      e:      #CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_NQE)
+>
+channel(#canu_mu_bg)<
+	@channel = 	#neg_beam:	+:	m:	m:	#CC:    #numu_cc
+	@post_smearing_efficiencies = copy(%postcuts_numuCC)
+>
+channel(#canu_e_signal_qe)<
+    @channel =      #neg_beam:   +:      m:      e:      #QE:    #nue_qe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_QE)
+>
+channel(#canu_e_signal_nqe)<
+    @channel =      #neg_beam:   +:      m:      e:      #CCNonQE:    #nue_nqe
+	@post_smearing_efficiencies = copy(%postcuts_NUE_NQE)
+>
+
+
+/* 	 Rules 		  */
+
+//include "syst-def1.inc"
+//include "syst-_-list.inc"
+
+sys(#err_beam_energy)<
+  @error = 0.02
+  //@error_list = {0.01, 0.015 , 0.02 , 0.025, 0.03 , 0.035, 0.04, 0.045, 0.05}
+  //@energy_list = {0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5}
+  @systype = 1
+>
+
+sys(#fid_vol)<
+  @error = 0.02
+>
+
+sys(#err_beam_norm)<
+  @error = 0.02
+>
+
+/*sys(#err_fid_vol)<
+  @error = 0.0
+>
+sys(#xsec_error)<
+  @error = 0.0
+>
+sys(#err_norm_far)<
+  @energy_list = {0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5}
+  @error_list = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9}
+  @systype = 1
+>*/
+
+/*
+rule(#nu_e_appearance)<
+ 	@signal = 1.0@#nu_e_signal_qe : 1.0@#nu_e_signal_nqe
+ 	@sys_on_multiex_errors_sig    = {#err_norm_far, #err_fid_vol, #err_beam_energy , #xsec_error } : {#err_norm_far, #err_fid_vol,#err_beam_energy ,#xsec_error} //{0.02,0.02,0.02,0.02,0.02,0.02} : {0.02,0.02,0.02,0.02,0.02,0.02}
+	@background =  1.0@#nu_mu_bg : 1.0@#nc_bg : 1.0@#nu_e_beam_qe : 1.0@#nu_e_beam_nqe   
+	@sys_on_multiex_errors_bg = { #err_fid_vol, #err_beam_energy , #xsec_error } : { #err_fid_vol, #err_beam_energy , #xsec_error } 
+	: {#err_fid_vol, #err_beam_energy , #xsec_error } : {#err_fid_vol, #err_beam_energy , #xsec_error }
+	@sys_on_function  = "chiMultiExp"
+    @sys_off_function = "chiNoSysSpectrum"
+    @energy_window = 0.5 : 5.0
+>
+
+rule(#anu_e_appearance)<
+    @signal = 1.0@#anu_e_signal_qe : 1.0@#anu_e_signal_nqe : 1.0@#canu_e_signal_qe : 1.0@#canu_e_signal_nqe
+    @sys_on_multiex_errors_sig    = {#err_norm_far, #err_fid_vol, #err_beam_energy , #xsec_error} : {#err_norm_far, #err_fid_vol, #err_beam_energy , #xsec_error}
+     : {#err_norm_far, #err_fid_vol, #err_beam_energy , #xsec_error} : {#err_norm_far, #err_fid_vol, #err_beam_energy , #xsec_error} 
+  	@background = 1.0@#anu_mu_bg : 1.0@#anc_bg : 1.0@#anu_e_beam_nqe : 1.0@#anu_e_beam_qe : 1.0@#canu_mu_bg : 1.0@#canc_bg : 1.00@#canu_e_beam_nqe : 1.00@#canu_e_beam_qe 
+    @sys_on_multiex_errors_bg =  {#err_fid_vol, #err_beam_energy ,#xsec_error} : {#err_fid_vol, #err_beam_energy , #xsec_error}
+     :{#err_fid_vol, #err_beam_energy , #xsec_error} : {#err_fid_vol, #err_beam_energy , #xsec_error} 
+     :{#err_fid_vol, #err_beam_energy ,#xsec_error} : {#err_fid_vol, #err_beam_energy ,#xsec_error} 
+     :{#err_fid_vol, #err_beam_energy , #xsec_error}  : {#err_fid_vol, #err_beam_energy , #xsec_error}  
+	@sys_on_function  = "chiMultiExp"
+  	@sys_off_function = "chiNoSysSpectrum"
+  	@energy_window = 0.5 : 5.0
+>
+*/
+
+rule(#nu_e_appearance)<
+ 	@signal = 1.0@#nu_e_signal_qe : 1.0@#nu_e_signal_nqe
+ 	@sys_on_multiex_errors_sig    = {#err_beam_norm, #fid_vol, #err_beam_energy} : {#err_beam_norm, #fid_vol, #err_beam_energy}
+	@background =  1.0@#nu_mu_bg : 1.0@#nc_bg : 1.0@#nu_e_beam_qe : 1.0@#nu_e_beam_nqe   
+	@sys_on_multiex_errors_bg = {#err_beam_norm,#fid_vol, #err_beam_energy} : {#err_beam_norm, #fid_vol, #err_beam_energy} : {#err_beam_norm, #fid_vol, #err_beam_energy} : {#err_beam_norm, #fid_vol, #err_beam_energy}
+	@sys_on_function  = "chiMultiExp"
+    @sys_off_function = "chiNoSysSpectrum"
+    @energy_window = 0.5 : 5.0
+>
+
+rule(#anu_e_appearance)<
+    @signal = 1.0@#anu_e_signal_qe : 1.0@#anu_e_signal_nqe : 1.0@#canu_e_signal_qe : 1.0@#canu_e_signal_nqe
+    @sys_on_multiex_errors_sig    = {#err_beam_norm,#err_beam_energy} : {#err_beam_norm, #err_beam_energy} : {#err_beam_norm, #err_beam_energy} : {#err_beam_norm, #err_beam_energy} 
+  	@background = 1.0@#anu_mu_bg : 1.0@#anc_bg : 1.0@#anu_e_beam_nqe : 1.0@#anu_e_beam_qe : 1.0@#canu_mu_bg : 1.0@#canc_bg : 1.00@#canu_e_beam_nqe : 1.00@#canu_e_beam_qe 
+    @sys_on_multiex_errors_bg =  {#err_beam_norm,#fid_vol,#err_beam_energy} : {#err_beam_norm,#fid_vol,#err_beam_energy}
+     :{#err_beam_norm,#fid_vol,#err_beam_energy} : {#err_beam_norm,#fid_vol,#err_beam_energy} 
+     :{#err_beam_norm,#fid_vol,#err_beam_energy} : {#err_beam_norm,#fid_vol,#err_beam_energy} 
+     :{#err_beam_norm,#fid_vol,#err_beam_energy} : {#err_beam_norm,#fid_vol,#err_beam_energy} 
+	@sys_on_function  = "chiMultiExp"
+  	@sys_off_function = "chiNoSysSpectrum"
+  	@energy_window = 0.5 : 5.0
+>
+
+
+
+/*rule(#nu_e_appearance)<
+ 	@signal = 1.0@#nu_e_signal_qe : 1.0@#nu_e_signal_nqe
+ 	@signalerror = 0.0001 : 0.1  
+	@backgrounderror = 0.0001 : 0.1
+	@background =  1.0@#nu_mu_bg : 1.0@#nc_bg : 1.0@#nu_e_beam_qe : 1.0@#nu_e_beam_nqe   
+	@sys_on_function  = "chiZero"
+    @sys_off_function = "chiNoSysSpectrum"
+    @energy_window = 0.5 : 5.0
+>
+
+rule(#anu_e_appearance)<
+    @signal = 1.0@#anu_e_signal_qe : 1.0@#anu_e_signal_nqe : 1.0@#canu_e_signal_qe : 1.0@#canu_e_signal_nqe
+  	@background = 1.0@#anu_mu_bg : 1.0@#anc_bg : 1.0@#anu_e_beam_nqe : 1.0@#anu_e_beam_qe : 1.0@#canu_mu_bg : 1.0@#canc_bg : 1.00@#canu_e_beam_nqe : 1.00@#canu_e_beam_qe 
+	@signalerror = 0.0001 : 0.1  
+	@backgrounderror = 0.0001 : 0.1
+	@sys_on_function  = "chiZero"
+  	@sys_off_function = "chiNoSysSpectrum"
+  	@energy_window = 0.5 : 5.0
+>
+*/
+/**********************END**********************/

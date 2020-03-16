@@ -54,8 +54,8 @@ INCFLAGS:=$(shell $(globesconf) --include)
 local_LDFLAGS:=$(shell $(globesconf) --libs) $(ROOTGLIBS)
 local_LTLDFLAGS:=$(shell $(globesconf) --ltlibs)
 
-BIN = example-tour example-static customsimulation example2 example3 example4 example5 example6
-OBJ = example-tour.o example-tour-s.o customsimulation.o example2.o example3.o example4.o \
+BIN = example-tour example-static customsimulation testsimulation example2 example3 example4 example5 example6
+OBJ = example-tour.o example-tour-s.o customsimulation.o testsimulation.o example2.o example3.o example4.o \
       example5.o example6.o myio.o
 
 all: $(BIN)
@@ -68,6 +68,9 @@ example-static: example-tour.o
 
 customsimulation: customsimulation.o myio.o
 	$(CXX) customsimulation.o myio.o -o customsimulation  $(LDFLAGS) $(local_LDFLAGS)
+
+testsimulation: testsimulation.o myio.o
+	$(CXX) testsimulation.o myio.o -o testsimulation  $(LDFLAGS) $(local_LDFLAGS)
 
 example2: example2.o myio.o
 	$(CC)  example2.o myio.o -o example2  $(LDFLAGS) $(local_LDFLAGS)
