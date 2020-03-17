@@ -790,8 +790,10 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
   // spb->SetMarkerColor(3);
   
   auto mg = new TMultiGraph();
+  string title_preffix = "#splitline{#chi^{2} curve over #delta_{CP}}{";
+  string title_suffix = "}";
 
-  mg->SetTitle("#chi^{2} curve over #delta_{CP}.");
+  mg->SetTitle((title_preffix + (string)canvas_name + title_suffix).c_str());
   mg->Add(spa);
   // mg->Add(spb);
   mg->GetXaxis()->SetTitle("#delta_{CP} rad");
@@ -806,6 +808,7 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
 
   //gPad->SetLogx();
   gPad->SetLeftMargin(0.15);
+  gPad->SetTopMargin(0.25);
   gPad->Update();
   mg->Draw("APL");
 
@@ -957,11 +960,11 @@ glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GL
 userConfirm();
 auto start = high_resolution_clock::now();
 generate_covariance(covariance_matrix_1);
-runChiCurve(0,2*M_PI,100,0,1,0,"chicov sys on");
-runChiCurve(0,2*M_PI,100,0,0,0,"chicov sys off");
+runChiCurve(0,2*M_PI,200,0,1,1,"Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,0,1,"Covariance with Systematics Off ");
 
-runChiCurve(0,2*M_PI,100,1,1,0,"chinocov sys on");
-runChiCurve(0,2*M_PI,100,1,0,0,"chinocov sys off");
+runChiCurve(0,2*M_PI,200,1,1,1,"No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,1,"No Covariance with Systematics Off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 auto end =high_resolution_clock::now();
