@@ -15,6 +15,7 @@
 #include <TGraph.h>
 #include <TMultiGraph.h>
 #include <TLegend.h>
+#include <TStyle.h>
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -1023,6 +1024,7 @@ int main(int argc, char *argv[])
 
 // Plotting for Report
 userConfirm();
+gStyle->SetMarkerSize(0.25);
 doPlotROOTProb2(2,2,2,1,2,3,1,"ReportOSCPlotMatter",0);
 doPlotROOTProb2(2,2,2,1,2,3,1,"ReportOCSPlotVacu",1);
 
