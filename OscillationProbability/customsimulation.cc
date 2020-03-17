@@ -741,6 +741,163 @@ char *xtitle = NULL;
 
 }
 
+string neutrinoFlav(int variable){
+  string svariable;
+  if(variable == 1){
+    svariable = "e";
+  }else if (variable == 2)
+  {
+    svariable = "#mu";
+  }else if (variable == 3){
+    svariable = "#tau";
+  }
+  return svariable;
+}
+
+void doPlotROOTProb2(int l1, int m1, int l2,int m2, int l3,int m3,int option,const char* canvas_name,int plot_type){
+
+
+  double plot_data_prob_1[2][baseline_steps];
+  double plot_data_prob_2[2][baseline_steps];
+  double plot_data_prob_3[2][baseline_steps];
+  double plot_data_prob_tot[2][baseline_steps];
+
+// for (int g = 0;g<baseline_steps; g++){
+//     printf("Data a is: index: %f and value: %f \n",plot_data_a[0][g],plot_data_a[1][g]);
+//     printf("Data b is: index: %f and value: %f \n",plot_data_b[0][g],plot_data_b[1][g]);
+//   }
+char *plottitle = NULL;
+char *xtitle = NULL;
+
+  if(plot_type == 1){
+    plottitle = (char*)"Plot of Vacuum Probabilities for 10 GeV";
+    xtitle = (char*)"Baseline L/E km/GeV";
+
+
+    getOscillation(plot_data_prob_1,10.0,5E2,10,l1,m1,1);
+    getOscillation(plot_data_prob_2,10.0,5E2,10,l2,m2,1);
+    getOscillation(plot_data_prob_3,10.0,5E2,10,l3,m3,1);
+
+  }else if(plot_type == 0){
+    plottitle = (char*)"Plot of Matter Probabilities for 700 km";
+    xtitle = (char*)"E GeV";
+
+  getOscillation(plot_data_prob_1,100.0,4E2,10,l1,m1,0);
+  getOscillation(plot_data_prob_2,100.0,4E2,10,l2,m2,0);
+  getOscillation(plot_data_prob_3,100.0,4E2,10,l3,m3,0);
+
+  }else{
+    plottitle = (char*)"error1";
+    xtitle = (char*)"errorx1";
+  }
+  plot_data_prob_1[1][0] = plot_data_prob_1[1][1];
+  plot_data_prob_2[1][0] = plot_data_prob_2[1][1];
+  plot_data_prob_3[1][0] = plot_data_prob_3[1][1];
+  plot_data_prob_tot[1][0] = 1;
+  for (int i= 1;i<baseline_steps;++i){
+  plot_data_prob_tot[1][i] = plot_data_prob_1[1][i] + plot_data_prob_2[1][i] + plot_data_prob_3[1][i];
+  plot_data_prob_tot[0][i] = plot_data_prob_1[0][i];
+  }
+
+  auto myCanvas = new TCanvas(canvas_name,canvas_name);
+  myCanvas->SetGrid();
+  auto spa = new TGraph(baseline_steps,plot_data_prob_1[0],plot_data_prob_1[1]);
+  auto spb = new TGraph(baseline_steps,plot_data_prob_2[0],plot_data_prob_2[1]);
+  auto spc = new TGraph(baseline_steps,plot_data_prob_3[0],plot_data_prob_3[1]);
+  auto spd = new TGraph(baseline_steps,plot_data_prob_tot[0],plot_data_prob_tot[1]);
+
+  //TGraphErrors* sp = new TGraphErrors(g->GetN(),pow(g->GetY(),10.0),g->GetX());
+
+  spa->SetMarkerStyle(5);
+  spa->SetMarkerColor(4);
+  spa->SetLineColor(4);
+  spb->SetMarkerStyle(5);
+  spb->SetMarkerColor(3);
+  spb->SetLineColor(3);
+  spc->SetMarkerStyle(5);
+  spc->SetMarkerColor(2);
+  spc->SetLineColor(2);
+  spd->SetMarkerStyle(8);
+  spd->SetMarkerColor(1);
+  spd->SetLineColor(1);
+  
+  
+  auto mg = new TMultiGraph();
+
+  mg->SetTitle(plottitle);
+  mg->Add(spa);
+  mg->Add(spb);
+  mg->Add(spc);
+  mg->Add(spd);
+  mg->GetXaxis()->SetTitle(xtitle);
+  mg->GetYaxis()->SetTitle("Probability");
+  mg->GetXaxis()->CenterTitle(true);
+  mg->GetYaxis()->CenterTitle(true);
+  // sp->SetTitle("A: Log Plot of sensitivity curve for Initial Simulation \n For CHIPS .glb");
+  // sp->GetXaxis()->SetTitle("Integrated detector luminosity GW t years");
+  // sp->GetYaxis()->SetTitle("sin(2*theta_23)^2 sensitiivity");
+  // sp->SetMarkerStyle(4);
+  // sp->SetMarkerColor(4);
+
+  //gPad->SetLogx();
+  gPad->Update();
+  mg->Draw("APL");
+
+  TLegend* legend = new TLegend();
+  legend->SetHeader("Oscillation");
+
+    
+  
+
+  string entry1 = "#nu_{" + neutrinoFlav(l1) + "}#rightarrow#nu_{" + neutrinoFlav(m1) + "}";
+  string entry2 = "#nu_{" + neutrinoFlav(l2) + "}#rightarrow#nu_{" + neutrinoFlav(m2) + "}";
+  string entry3 = "#nu_{" + neutrinoFlav(l3) + "}#rightarrow#nu_{" + neutrinoFlav(m3) + "}";
+  
+  
+ 
+  legend->AddEntry(spa,entry1.c_str(),"lp");
+  legend->AddEntry(spc,entry2.c_str(),"lp");
+  legend->AddEntry(spb,entry3.c_str(),"lp");
+  legend->AddEntry(spd,"Total Probability","lp");
+  legend->Draw();
+
+  myCanvas->Update();
+  
+  myCanvas->Modified();
+  myCanvas->Update();
+
+  if (option == 1){
+
+  string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/OscillationProbability/Plotting/Output/";
+  string file_svg = ".svg";
+  string file_pdf = ".pdf";
+
+  // char filename1[256];
+  // strncat(filename1,filepath,sizeof(filename1));
+  // printf(filename1);
+  // strncat(filename1,canvas_name,sizeof(filename1));
+  // strncat(filename1,file_svg,sizeof(filename1));
+  // printf(filename1);
+  
+  // char filename2[256];
+  // strncat(filename2,filepath,sizeof(filename2));
+  // strncat(filename2,canvas_name,sizeof(filename2));
+  // strncat(filename2,file_pdf,sizeof(filename2));
+
+  string filestring1 = filepath + (string)canvas_name + file_svg;
+  char filename1[filestring1.length() + 1];
+  strcpy(filename1,filestring1.c_str());
+
+  string filestring2 = filepath + (string)canvas_name + file_pdf;
+  char filename2[filestring2.length() + 1];
+  strcpy(filename2,filestring2.c_str());
+
+  myCanvas->SaveAs(filename1);
+  myCanvas->SaveAs(filename2);
+  }
+
+}
+
 void userConfirm(){
   int kz;
   cout << "Please enter an integer to proceed: ";
@@ -853,16 +1010,21 @@ int main(int argc, char *argv[])
 // Plot to compare Systematics on and off
 
 
-doPlotROOTProb(3,3,2,2,1,"OSCProbabilityPlotSurvMUvTAUv4.1",1);
-doPlotROOTProb(1,1,2,2,1,"OSCProbabilityPlotSurvMUvEv4.1",1);
+// doPlotROOTProb(3,3,2,2,1,"OSCProbabilityPlotSurvMUvTAUv4.1",1);
+// doPlotROOTProb(1,1,2,2,1,"OSCProbabilityPlotSurvMUvEv4.1",1);
 
+// userConfirm();
+
+// doPlotROOTProb(2,2,2,1,1,"OSCProbabilityProfilePlotv4.1",0);
+
+// userConfirm();
+
+// doPlotROOTProb(2,2,2,1,1,"OSCProbabilityPlotSurvMUvE2v4.1",1);
+
+// Plotting for Report
 userConfirm();
-
-doPlotROOTProb(2,2,2,1,1,"OSCProbabilityProfilePlotv4.1",0);
-
-userConfirm();
-
-doPlotROOTProb(2,2,2,1,1,"OSCProbabilityPlotSurvMUvE2v4.1",1);
+doPlotROOTProb2(2,2,2,1,2,3,1,"ReportOSCPlotMatter",0);
+doPlotROOTProb2(2,2,2,1,2,3,1,"ReportOCSPlotVacu",1);
 
 
 // double plot_data_statvsys_a[2][tSteps];
