@@ -5,7 +5,7 @@
 </title>
 <desc>
 Creator: ROOT Version 6.18/04
-CreationDate: Tue Mar 17 20:45:50 2020</desc>
+CreationDate: Sun Mar 22 15:39:19 2020</desc>
 <defs>
 </defs>
 <rect x="0.5" y="0" width="566.929" height="385.804" fill="white"/>
@@ -25872,8 +25872,8 @@ CreationDate: Tue Mar 17 20:45:50 2020</desc>
 <text xml:space="preserve" x="265.284" y="203.055" fill="black" font-size="9.44186" font-family="Times">&#8594;</text>
 <text xml:space="preserve" x="262.035" y="205.492" fill="black" font-size="6.46124" font-family="Times">&#0956;</text>
 <text xml:space="preserve" x="256.349" y="203.055" fill="black" font-size="9.44186" font-family="Times">&#0957;</text>
-<path d="M220.503,200.905h 29.7638" fill="none" stroke="#ff0000"/>
-<g stroke="#ff0000" stroke-width="1" fill="none">
+<path d="M220.503,200.905h 29.7638" fill="none" stroke="#00ff00"/>
+<g stroke="#00ff00" stroke-width="1" fill="none">
 <line x1="234.573" y1="200.093" x2="236.198" y2="201.718"/><line x1="234.573" y1="201.718" x2="236.198" y2="200.093"/>
 </g>
 <text xml:space="preserve" x="279.903" y="216.863" fill="black" font-size="6.46124" font-family="Times">&#0964;</text>
@@ -25881,8 +25881,8 @@ CreationDate: Tue Mar 17 20:45:50 2020</desc>
 <text xml:space="preserve" x="265.284" y="214.426" fill="black" font-size="9.44186" font-family="Times">&#8594;</text>
 <text xml:space="preserve" x="262.035" y="216.863" fill="black" font-size="6.46124" font-family="Times">&#0956;</text>
 <text xml:space="preserve" x="256.349" y="214.426" fill="black" font-size="9.44186" font-family="Times">&#0957;</text>
-<path d="M220.503,212.48h 29.7638" fill="none" stroke="#00ff00"/>
-<g stroke="#00ff00" stroke-width="1" fill="none">
+<path d="M220.503,212.48h 29.7638" fill="none" stroke="#ff0000"/>
+<g stroke="#ff0000" stroke-width="1" fill="none">
 <line x1="234.573" y1="211.667" x2="236.198" y2="213.292"/><line x1="234.573" y1="213.292" x2="236.198" y2="211.667"/>
 </g>
 <text xml:space="preserve" x="256.349" y="226.609" fill="black" font-size="9.44186" font-family="Helvetica">Total Probability</text>

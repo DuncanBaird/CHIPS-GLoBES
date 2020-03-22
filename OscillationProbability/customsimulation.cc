@@ -857,8 +857,8 @@ char *xtitle = NULL;
   
  
   legend->AddEntry(spa,entry1.c_str(),"lp");
-  legend->AddEntry(spc,entry2.c_str(),"lp");
-  legend->AddEntry(spb,entry3.c_str(),"lp");
+  legend->AddEntry(spb,entry2.c_str(),"lp");
+  legend->AddEntry(spc,entry3.c_str(),"lp");
   legend->AddEntry(spd,"Total Probability","lp");
   legend->Draw();
 
