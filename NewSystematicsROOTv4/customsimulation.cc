@@ -474,7 +474,7 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
 TMatrixD covariance_matrix_1(200,200);
 
   
-
+double chi_cov_factor = 1;
 
 double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
                  void *user_data)
@@ -535,8 +535,8 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // std::cout << "debug5";
   // dummy2.Mult(dummy1,delta2);
   // std::cout << "debug6";
-  double test_result = sqrt(abs(log(matrix_result[0][0])));
-  //std::cout << "testing output: "<< test_result << "\n";
+  double test_result = (matrix_result[0][0]);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
+  // std::cout << "testing output: "<< test_result << "\n";
   //std::cout << "hello world\n";
 
   return chi2+test_result; //+test_result;
@@ -953,6 +953,9 @@ int main(int argc, char *argv[])
 
 std::cout << "Starting testing stuff \n";
 
+chi_cov_factor = glbGetNumberOfRules(EXP_FAR) * glb_num_of_exps;
+
+
 std::cout << glbGetRunningTime(EXP_FAR,0) << "\n";
 
 glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GLB_SIG);
@@ -960,11 +963,11 @@ glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GL
 userConfirm();
 auto start = high_resolution_clock::now();
 generate_covariance(covariance_matrix_1);
-runChiCurve(0,2*M_PI,200,0,1,1,"Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,0,0,1,"Covariance with Systematics Off ");
+runChiCurve(0,2*M_PI,200,0,1,0,"Covariance with Systematics On");
+// runChiCurve(0,2*M_PI,200,0,0,0,"Covariance with Systematics Off ");
 
-runChiCurve(0,2*M_PI,200,1,1,1,"No Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,1,0,1,"No Covariance with Systematics Off");
+// runChiCurve(0,2*M_PI,200,1,1,0,"No Covariance with Systematics On");
+// runChiCurve(0,2*M_PI,200,1,0,0,"No Covariance with Systematics Off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 auto end =high_resolution_clock::now();
