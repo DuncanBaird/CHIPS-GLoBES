@@ -60,17 +60,17 @@ void errorApply(double &energy, double calibration, double shift,int option){
   } 
 }
 
-int main(int argc, char* argv[])
-{ //argv[0] is name of programme 
-
-  TApplication *app = new TApplication("app", &argc, argv);
-
+/**
+ * Function to create covariance matrix from spectra.
+ * Errors; eoption = 1 for both calibration and shift, 0 for shift only, -1 for neither.
+ * */
+TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix, int eoption){
   double calibration_e = 0.04;
   double shift_e = 0.05;
 
   const int mat_len = 200;
-  TMatrixD covariance_matrix(200,200);
-  TMatrixD correlation_matrix(200,200);
+  // TMatrixD covariance_matrix(200,200);
+  // TMatrixD correlation_matrix(200,200);
   double_t matrix_data[200*200];
 
   //two detectors, close together, energy from 0-5
@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
     }
 
    //make the universes based on the real event spectrum
-   std::cout<<" making the universes "<<std::endl;
+   //std::cout<<" making the universes "<<std::endl;
    for (int k=0; k<100; k++) 
       {
 	//use Fill instead of SetBinContent to allow for resolution smearing later
@@ -188,8 +188,8 @@ int main(int argc, char* argv[])
 	     float i2 = g->Poisson(Ewt2);
 	     //now lets put in a constant E shift
 
-       errorApply(E1,calibration_e,shift_e,1);
-       errorApply(E2,calibration_e,shift_e,1);
+       errorApply(E1,calibration_e,shift_e,eoption);
+       errorApply(E2,calibration_e,shift_e,eoption);
 	    //  E1 = E1+0.05*E1;
 	    //  E2 = E2+0.05*E2;
 	     //float rfake = g->Gaus(E,res[0]/sqrt(E));
@@ -202,7 +202,7 @@ int main(int argc, char* argv[])
 
 	  } ///finished spectrum generation for this k universe
     histInterpolate(Euniverse1[k]);
-	std::cout<<" finished this universe "<<k<<std::endl;
+//std::cout<<" finished this universe "<<k<<std::endl;
 	for (int i=0; i<200; i++)
 	  {
 	    for (int j=0; j<200; j++)
@@ -232,16 +232,18 @@ int main(int argc, char* argv[])
     correlation_matrix[i][j] += alan*mary/float(iuniverse);
 
     
-		if(k==4&&i==120&&j==120)std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+		if(k==4&&i==120&&j==120){
+        //std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+      }
 	      }
 	  }
       }
 
     double singular_adjust = 0.001;
     for(int w=0;w<mat_len;w++){
-      printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
+      //printf("diagonal %d value is %f \n",w,correlation_matrix[w][w]);
       correlation_matrix[w][w] = correlation_matrix[w][w] + singular_adjust;
-      printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
+      //printf("diagonal %d value is now %f \n",w,correlation_matrix[w][w]);
     }
    //adding covariance values into matrix object
     // covariance_matrix.SetMatrixArray(matrix_data);
@@ -265,6 +267,67 @@ int main(int argc, char* argv[])
    cov_hist->Write();
    cor_hist->Write();
    newfile->Close();
+   
+   mat->Delete();
+
+   for (int k=0; k<100; k++){
+     if (k != 4)
+     {
+       Euniverse1[k]->Delete();
+     }
+     
+   }
+
+   return Euniverse1[4];
+
+}
+
+/**
+ * Function to create relative version of matrix.
+ * M_sys/M_nosys = M_rel.
+ **/
+void makeRelative(TMatrixD &ResultMatrix,TMatrixD &SysMatrix,TMatrixD &OrigMatrix){
+  for(int i = 0; i<200; ++i){
+    for(int j = 0; j<200; ++j){
+      ResultMatrix[i][j] = SysMatrix[i][j] / OrigMatrix[i][j];
+    }
+  }
+}
+
+void applyStats(TMatrixD &Matrix){
+  for(int i = 0; i<200; ++i){
+    Matrix[i][i] = Matrix[i][i]*1;
+  }
+}
+
+void applyScaling(TMatrixD &Matrix,TH1F *Spectrum){
+  for(int i = 0; i<200; ++i){
+    Matrix[i][i] = Matrix[i][i]*1;
+  }
+}
+
+int main(int argc, char* argv[])
+{ //argv[0] is name of programme 
+
+  TApplication *app = new TApplication("app", &argc, argv);
+
+  TMatrixD covariance_matrix_noe(200,200);
+  TMatrixD covariance_matrix_bothe(200,200);
+  TMatrixD covariance_matrix(200,200);
+  TMatrixD inv_covariance_matrix(200,200);
+  TMatrixD inv_covariance_matrix2(200,200);
+
+  TH1F *spectrum = createCovariance(covariance_matrix_bothe,inv_covariance_matrix,1);
+  TH1F *spectrum2 = createCovariance(covariance_matrix_noe,inv_covariance_matrix2,-1);
+
+  TMatrixD covariance_matrix_rel(200,200);
+
+  makeRelative(covariance_matrix_rel,covariance_matrix_bothe,covariance_matrix_noe);
+  applyStats(covariance_matrix_rel);
+  applyScaling(covariance_matrix_rel,spectrum);
+
+  TH2D *cov_hist = new TH2D(covariance_matrix);
+  TH2D *inv_cov_hist = new TH2D(inv_covariance_matrix);
 
    if (userConfirm() == 1){
 //Some Plotting of matrices and other stuff
@@ -273,7 +336,7 @@ int main(int argc, char* argv[])
     TH2D *cov_hist_plot = new TH2D("covariance1","Covariance",200,0.0,10.0,200,0.0,10.0);
     TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
     
-    const char* canvas_name = "FULL Generated Covariance Matrices Both Errors";
+    const char* canvas_name = "TestingRelative";
 
 
     auto myCanvas = new TCanvas(canvas_name,canvas_name);
@@ -284,8 +347,8 @@ int main(int argc, char* argv[])
 
     for(int i = 0; i<200; i++){
       for(int j = 0; j<200; j++){
-        cov_hist_plot->SetBinContent(i+1,j+1,covariance_matrix[i][j]);
-        cor_hist_plot->SetBinContent(i+1,j+1,correlation_matrix[i][j]);
+        cov_hist_plot->SetBinContent(i+1,j+1,covariance_matrix_bothe[i][j]);
+        cor_hist_plot->SetBinContent(i+1,j+1,inv_covariance_matrix[i][j]);
       }
     }
     
@@ -310,7 +373,7 @@ int main(int argc, char* argv[])
 
   //Relabel axes
   for(int i=0; i<10; i++){
-    int bin = Euniverse1[universe_choice]->GetXaxis()->FindBin(i);
+    int bin = spectrum->GetXaxis()->FindBin(i);
     std::string bin_label;
 
     if(i<=5){
@@ -323,8 +386,8 @@ int main(int argc, char* argv[])
     //std::string bin_label{std::to_string(i % 10)};
     printf("bin number: %d \n",bin);
     cout << bin_label << "\n";
-    Euniverse1[universe_choice]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
-    cor_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    spectrum->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    inv_cov_hist->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
     cov_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
   }
 
@@ -370,24 +433,24 @@ int main(int argc, char* argv[])
 
     myCanvas->Update();
   
-   Euniverse1[universe_choice]->LabelsOption("h","X");
-   Euniverse1[universe_choice]->SetTitle("Energy Spectrum");
+   spectrum->LabelsOption("h","X");
+   spectrum->SetTitle("Energy Spectrum");
 
-   Euniverse1[universe_choice]->GetXaxis()->SetTitle("E GeV");
-   Euniverse1[universe_choice]->SetName("Merged");   
-   Euniverse1[universe_choice]->SetStats(false);
+   spectrum->GetXaxis()->SetTitle("E GeV");
+   spectrum->SetName("Merged");   
+   spectrum->SetStats(false);
   
     ///Plotting Spectra
     myCanvas->cd(1);
     gPad->SetRightMargin(0.15);
-    Euniverse1[universe_choice]->Draw("hist");
-    //Euniverse1[universe_choice]->LabelsOption("v","X");
+    spectrum->Draw("hist");
+    //spectrum->LabelsOption("v","X");
   
 
     myCanvas->cd(2);
     gPad->SetRightMargin(0.15);
-    Euniverse1[universe_choice]->Draw("hist");
-    //Euniverse1[universe_choice]->LabelsOption("v","X");
+    spectrum->Draw("hist");
+    //spectrum->LabelsOption("v","X");
 
     // TPaveStats *st3 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
     // TPaveStats *st4 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
