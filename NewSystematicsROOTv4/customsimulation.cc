@@ -535,7 +535,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // std::cout << "debug5";
   // dummy2.Mult(dummy1,delta2);
   // std::cout << "debug6";
-  double test_result = (matrix_result[0][0]);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
+  double test_result = (matrix_result[0][0])/(1E7);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
   // std::cout << "testing output: "<< test_result << "\n";
   //std::cout << "hello world\n";
 
