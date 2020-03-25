@@ -286,10 +286,16 @@ TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix
  * Function to create relative version of matrix.
  * M_sys/M_nosys = M_rel.
  **/
-void makeRelative(TMatrixD &ResultMatrix,TMatrixD &SysMatrix,TMatrixD &OrigMatrix){
+void makeRelative(TMatrixD &ResultMatrix,TMatrixD &SysMatrix,TMatrixD &OrigMatrix, TH1F *spectrum){
   for(int i = 0; i<200; ++i){
     for(int j = 0; j<200; ++j){
-      ResultMatrix[i][j] = SysMatrix[i][j] / OrigMatrix[i][j];
+      if(OrigMatrix[i][j]!= 0.0){
+      ResultMatrix[i][j] = SysMatrix[i][j] / spectrum->Integral();
+      }else if (OrigMatrix[i][j]== 0.0)
+      {
+        ResultMatrix[i][j] = 0.0;//SysMatrix[i][j] / (OrigMatrix[i][j]+0.001);
+      }
+      
     }
   }
 }
@@ -306,37 +312,15 @@ void applyScaling(TMatrixD &Matrix,TH1F *Spectrum){
   }
 }
 
-int main(int argc, char* argv[])
-{ //argv[0] is name of programme 
+void doPlotMatrices(int save_option, TMatrixD Cov1, TMatrixD Cov2, const char* canvas_name, const char* title1, const char* title2, TH1F *spectrum){
 
-  TApplication *app = new TApplication("app", &argc, argv);
+    TH2D *cov_hist_plot = new TH2D("covariance1",title1,200,0.0,10.0,200,0.0,10.0);
+    TH2D *cor_hist_plot = new TH2D("correlation1",title2,200,0.0,10.0,200,0.0,10.0);
 
-  TMatrixD covariance_matrix_noe(200,200);
-  TMatrixD covariance_matrix_bothe(200,200);
-  TMatrixD covariance_matrix(200,200);
-  TMatrixD inv_covariance_matrix(200,200);
-  TMatrixD inv_covariance_matrix2(200,200);
-
-  TH1F *spectrum = createCovariance(covariance_matrix_bothe,inv_covariance_matrix,1);
-  TH1F *spectrum2 = createCovariance(covariance_matrix_noe,inv_covariance_matrix2,-1);
-
-  TMatrixD covariance_matrix_rel(200,200);
-
-  makeRelative(covariance_matrix_rel,covariance_matrix_bothe,covariance_matrix_noe);
-  applyStats(covariance_matrix_rel);
-  applyScaling(covariance_matrix_rel,spectrum);
-
-  TH2D *cov_hist = new TH2D(covariance_matrix);
-  TH2D *inv_cov_hist = new TH2D(inv_covariance_matrix);
-
-   if (userConfirm() == 1){
-//Some Plotting of matrices and other stuff
-    std::cout<<"Starting plotting \n ";
-
-    TH2D *cov_hist_plot = new TH2D("covariance1","Covariance",200,0.0,10.0,200,0.0,10.0);
-    TH2D *cor_hist_plot = new TH2D("correlation1","Inverse",200,0.0,10.0,200,0.0,10.0);
+    TH2D *cov_hist = new TH2D(Cov1);
+    TH2D *inv_cov_hist = new TH2D(Cov2);
     
-    const char* canvas_name = "TestingRelative";
+    // const char* canvas_name = "TestingRelative";
 
 
     auto myCanvas = new TCanvas(canvas_name,canvas_name);
@@ -347,8 +331,8 @@ int main(int argc, char* argv[])
 
     for(int i = 0; i<200; i++){
       for(int j = 0; j<200; j++){
-        cov_hist_plot->SetBinContent(i+1,j+1,covariance_matrix_bothe[i][j]);
-        cor_hist_plot->SetBinContent(i+1,j+1,inv_covariance_matrix[i][j]);
+        cov_hist_plot->SetBinContent(i+1,j+1,Cov1[i][j]);
+        cor_hist_plot->SetBinContent(i+1,j+1,Cov2[i][j]);
       }
     }
     
@@ -384,8 +368,8 @@ int main(int argc, char* argv[])
     }
     
     //std::string bin_label{std::to_string(i % 10)};
-    printf("bin number: %d \n",bin);
-    cout << bin_label << "\n";
+    //printf("bin number: %d \n",bin);
+    //cout << bin_label << "\n";
     spectrum->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
     inv_cov_hist->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
     cov_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
@@ -394,14 +378,14 @@ int main(int argc, char* argv[])
 
     //// Plotting Matrices
     myCanvas->cd(3);
-    gPad->SetLogz();
+    //gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cov_hist_plot->Draw("COLZ");
     cov_hist_plot->LabelsOption("h","X");
     
 
     myCanvas->cd(4);
-    gPad->SetLogz();
+    //gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cor_hist_plot->Draw("COLZ");
     cor_hist_plot->LabelsOption("h","X");
@@ -468,17 +452,45 @@ int main(int argc, char* argv[])
     char filename2[filestring2.length() + 1];
     strcpy(filename2,filestring2.c_str());
 
-    if(userConfirm()==1){
+    if(save_option == 1){
     myCanvas->SaveAs(filename1);
     myCanvas->SaveAs(filename2);
     }
-   }
-   
-   
+}
+int main(int argc, char* argv[])
+{ //argv[0] is name of programme 
+
+  TApplication *app = new TApplication("app", &argc, argv);
+
+  TMatrixD covariance_matrix_noe(200,200);
+  TMatrixD covariance_matrix_bothe(200,200);
+  TMatrixD covariance_matrix(200,200);
+  TMatrixD inv_covariance_matrix(200,200);
+  TMatrixD inv_covariance_matrix2(200,200);
+
+  TH1F *spectrum = createCovariance(covariance_matrix_bothe,inv_covariance_matrix,1);
+  TH1F *spectrum2 = createCovariance(covariance_matrix_noe,inv_covariance_matrix2,-1);
+
+  TMatrixD covariance_matrix_rel(200,200);
+  TMatrixD inv_covariance_matrix_rel(200,200);
+
+  makeRelative(covariance_matrix_rel,covariance_matrix_bothe,inv_covariance_matrix2,spectrum);
+  makeRelative(inv_covariance_matrix_rel,inv_covariance_matrix,inv_covariance_matrix2,spectrum);
+  applyStats(covariance_matrix_rel);
+  applyScaling(covariance_matrix_rel,spectrum);
+
+
+   if (userConfirm() == 1){
+//Some Plotting of matrices and other stuff
+    std::cout<<"Starting plotting \n ";
+
+    doPlotMatrices(0,covariance_matrix_bothe,inv_covariance_matrix,"Normal","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
+    doPlotMatrices(0,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
     
 
     app->Run();
 	  
+}
 }
 
 
