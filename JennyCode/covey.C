@@ -464,29 +464,47 @@ int main(int argc, char* argv[])
 
   TMatrixD covariance_matrix_noe(200,200);
   TMatrixD covariance_matrix_bothe(200,200);
+  TMatrixD covariance_matrix_shifte(200,200);
+
   TMatrixD covariance_matrix(200,200);
+
   TMatrixD inv_covariance_matrix(200,200);
   TMatrixD inv_covariance_matrix2(200,200);
+  TMatrixD inv_covariance_matrix3(200,200);
 
   TH1F *spectrum = createCovariance(covariance_matrix_bothe,inv_covariance_matrix,1);
   TH1F *spectrum2 = createCovariance(covariance_matrix_noe,inv_covariance_matrix2,-1);
+  TH1F *spectrum3 = createCovariance(covariance_matrix_shifte,inv_covariance_matrix3,0);
 
   TMatrixD covariance_matrix_rel(200,200);
   TMatrixD inv_covariance_matrix_rel(200,200);
+  TMatrixD covariance_matrix_rel_shift(200,200);
+  TMatrixD inv_covariance_matrix_rel_shift(200,200);
 
   makeRelative(covariance_matrix_rel,covariance_matrix_bothe,inv_covariance_matrix2,spectrum);
   makeRelative(inv_covariance_matrix_rel,inv_covariance_matrix,inv_covariance_matrix2,spectrum);
   applyStats(covariance_matrix_rel);
   applyScaling(covariance_matrix_rel,spectrum);
 
+  makeRelative(covariance_matrix_rel_shift,covariance_matrix_shifte,inv_covariance_matrix3,spectrum3);
+  makeRelative(inv_covariance_matrix_rel_shift,inv_covariance_matrix3,inv_covariance_matrix3,spectrum3);
+  applyStats(covariance_matrix_rel_shift);
+  applyScaling(covariance_matrix_rel_shift,spectrum3);
+
 
    if (userConfirm() == 1){
 //Some Plotting of matrices and other stuff
     std::cout<<"Starting plotting \n ";
 
-    doPlotMatrices(0,covariance_matrix_bothe,inv_covariance_matrix,"Normal","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
-    doPlotMatrices(0,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
+    doPlotMatrices(1,covariance_matrix_bothe,inv_covariance_matrix,"Normal Both Errors","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
+    doPlotMatrices(1,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative Both Errors no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
     
+    doPlotMatrices(1,covariance_matrix_shifte,inv_covariance_matrix3,"Normal Shift Error","Covariance Both Errors","Inverse Covariance Both Errors",spectrum3);
+    doPlotMatrices(1,covariance_matrix_rel_shift,inv_covariance_matrix_rel_shift,"Relative Shift Error no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
+
+    doPlotMatrices(1,covariance_matrix_bothe,covariance_matrix_noe,"Normal Both and None Errors","Covariance Both Errors","Covariance No Errors",spectrum);
+    doPlotMatrices(1,covariance_matrix_rel,covariance_matrix_noe,"Relative Both Errors","Covariance Both Errors Relative","Covariance No Errors",spectrum);
+  
 
     app->Run();
 	  
