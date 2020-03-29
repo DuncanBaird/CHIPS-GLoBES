@@ -1098,11 +1098,11 @@ makeRelative(covariance_matrix_inv_rel,covariance_matrix,spectrum);
 
 covariance_matrix_compute = covariance_matrix_inv_rel;
 
-runChiCurve(0,2*M_PI,200,0,1,0,"Covariance with Systematics On");
-// runChiCurve(0,2*M_PI,200,0,0,0,"Covariance with Systematics Off ");
+runChiCurve(0,2*M_PI,200,0,1,0,"New Testing Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,0,0,"New Testing Covariance with Systematics Off ");
 
-// runChiCurve(0,2*M_PI,200,1,1,0,"No Covariance with Systematics On");
-// runChiCurve(0,2*M_PI,200,1,0,0,"No Covariance with Systematics Off");
+runChiCurve(0,2*M_PI,200,1,1,0,"New Testing No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,0,"New Testing No Covariance with Systematics Off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 auto end =high_resolution_clock::now();
