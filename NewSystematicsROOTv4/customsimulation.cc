@@ -62,6 +62,15 @@ double sigma_binbin = 0.0;        /* Bin-to-bin error */
 #define EXP_FAR  0
 #define EXP_NEAR 1
 
+// Covariance matrix definitions
+TMatrixD covariance_matrix(200,200);
+TMatrixD covariance_matrix_inv(200,200);
+
+TMatrixD covariance_matrix_rel(200,200);
+TMatrixD covariance_matrix_inv_rel(200,200);
+
+TMatrixD covariance_matrix_compute(200,200);
+
 
 /***************************************************************************
  *                        H E L P E R   F U N C T I O N S                  *
@@ -164,16 +173,55 @@ double glb_prior(double x, double center, double sigma)
   return tmp*tmp;
 }
 
+
+void histInterpolate(TH1F *Euniverse1){
+  //Interpolate gaps
+  for(int i = 0; i<200; i++){
+     double bin_content =  Euniverse1->GetBinContent(i);
+     
+     if(bin_content == 0){
+       
+       double left_bin = Euniverse1->GetBinContent(i+1);
+       double right_bin = Euniverse1->GetBinContent(i-1);
+       if((left_bin != 0) && (right_bin!=0) ){
+         Euniverse1->SetBinContent(i,(left_bin+right_bin)/2);
+       }
+     }
+   }
+}
+/*
+* Apply errors to energy bins, specify errors as decimals
+* option = 1 for both, 0 for shift only, -1 for neither
+*/
+void errorApply(double &energy, double calibration, double shift,int option){
+  if(option == 1){
+    energy = (1-calibration)*energy + shift*energy;
+  }else if (option == 0)
+  {
+    energy = (1)*energy + shift*energy;
+  }else if (option == -1)
+  {
+    energy = energy;
+  } 
+}
+
+
 /***************************************************
  * Function to create covariance matrix
  * Pulled from covey.C
  * 
  ***************************************************/
-void generate_covariance(TMatrixD &covariance_matrix){
-  
- const int mat_len = 200;
-  //TMatrixD covariance_matrix(200,200);
-  TMatrixD correlation_matrix(200,200);
+/**
+ * Function to create covariance matrix from spectra.
+ * Errors; eoption = 1 for both calibration and shift, 0 for shift only, -1 for neither.
+ * */
+TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix, int eoption){
+  double calibration_e = 0.04;
+  double shift_e = 0.05;
+
+  const int mat_len = 200;
+  // TMatrixD covariance_matrix(200,200);
+  // TMatrixD correlation_matrix(200,200);
   double_t matrix_data[200*200];
 
   //two detectors, close together, energy from 0-5
@@ -198,6 +246,14 @@ void generate_covariance(TMatrixD &covariance_matrix){
    TFile *ff3 = new TFile("TrueE.root");
    TH1F *Espec1 = (TH1F*)ff3->Get("trueE_0to5");
    Espec1->SetName("Espec1");
+
+   
+   // Adds some floor noise to bottom of MINOS spectrum
+   for(int i = 1; i < Espec1->GetXaxis()->FindBin(1);++i){
+     if(Espec1->GetBinContent(i)==0){
+       Espec1->SetBinContent(i,3.0);
+     }
+   }
 
 
    double c = 2.99792458e8;
@@ -247,13 +303,25 @@ void generate_covariance(TMatrixD &covariance_matrix){
 
    //make the NOVA spectrum
    TH1D *Espec2 = new TH1D("Espec2","Espec2",100,0.0,5.0);
-   for (int i=0;i<10000;i++)
+   for (int i=0;i<1E4;i++)
      {
        Espec2->Fill(g->Gaus(2.0,0.3));
      }
 
+    // FLoor noise addition
+    for(int i = 1; i < Espec2->GetXaxis()->FindBin(1);++i){
+     if(Espec2->GetBinContent(i)==0){
+       Espec2->SetBinContent(i,3.0);
+     }
+    }
+    for(int i = Espec2->GetNbinsX(); i > Espec2->GetXaxis()->FindBin(3);--i){
+     if(Espec2->GetBinContent(i)==0){
+       Espec2->SetBinContent(i,3.0);
+     }
+    }
+
    //make the universes based on the real event spectrum
-   //std::std::cout<<" making the universes "<<std::endl;
+   //std::cout<<" making the universes "<<std::endl;
    for (int k=0; k<100; k++) 
       {
 	//use Fill instead of SetBinContent to allow for resolution smearing later
@@ -270,8 +338,11 @@ void generate_covariance(TMatrixD &covariance_matrix){
 	     float i1 = g->Poisson(Ewt1);
 	     float i2 = g->Poisson(Ewt2);
 	     //now lets put in a constant E shift
-	     E1 = E1+0.05*E1;
-	     E2 = E2+0.05*E2;
+
+       errorApply(E1,calibration_e,shift_e,eoption);
+       errorApply(E2,calibration_e,shift_e,eoption);
+	    //  E1 = E1+0.05*E1;
+	    //  E2 = E2+0.05*E2;
 	     //float rfake = g->Gaus(E,res[0]/sqrt(E));
 	     //float Eres = E;//+rfake;
 	     //fake11->Fill(Eres,ifake);
@@ -279,8 +350,10 @@ void generate_covariance(TMatrixD &covariance_matrix){
 	     Euniverse1[k]->Fill(E1,i1);
 	     Euniverse1[k]->Fill(E2+5,i2); //E2+5.0
 
+
 	  } ///finished spectrum generation for this k universe
-	//std::std::cout<<" finished this universe "<<k<<std::endl;
+    histInterpolate(Euniverse1[k]);
+//std::cout<<" finished this universe "<<k<<std::endl;
 	for (int i=0; i<200; i++)
 	  {
 	    for (int j=0; j<200; j++)
@@ -288,19 +361,19 @@ void generate_covariance(TMatrixD &covariance_matrix){
 		double alan, mary;
 		if(i<100)
 		  {
-		    alan = Espec1->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		    alan = Espec1->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i+1);
 		  }
 		if(j<100)
 		  {
-		    mary = Espec1->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		    mary = Espec1->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j+1);
 		  }
 		if(i>101)
 		  {
-		    alan = Espec2->GetBinContent(i+1) - Euniverse1[k]->GetBinContent(i);
+		    alan = Espec2->GetBinContent(i+1-100) - Euniverse1[k]->GetBinContent(i+1);
 		  }
 		if(j>101)
 		  {
-		    mary = Espec2->GetBinContent(j+1) - Euniverse1[k]->GetBinContent(j);
+		    mary = Espec2->GetBinContent(j+1-100) - Euniverse1[k]->GetBinContent(j+1);
 		  }
 		mat->SetBinContent(i+1,j+1,alan*mary/float(iuniverse));
 
@@ -310,7 +383,9 @@ void generate_covariance(TMatrixD &covariance_matrix){
     correlation_matrix[i][j] += alan*mary/float(iuniverse);
 
     
-		// if(k==4&&i==120&&j==120)std::std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+		if(k==4&&i==120&&j==120){
+        //std::cout<<" i "<<i<<" j "<<j<<"alan "<<alan<<" mary"<<mary<<" j universe bin "<<Euniverse1[k]->GetBinContent(j+100)<<std::endl;
+      }
 	      }
 	  }
       }
@@ -325,9 +400,62 @@ void generate_covariance(TMatrixD &covariance_matrix){
     // covariance_matrix.SetMatrixArray(matrix_data);
     // correlation_matrix.SetMatrixArray(matrix_data);
 
-    // double_t det;
-    // correlation_matrix.Invert(&det);
+    double_t det;
+    correlation_matrix.Invert(&det);
 
+    TH2D *cov_hist = new TH2D(covariance_matrix);
+    TH2D *cor_hist = new TH2D(correlation_matrix);
+    cov_hist->SetName("covariance1");
+    cor_hist->SetName("correlation1");
+    printf("The determinant is %f \n",det);
+
+   //Output to file
+   std::cout<<" made the covey matrix \n";
+   TFile *newfile = new TFile("coveySIM.root","RECREATE");
+   newfile->cd();
+   mat->Write();
+   Euniverse1[4]->Write();
+   cov_hist->Write();
+   cor_hist->Write();
+   newfile->Close();
+   
+   mat->Delete();
+
+   for (int k=0; k<100; k++){
+     if (k != 4)
+     {
+       Euniverse1[k]->Delete();
+     }
+     
+   }
+
+   return Euniverse1[4];
+
+}
+
+/**
+ * Function to create relative version of matrix.
+ * M_sys/M_nosys = M_rel.
+ **/
+void makeRelative(TMatrixD &ResultMatrix,TMatrixD &SysMatrix, TH1F *spectrum){
+  for(int i = 0; i<200; ++i){
+    for(int j = 0; j<200; ++j){
+      ResultMatrix[i][j] = SysMatrix[i][j] / spectrum->Integral();
+      
+    }
+  }
+}
+
+void applyStats(TMatrixD &Matrix){
+  for(int i = 0; i<200; ++i){
+    Matrix[i][i] = Matrix[i][i]*1;
+  }
+}
+
+void applyScaling(TMatrixD &Matrix,TH1F *Spectrum){
+  for(int i = 0; i<200; ++i){
+    Matrix[i][i] = Matrix[i][i]*1;
+  }
 }
 
 
@@ -471,7 +599,7 @@ double chiDCSpectral(int exp, int rule, int n_params, double *x, double *errors,
  * Uses covariance matrix in computation
  ********************************************************/
 
-TMatrixD covariance_matrix_1(200,200);
+
 
   
 double chi_cov_factor = 1;
@@ -527,7 +655,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   //covariance
   double_t det1;
   //chi2+= delta_transpose * inverse_covariance * delta
-  TMatrixD matrix_result = delta3 * covariance_matrix_1.Invert(&det1) * delta4;
+  TMatrixD matrix_result = delta3 * covariance_matrix_compute * delta4;
   // TMatrixD dummy1;
   // TMatrixD dummy2;
   // std::cout << "debug4";
@@ -535,7 +663,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   // std::cout << "debug5";
   // dummy2.Mult(dummy1,delta2);
   // std::cout << "debug6";
-  double test_result = (matrix_result[0][0])/(1E7);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
+  double test_result = (matrix_result[0][0]);///(1E7);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
   // std::cout << "testing output: "<< test_result << "\n";
   //std::cout << "hello world\n";
 
@@ -962,7 +1090,14 @@ glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GL
 
 userConfirm();
 auto start = high_resolution_clock::now();
-generate_covariance(covariance_matrix_1);
+//generate_covariance(covariance_matrix_1);
+TH1F *spectrum = createCovariance(covariance_matrix,covariance_matrix_inv,1);
+
+makeRelative(covariance_matrix_rel,covariance_matrix,spectrum);
+makeRelative(covariance_matrix_inv_rel,covariance_matrix,spectrum);
+
+covariance_matrix_compute = covariance_matrix_inv_rel;
+
 runChiCurve(0,2*M_PI,200,0,1,0,"Covariance with Systematics On");
 // runChiCurve(0,2*M_PI,200,0,0,0,"Covariance with Systematics Off ");
 
