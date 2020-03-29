@@ -499,8 +499,8 @@ int main(int argc, char* argv[])
     doPlotMatrices(1,covariance_matrix_bothe,inv_covariance_matrix,"Normal Both Errors","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
     doPlotMatrices(1,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative Both Errors no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
     
-    doPlotMatrices(1,covariance_matrix_shifte,inv_covariance_matrix3,"Normal Shift Error","Covariance Both Errors","Inverse Covariance Both Errors",spectrum3);
-    doPlotMatrices(1,covariance_matrix_rel_shift,inv_covariance_matrix_rel_shift,"Relative Shift Error no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
+    doPlotMatrices(1,covariance_matrix_shifte,inv_covariance_matrix3,"Normal Shift Error","Covariance Shift Error","Inverse Covariance Shift Error",spectrum3);
+    doPlotMatrices(1,covariance_matrix_rel_shift,inv_covariance_matrix_rel_shift,"Relative Shift Error no scaling","Covariance Shift Error Relative","Inverse Covariance Shift Error Relative",spectrum);
 
     doPlotMatrices(1,covariance_matrix_bothe,covariance_matrix_noe,"Normal Both and None Errors","Covariance Both Errors","Covariance No Errors",spectrum);
     doPlotMatrices(1,covariance_matrix_rel,covariance_matrix_noe,"Relative Both Errors","Covariance Both Errors Relative","Covariance No Errors",spectrum);
