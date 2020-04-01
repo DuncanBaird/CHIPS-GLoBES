@@ -69,7 +69,15 @@ TMatrixD covariance_matrix_inv(200,200);
 TMatrixD covariance_matrix_rel(200,200);
 TMatrixD covariance_matrix_inv_rel(200,200);
 
+TMatrixD covariance_matrix_single(200,200);
+TMatrixD covariance_matrix_inv_single(200,200);
+
+TMatrixD covariance_matrix_rel_single(200,200);
+TMatrixD covariance_matrix_inv_rel_single(200,200);
+
+/* Matrix refeference used in computation */
 TMatrixD covariance_matrix_compute(200,200);
+
 
 
 /***************************************************************************
@@ -214,8 +222,9 @@ void errorApply(double &energy, double calibration, double shift,int option){
 /**
  * Function to create covariance matrix from spectra.
  * Errors; eoption = 1 for both calibration and shift, 0 for shift only, -1 for neither.
+ * Detectors; 1 for two detectors, 0 for one detector
  * */
-TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix, int eoption){
+TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix, int eoption,int doption){
   double calibration_e = 0.04;
   double shift_e = 0.05;
 
@@ -301,12 +310,17 @@ TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix
 
    double deltacp=0.0;
 
+  
    //make the NOVA spectrum
    TH1D *Espec2 = new TH1D("Espec2","Espec2",100,0.0,5.0);
    for (int i=0;i<1E4;i++)
      {
        Espec2->Fill(g->Gaus(2.0,0.3));
      }
+
+    if(doption == 0){
+      Espec2 = (TH1D*)ff3->Get("trueE_0to5");
+    }
 
     // FLoor noise addition
     for(int i = 1; i < Espec2->GetXaxis()->FindBin(1);++i){
@@ -399,6 +413,15 @@ TH1F *createCovariance(TMatrixD &covariance_matrix, TMatrixD &correlation_matrix
    //adding covariance values into matrix object
     // covariance_matrix.SetMatrixArray(matrix_data);
     // correlation_matrix.SetMatrixArray(matrix_data);
+
+    if(doption == 0){
+      for(int i=0; i<200; ++i){
+        for(int j=0; j<200; ++j){
+          covariance_matrix[i][j] = covariance_matrix[i][j]/4;
+          correlation_matrix[i][j] = correlation_matrix[i][j]/4;
+        }
+      }
+    }
 
     double_t det;
     correlation_matrix.Invert(&det);
@@ -1091,7 +1114,7 @@ glbShowRuleRates(stdout,EXP_FAR,0,GLB_ALL, GLB_W_EFF, GLB_WO_BG, GLB_W_COEFF, GL
 userConfirm();
 auto start = high_resolution_clock::now();
 //generate_covariance(covariance_matrix_1);
-TH1F *spectrum = createCovariance(covariance_matrix,covariance_matrix_inv,1);
+TH1F *spectrum = createCovariance(covariance_matrix,covariance_matrix_inv,1,1);
 
 makeRelative(covariance_matrix_rel,covariance_matrix,spectrum);
 makeRelative(covariance_matrix_inv_rel,covariance_matrix,spectrum);
@@ -1107,8 +1130,16 @@ runChiCurve(0,2*M_PI,200,1,0,1,"Two Detectors No Covariance with Systematics Off
 
 std::cout << "Changing Target Masses \n";
 
-glbSetTargetMass(EXP_NEAR,0.0);
+glbSetTargetMass(EXP_NEAR,0.01);
 glbSetTargetMass(EXP_FAR,200.0);
+
+
+TH1F *spectrum_single = createCovariance(covariance_matrix_single,covariance_matrix_inv_single,1,0);
+
+makeRelative(covariance_matrix_rel_single,covariance_matrix_single,spectrum_single);
+makeRelative(covariance_matrix_inv_rel_single,covariance_matrix_single,spectrum_single);
+
+covariance_matrix_compute= covariance_matrix_inv_rel_single;
 
 runChiCurve(0,2*M_PI,200,0,1,1,"One Detectors Covariance with Systematics On");
 runChiCurve(0,2*M_PI,200,0,0,1,"One Detectors Covariance with Systematics Off ");
