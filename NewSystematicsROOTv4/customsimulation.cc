@@ -1098,12 +1098,23 @@ makeRelative(covariance_matrix_inv_rel,covariance_matrix,spectrum);
 
 covariance_matrix_compute = covariance_matrix_inv_rel;
 
-runChiCurve(0,2*M_PI,200,0,1,1,"New Testing Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,0,0,1,"New Testing Covariance with Systematics Off ");
+runChiCurve(0,2*M_PI,200,0,1,1,"Two Detectors Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,0,1,"Two Detectors Covariance with Systematics Off ");
 
-runChiCurve(0,2*M_PI,200,1,1,1,"New Testing No Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,1,0,1,"New Testing No Covariance with Systematics Off");
+runChiCurve(0,2*M_PI,200,1,1,1,"Two Detectors No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,1,"Two Detectors No Covariance with Systematics Off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
+
+std::cout << "Changing Target Masses \n";
+
+glbSetTargetMass(EXP_NEAR,0.0);
+glbSetTargetMass(EXP_FAR,200.0);
+
+runChiCurve(0,2*M_PI,200,0,1,1,"One Detectors Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,0,1,"One Detectors Covariance with Systematics Off ");
+
+runChiCurve(0,2*M_PI,200,1,1,1,"One Detectors No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,1,"One Detectors No Covariance with Systematics Off");
 
 auto end =high_resolution_clock::now();
 std::cout << "Finished testing stuff \n";
