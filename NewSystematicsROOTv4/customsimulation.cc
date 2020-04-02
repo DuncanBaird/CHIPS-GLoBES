@@ -35,6 +35,10 @@ char MYFILE2[]="Plotting/Input/v2testb.dat";
 /* "True" oscillation parameters */
 double theta12,theta13,theta23,deltacp,sdm,ldm;
 
+/*Dummy variable*/
+double global_dummy = 0;
+double global_dummy_r = 0;
+
 /* GLoBES parameter structures */
 glb_params true_values;
 glb_params test_values;
@@ -689,6 +693,7 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   double test_result = (matrix_result[0][0]);///(1E7);///(4E6);///(1E7*chi_cov_factor);//(glb_num_of_exps+glbGetNumberOfRules(GLB_ALL));
   // std::cout << "testing output: "<< test_result << "\n";
   //std::cout << "hello world\n";
+  global_dummy = test_result;
 
   return chi2+test_result; //+test_result;
 }
@@ -924,8 +929,10 @@ void runChiCurve(double min_cp, double max_cp, int cp_steps,int sys_option, int 
     //  }
      chi_data[0][i] = cp_current;
      chi_data[1][i] = chi_current;
-     cp_current += cp_step;
-
+     
+    //  global_dummy_r = global_dummy;
+    //  std::cout << "For cp value: " << cp_current << "The stat contribution is: "<<global_dummy_r << "\n";
+    cp_current += cp_step;
   }
 
   auto myCanvas = new TCanvas(canvas_name,canvas_name);
