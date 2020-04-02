@@ -178,6 +178,10 @@ double glb_likelihood(double true_rate, double fit_rate)
 
 }
 
+double poissonChi(double true_r,double fit_r){
+  return (fit_r-true_r)/pow(true_r,2);
+}
+
 // Taken from glb_sys.c in GLoBES Library
 double glb_prior(double x, double center, double sigma)
 {
@@ -648,7 +652,8 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   for (i=ew_low; i <= ew_high; i++)
   {
     fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
-    chi2 += glb_likelihood(true_rates[i], fit_rate);
+    //chi2 += glb_likelihood(true_rates[i], fit_rate);
+    //chi2 += poissonChi(true_rates[i], fit_rate);
   }
 
   //NEW Contribution
@@ -695,6 +700,11 @@ double chiCOV(int exp, int rule, int n_params, double *x, double *errors,
   //std::cout << "hello world\n";
   global_dummy = test_result;
 
+  // /* Systematical part of chi^2 (= priors) */
+  // for (i=0; i < n_params; i++){
+  //   chi2 += square(0.01/ errors[i]); //chi2 += square(x[i] / errors[i]);
+  // }
+
   return chi2+test_result; //+test_result;
 }
 
@@ -716,6 +726,7 @@ double chiCOVStat(int exp, int rule, int n_params, double *x, double *errors,
   {
     fit_rate = signal_fit_rates[i] + bg_norm_center * bg_fit_rates[i];
     chi2 += glb_likelihood(true_rates[i], fit_rate);
+    //chi2 += poissonChi(true_rates[i], fit_rate);
   }
 
   return chi2;
@@ -1128,11 +1139,11 @@ makeRelative(covariance_matrix_inv_rel,covariance_matrix,spectrum);
 
 covariance_matrix_compute = covariance_matrix_inv_rel;
 
-runChiCurve(0,2*M_PI,200,0,1,1,"Two Detectors Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,0,0,1,"Two Detectors Covariance with Systematics Off ");
+runChiCurve(0,2*M_PI,200,0,1,1,"v2Two Detectors Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,0,1,"v2Two Detectors Covariance with Systematics Off ");
 
-runChiCurve(0,2*M_PI,200,1,1,1,"Two Detectors No Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,1,0,1,"Two Detectors No Covariance with Systematics Off");
+runChiCurve(0,2*M_PI,200,1,1,1,"v2Two Detectors No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,1,"v2Two Detectors No Covariance with Systematics Off");
 //runChiCurve(0,2*M_PI,100,1,1,0,"testing");
 
 std::cout << "Changing Target Masses \n";
@@ -1148,11 +1159,11 @@ makeRelative(covariance_matrix_inv_rel_single,covariance_matrix_single,spectrum_
 
 covariance_matrix_compute= covariance_matrix_inv_rel_single;
 
-runChiCurve(0,2*M_PI,200,0,1,1,"One Detectors Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,0,1,1,"v2One Detectors Covariance with Systematics On");
 runChiCurve(0,2*M_PI,200,0,0,1,"One Detectors Covariance with Systematics Off ");
 
-runChiCurve(0,2*M_PI,200,1,1,1,"One Detectors No Covariance with Systematics On");
-runChiCurve(0,2*M_PI,200,1,0,1,"One Detectors No Covariance with Systematics Off");
+runChiCurve(0,2*M_PI,200,1,1,1,"v2One Detectors No Covariance with Systematics On");
+runChiCurve(0,2*M_PI,200,1,0,1,"v2One Detectors No Covariance with Systematics Off");
 
 auto end =high_resolution_clock::now();
 std::cout << "Finished testing stuff \n";
