@@ -70,8 +70,8 @@ for(int u=0;u<31;++u){
   p2->SetTopMargin(0.001);
   p2->SetBottomMargin(0.4);
   p2->SetGrid();
-  p2->SetLogx ();
-  p2->SetLogy();
+  p2->SetLogx();
+  //p2->SetLogy();
 
   auto *p1 = new TPad("p1","p1",0.,0.3,1.,0.9);  p1->Draw();
   p1->SetBottomMargin(0.001);
@@ -140,6 +140,9 @@ for(int u=0;u<31;++u){
   mg2->GetYaxis()->CenterTitle(true);
   mg2->GetYaxis()->SetTitleSize(0.06);
 
+  TAxis *axis = mg2->GetYaxis();
+  axis->SetLimits(0.,5.);
+
 
 
   //  TGraph*r = new TGraph(31); r->SetTitle("");
@@ -159,8 +162,8 @@ for(int u=0;u<31;++u){
   myCanvas->Update();
 
 
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.svg");
-  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/SensitivityplotAChiComparedRatio.pdf");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/ReportRatio.svg");
+  myCanvas->SaveAs("/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/NewSystematics/Plotting/Output/ReportRatio.pdf");
 
 return 0; // everything went right.
 }
