@@ -378,14 +378,14 @@ void doPlotMatrices(int save_option, TMatrixD Cov1, TMatrixD Cov2, const char* c
 
     //// Plotting Matrices
     myCanvas->cd(3);
-    //gPad->SetLogz();
+    gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cov_hist_plot->Draw("COLZ");
     cov_hist_plot->LabelsOption("h","X");
     
 
     myCanvas->cd(4);
-    //gPad->SetLogz();
+    gPad->SetLogz();
     gPad->SetRightMargin(0.15);
     cor_hist_plot->Draw("COLZ");
     cor_hist_plot->LabelsOption("h","X");
@@ -457,6 +457,156 @@ void doPlotMatrices(int save_option, TMatrixD Cov1, TMatrixD Cov2, const char* c
     myCanvas->SaveAs(filename2);
     }
 }
+
+void doPlotMatrices_single(int save_option, TMatrixD Cov1, const char* canvas_name, const char* title1, TH1F *spectrum){
+
+    TH2D *cov_hist_plot = new TH2D("covariance1",title1,200,0.0,10.0,200,0.0,10.0);
+    // TH2D *cor_hist_plot = new TH2D("correlation1",title2,200,0.0,10.0,200,0.0,10.0);
+
+    TH2D *cov_hist = new TH2D(Cov1);
+    
+    // const char* canvas_name = "TestingRelative";
+
+
+    auto myCanvas = new TCanvas(canvas_name,canvas_name,200,10,300,500);
+
+    myCanvas->SetGrid();
+
+    TPad *pad1 = new TPad("pad1", "The pad 80% of the height",0.0,0.3,1.0,1.0,0);
+    TPad *pad2 = new TPad("pad2", "The pad 20% of the height",0.0,0.0,1.0,0.3,0);
+    pad1->Draw();
+    pad2->Draw();
+    //myCanvas->Divide(1,2);
+
+
+    for(int i = 0; i<200; i++){
+      for(int j = 0; j<200; j++){
+        cov_hist_plot->SetBinContent(i+1,j+1,Cov1[i][j]);
+        // cor_hist_plot->SetBinContent(i+1,j+1,Cov2[i][j]);
+      }
+    }
+    
+    cov_hist_plot->GetXaxis()->SetTitle("E GeV");
+    // cor_hist_plot->GetXaxis()->SetTitle("E GeV");
+    cov_hist_plot->GetYaxis()->SetTitle("E GeV");
+    // cor_hist_plot->GetYaxis()->SetTitle("E GeV");
+
+    
+    
+    //Relabelling Spectra
+  //   for (int i = 0; i < 10-1; ++i) {
+  //   int bin{Euniverse1[4]->GetXaxis()->FindBin(i)};
+  //   printf("bin number: %d \n",bin);
+  //   std::string bin_label{std::to_string(i % 10)};
+  //   Euniverse1[4]->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+  //   //bin = Euniverse1[4]->GetYaxis()->FindBin(i);
+  //   //Euniverse1[4]->GetYaxis()->SetBinLabel(bin, bin_label.c_str());
+  // }
+
+  int universe_choice = 3;
+
+  //Relabel axes
+  for(int i=0; i<10; i++){
+    int bin = spectrum->GetXaxis()->FindBin(i);
+    std::string bin_label;
+
+    if(i<=5){
+      bin_label = std::to_string(i);
+    }else if (i>5)
+    {
+      bin_label = std::to_string(i%5);
+    }
+    
+    //std::string bin_label{std::to_string(i % 10)};
+    //printf("bin number: %d \n",bin);
+    //cout << bin_label << "\n";
+    spectrum->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    // inv_cov_hist->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+    cov_hist_plot->GetXaxis()->SetBinLabel(bin, bin_label.c_str());
+  }
+
+
+    //// Plotting Matrices
+    pad1->cd();
+    gPad->SetLogz();
+    gPad->SetRightMargin(0.15);
+    cov_hist_plot->Draw("COLZ");
+    cov_hist_plot->LabelsOption("h","X");
+    
+
+    // myCanvas->cd(4);
+    // gPad->SetLogz();
+    // gPad->SetRightMargin(0.15);
+    // cor_hist_plot->Draw("COLZ");
+    // cor_hist_plot->LabelsOption("h","X");
+
+    
+    
+    gPad->Update();
+    TPaveStats *st1 = (TPaveStats*)cov_hist_plot->FindObject("stats");
+    // TPaveStats *st2 = (TPaveStats*)cor_hist_plot->FindObject("stats");
+
+    
+
+    //stat box position
+    st1->SetX2NDC(0.2); 
+    st1->SetY2NDC(0.65); 
+    st1->SetX1NDC(0.4); 
+    st1->SetY1NDC(0.85); 
+
+    //myCanvas->Update();
+
+    st1->SetOptStat(111110110);
+
+    // st2->SetX2NDC(0.2); 
+    // st2->SetY2NDC(0.65); 
+    // st2->SetX1NDC(0.4); 
+    // st2->SetY1NDC(0.85); 
+
+    // st2->SetOptStat(111110110);
+
+    myCanvas->Update();
+  
+   spectrum->LabelsOption("h","X");
+   spectrum->SetTitle("Energy Spectrum");
+
+   spectrum->GetXaxis()->SetTitle("E GeV");
+   spectrum->SetName("Merged");   
+   spectrum->SetStats(false);
+  
+    ///Plotting Spectra
+    pad2->cd();
+    gPad->SetRightMargin(0.15);
+    spectrum->Draw("hist");
+    //spectrum->LabelsOption("v","X");
+  
+
+    // myCanvas->cd(2);
+    // gPad->SetRightMargin(0.15);
+    // spectrum->Draw("hist");
+    //spectrum->LabelsOption("v","X");
+
+    // TPaveStats *st3 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
+    // TPaveStats *st4 = (TPaveStats*)Euniverse1[universe_choice]->FindObject("stats");
+
+    string filepath = "/home/duncan/Documents/CHIPS Repository/CHIPS-GLoBES/JennyCode/Plotting/Report/";
+    string file_svg = ".svg";
+    string file_pdf = ".pdf";
+
+
+    string filestring1 = filepath + (string)canvas_name + file_svg;
+    char filename1[filestring1.length() + 1];
+    strcpy(filename1,filestring1.c_str());
+
+    string filestring2 = filepath + (string)canvas_name + file_pdf;
+    char filename2[filestring2.length() + 1];
+    strcpy(filename2,filestring2.c_str());
+
+    if(save_option == 1){
+    myCanvas->SaveAs(filename1);
+    myCanvas->SaveAs(filename2);
+    }
+}
 int main(int argc, char* argv[])
 { //argv[0] is name of programme 
 
@@ -496,15 +646,22 @@ int main(int argc, char* argv[])
 //Some Plotting of matrices and other stuff
     std::cout<<"Starting plotting \n ";
 
-    doPlotMatrices(1,covariance_matrix_bothe,inv_covariance_matrix,"Normal Both Errors","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
-    doPlotMatrices(1,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative Both Errors no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
+    // doPlotMatrices(1,covariance_matrix_bothe,inv_covariance_matrix,"Normal Both Errors","Covariance Both Errors","Inverse Covariance Both Errors",spectrum);
+    // doPlotMatrices(1,covariance_matrix_rel,inv_covariance_matrix_rel,"Relative Both Errors no scaling","Covariance Both Errors Relative","Inverse Covariance Both Errors Relative",spectrum);
     
-    doPlotMatrices(1,covariance_matrix_shifte,inv_covariance_matrix3,"Normal Shift Error","Covariance Shift Error","Inverse Covariance Shift Error",spectrum3);
-    doPlotMatrices(1,covariance_matrix_rel_shift,inv_covariance_matrix_rel_shift,"Relative Shift Error no scaling","Covariance Shift Error Relative","Inverse Covariance Shift Error Relative",spectrum);
+    // doPlotMatrices(1,covariance_matrix_shifte,inv_covariance_matrix3,"Normal Shift Error","Covariance Shift Error","Inverse Covariance Shift Error",spectrum3);
+    // doPlotMatrices(1,covariance_matrix_rel_shift,inv_covariance_matrix_rel_shift,"Relative Shift Error no scaling","Covariance Shift Error Relative","Inverse Covariance Shift Error Relative",spectrum);
 
-    doPlotMatrices(1,covariance_matrix_bothe,covariance_matrix_noe,"Normal Both and None Errors","Covariance Both Errors","Covariance No Errors",spectrum);
-    doPlotMatrices(1,covariance_matrix_rel,covariance_matrix_noe,"Relative Both Errors","Covariance Both Errors Relative","Covariance No Errors",spectrum);
+    // doPlotMatrices(1,covariance_matrix_bothe,covariance_matrix_noe,"Normal Both and None Errors","Covariance Both Errors","Covariance No Errors",spectrum);
+    // doPlotMatrices(1,covariance_matrix_rel,covariance_matrix_noe,"Relative Both Errors","Covariance Both Errors Relative","Covariance No Errors",spectrum);
   
+
+    doPlotMatrices_single(1,covariance_matrix_noe,"NoErrors","Covariance with No Errors",spectrum2);
+    doPlotMatrices_single(1,inv_covariance_matrix,"InverseNoErrors","Inverse with No Errors",spectrum);
+    doPlotMatrices_single(1,covariance_matrix_shifte,"ShiftError","Covariance with Shift Error",spectrum3);
+    doPlotMatrices_single(1,covariance_matrix_bothe,"BothErrors","Covariance with Shift and Calibration Errors",spectrum);
+    doPlotMatrices_single(1,covariance_matrix_rel,"RelativeBoth Errors","Relative Covariance with Noth Errors",spectrum);
+    doPlotMatrices_single(1,inv_covariance_matrix_rel,"InverseRelative Both Errors","Inverse Relative Covariance with both Errors",spectrum);
 
     app->Run();
 	  
